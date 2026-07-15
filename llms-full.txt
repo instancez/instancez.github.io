@@ -3966,6 +3966,18 @@ const { data, error } = await supabase
 
 > The scaffolded `todos` table has a `user_id = auth.uid()` RLS policy, so rows are filtered by the authenticated user. To read without signing in, add a separate `- operations: [select]` policy with `using: "true"` in `instancez.yaml`. Don’t loosen the existing policy: it also covers insert, update, and delete, so `using: "true"` there would open writes to anyone.
 
+## Building with a coding agent
+
+[Section titled “Building with a coding agent”](#building-with-a-coding-agent)
+
+The repo ships an agent skill that teaches coding agents the YAML syntax, RLS patterns, and the `inz` CLI:
+
+```bash
+npx skills add instancez/instancez
+```
+
+See [Coding Agents](/instancez/coding-agents/) for Claude Code plugin install, per-agent flags, and the manual route.
+
 ## What’s next
 
 [Section titled “What’s next”](#whats-next)
