@@ -24,9 +24,14 @@ instancez.yaml
           <span class="yk astro-j7pv25f6">references</span><span class="p astro-j7pv25f6">:</span> <span class="yv astro-j7pv25f6">auth.users.id</span>
     <span class="yk astro-j7pv25f6">rls</span><span class="p astro-j7pv25f6">:</span>
       <span class="p astro-j7pv25f6">-</span> <span class="yk astro-j7pv25f6">operations</span><span class="p astro-j7pv25f6">:</span> [<span class="yv astro-j7pv25f6">select</span>]
-        <span class="yk astro-j7pv25f6">check</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"true"</span>
-      <span class="p astro-j7pv25f6">-</span> <span class="yk astro-j7pv25f6">operations</span><span class="p astro-j7pv25f6">:</span> [<span class="yv astro-j7pv25f6">insert</span><span class="p astro-j7pv25f6">,</span> <span class="yv astro-j7pv25f6">update</span><span class="p astro-j7pv25f6">,</span> <span class="yv astro-j7pv25f6">delete</span>]
-        <span class="yk astro-j7pv25f6">check</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"auth.uid() = user_id"</span></pre> </div> <div class="code-card astro-j7pv25f6"> <div class="code-head astro-j7pv25f6"> <span class="dot astro-j7pv25f6" style="background:#ff5f57"></span> <span class="dot astro-j7pv25f6" style="background:#febc2e"></span> <span class="dot astro-j7pv25f6" style="background:#28c840"></span>
+        <span class="yk astro-j7pv25f6">using</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"true"</span>
+      <span class="p astro-j7pv25f6">-</span> <span class="yk astro-j7pv25f6">operations</span><span class="p astro-j7pv25f6">:</span> [<span class="yv astro-j7pv25f6">insert</span>]
+        <span class="yk astro-j7pv25f6">with_check</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"auth.uid() = user_id"</span>
+      <span class="p astro-j7pv25f6">-</span> <span class="yk astro-j7pv25f6">operations</span><span class="p astro-j7pv25f6">:</span> [<span class="yv astro-j7pv25f6">update</span>]
+        <span class="yk astro-j7pv25f6">using</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"auth.uid() = user_id"</span>
+        <span class="yk astro-j7pv25f6">with_check</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"auth.uid() = user_id"</span>
+      <span class="p astro-j7pv25f6">-</span> <span class="yk astro-j7pv25f6">operations</span><span class="p astro-j7pv25f6">:</span> [<span class="yv astro-j7pv25f6">delete</span>]
+        <span class="yk astro-j7pv25f6">using</span><span class="p astro-j7pv25f6">:</span> <span class="s astro-j7pv25f6">"auth.uid() = user_id"</span></pre> </div> <div class="code-card astro-j7pv25f6"> <div class="code-head astro-j7pv25f6"> <span class="dot astro-j7pv25f6" style="background:#ff5f57"></span> <span class="dot astro-j7pv25f6" style="background:#febc2e"></span> <span class="dot astro-j7pv25f6" style="background:#28c840"></span>
 app.ts
 </div> <pre class="astro-j7pv25f6"><span class="cm astro-j7pv25f6">// @supabase/supabase-js, unchanged</span>
 <span class="k astro-j7pv25f6">const</span> <span class="plain astro-j7pv25f6">supabase</span> <span class="p astro-j7pv25f6">=</span> <span class="fn astro-j7pv25f6">createClient</span><span class="p astro-j7pv25f6">(</span>
