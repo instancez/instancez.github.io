@@ -1,0 +1,13 @@
+# instancez
+
+> A lightweight, self-hosted backend that speaks the Supabase wire protocol.
+
+## Documentation Sets
+
+- [Abridged documentation](https://instancez.github.io/llms-small.txt): a compact version of the documentation for instancez, with non-essential content removed
+- [Complete documentation](https://instancez.github.io/llms-full.txt): the full documentation for instancez
+
+## Notes
+
+- The complete documentation includes all content from the official documentation
+- The content is automatically generated from the same source as the official documentation

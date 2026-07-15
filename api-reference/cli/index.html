@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>CLI Reference | instancez</title><link rel="canonical" href="https://instancez.github.io/api-reference/cli/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt"/><style>.site-title .title-text::after{content:"0.0.1";margin-left:.55rem;font-family:'Geist Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.02em;color:#6a6a6a;border:1px solid #1c1c1c;border-radius:99px;padding:2px 8px;vertical-align:middle}</style><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.2"/><meta name="generator" content="Starlight v0.34.8"/><meta property="og:title" content="CLI Reference"/><meta property="og:type" content="article"/><meta property="og:url" content="https://instancez.github.io/api-reference/cli/"/><meta property="og:locale" content="en"/><meta property="og:description" content="All inz subcommands with flags and examples."/><meta property="og:site_name" content="instancez"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="All inz subcommands with flags and examples."/><script>
+	document.documentElement.dataset.theme = 'dark';
+</script><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/index.BdrxSEzD.css">
+<link rel="stylesheet" href="/_astro/index.Ch9VW2bI.css">
+<style>@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){margin-bottom:-2px}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{display:flex;align-items:center;gap:.5rem;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected=true]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="layout astro-qgm4hv6f"> <div class="layout__grid astro-qgm4hv6f"> <header class="layout__header astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container container__header astro-qgm4hv6f"> <div class="site-title-wrapper astro-al2ajamp"> <a href="/" class="site-title astro-pl5n7ndn">  <img class="logo-size astro-pl5n7ndn" alt="instancez" src="/_astro/logo.QAEItoHz.svg" width="345" height="383">  <span class="title-text astro-pl5n7ndn"> instancez </span> </a>  <nav class="nav-bar astro-cr6yirev">  </nav>  </div> <button class="show-modal astro-355t7gtl" popovertargetaction="toggle" popovertarget="drawer"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="astro-355t7gtl"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" class="astro-355t7gtl"></path> </svg> <span class="sr-only astro-355t7gtl">Toggle Menu</span> </button>  <div class="header-right astro-al2ajamp"> <site-search class="astro-al2ajamp astro-pmbanboq" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-pmbanboq"> <span aria-hidden="true" class="astro-pmbanboq">Search</span> <kbd class="sl-hidden md:sl-flex astro-pmbanboq" style="display: none;"> <kbd class="astro-pmbanboq">Ctrl</kbd><kbd class="astro-pmbanboq">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-pmbanboq"> <div class="dialog-frame sl-flex astro-pmbanboq">  <button data-close-modal class="sl-flex md:sl-hidden astro-pmbanboq"> Cancel </button> <div class="search-container astro-pmbanboq"> <div id="starlight__search" class="astro-pmbanboq"></div> </div> </div> </dialog> </site-search>  <script>
+  ;(() => {
+    const openBtn = document.querySelector('button[data-open-modal]')
+    const shortcut = openBtn?.querySelector('kbd')
+    if (!openBtn || !(shortcut instanceof HTMLElement)) return
+    const platformKey = shortcut.querySelector('kbd')
+    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+      platformKey.textContent = '⌘'
+      openBtn.setAttribute('aria-keyshortcuts', 'Meta+K')
+    }
+    shortcut.style.display = ''
+  })()
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Bij-bOB5.js"></script>   <nav class="header-nav astro-al2ajamp"> <div class="astro-al2ajamp"> <a href="https://github.com/instancez/instancez" rel="me" class="sl-flex button astro-sxsus6vf" data-variant="ghost"><span class="sr-only astro-sxsus6vf">GitHub</span><svg aria-hidden="true" class="astro-sxsus6vf astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <div class="astro-al2ajamp"> <starlight-theme-black-select class="astro-qxpzpg5m"> <button aria-label="Select theme" aria-live="polite" class="sl-flex button astro-qxpzpg5m" title="Select theme" data-variant="ghost"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun astro-qxpzpg5m"> <circle cx="12" cy="12" r="4" class="astro-qxpzpg5m"></circle> <path d="M12 2v2" class="astro-qxpzpg5m"></path> <path d="M12 20v2" class="astro-qxpzpg5m"></path> <path d="m4.93 4.93 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m17.66 17.66 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="M2 12h2" class="astro-qxpzpg5m"></path> <path d="M20 12h2" class="astro-qxpzpg5m"></path> <path d="m6.34 17.66-1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m19.07 4.93-1.41 1.41" class="astro-qxpzpg5m"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon astro-qxpzpg5m"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" class="astro-qxpzpg5m"></path> </svg> <span class="sr-only astro-qxpzpg5m">Toggle theme</span> </button> </starlight-theme-black-select>   <script>
+  StarlightThemeProvider.updatePickers()
+</script> <script type="module">const n="starlight-theme";function c(e){return e==="auto"||e==="dark"||e==="light"?e:"auto"}function l(){return c(typeof localStorage<"u"&&localStorage.getItem(n))}function i(e){typeof localStorage<"u"&&localStorage.setItem(n,e==="light"||e==="dark"?e:"")}function s(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?s():e,i(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{l()==="auto"&&t("auto")});customElements.define("starlight-theme-black-select",class extends HTMLElement{constructor(){super(),t(l());const a=this.querySelector("button");a?.addEventListener("click",()=>{const o=c(document.documentElement.dataset.theme),r=o==="dark"?"light":o==="light"?"dark":"auto";t(r),a?.setAttribute("aria-label",`${r} theme`)})}});</script> </div> <div class="astro-al2ajamp"> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </nav> </div>  </div> </div> </header> <main class="main astro-qgm4hv6f">  <div class="container-wrapper astro-qgm4hv6f"> <div class="container container-wrapper-main astro-qgm4hv6f"> <aside class="aside astro-qgm4hv6f"> <div class="sidebar astro-ogph4agi"> <div class="container-sidebar astro-ogph4agi"> <a href="/quick-start/" aria-current="false" class="entry-link astro-euowmrmi">Quick Start</a><a href="/install/" aria-current="false" class="entry-link astro-euowmrmi">Installation</a><a href="/coding-agents/" aria-current="false" class="entry-link astro-euowmrmi">Coding Agents</a><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Build</h4><div class="container-group-link astro-euowmrmi"><a href="/build/schema/" aria-current="false" class="entry-link astro-euowmrmi">Tables / Schema</a><a href="/build/auth/" aria-current="false" class="entry-link astro-euowmrmi">Auth</a><a href="/build/rls/" aria-current="false" class="entry-link astro-euowmrmi">RLS Policies</a><a href="/api-reference/rpc/" aria-current="false" class="entry-link astro-euowmrmi">SQL Functions</a><a href="/build/functions/" aria-current="false" class="entry-link astro-euowmrmi">Code Functions</a><a href="/build/storage/" aria-current="false" class="entry-link astro-euowmrmi">Storage</a><a href="/build/querying/" aria-current="false" class="entry-link astro-euowmrmi">Querying</a><a href="/supabase-compatibility/" aria-current="false" class="entry-link astro-euowmrmi">Supabase SDK Compatibility</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Deploy</h4><div class="container-group-link astro-euowmrmi"><a href="/deploy/cloud/" aria-current="false" class="entry-link astro-euowmrmi">instancez Cloud</a><a href="/deploy/docker/" aria-current="false" class="entry-link astro-euowmrmi">Docker</a><a href="/deploy/kubernetes/" aria-current="false" class="entry-link astro-euowmrmi">Kubernetes</a><a href="/deploy/lambda/" aria-current="false" class="entry-link astro-euowmrmi">AWS Lambda</a><a href="/deploy/self-hosted/" aria-current="false" class="entry-link astro-euowmrmi">Self-hosted</a><a href="/deploy/env-vars/" aria-current="false" class="entry-link astro-euowmrmi">Environment Variables</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Examples</h4><div class="container-group-link astro-euowmrmi"><a href="/examples/ecommerce-store/" aria-current="false" class="entry-link astro-euowmrmi">Ecommerce Store</a><a href="/examples/file-gallery/" aria-current="false" class="entry-link astro-euowmrmi">File Gallery</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">CLI Reference</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/cli/" aria-current="page" class="entry-link astro-euowmrmi">CLI</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Configuration</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/config/" aria-current="false" class="entry-link astro-euowmrmi">instancez.yaml</a></div></div> </div> </div>  </aside>   <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <main class="container-main astro-jytpsvwo"><div class="main astro-jytpsvwo">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">     <div class="breadcrumb astro-6jkgswov"><div class="truncate astro-6jkgswov">Docs</div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-6jkgswov"><path d="m9 18 6-6-6-6" class="astro-6jkgswov"></path></svg><div class="text-foreground astro-6jkgswov">CLI Reference</div></div><h1 id="_top" class="astro-6jkgswov">CLI Reference</h1> <p class="astro-6jkgswov">All inz subcommands with flags and examples.</p>     <div class="markdown-wrapper"> <div class="sl-markdown-content">  <div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.sfvf5.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz [command] [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz [command] [flags]"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-init">inz init</h2><a class="sl-anchor-link" href="#inz-init"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz init”</span></a></div>
+<p>Scaffold a new instancez project in the current directory.</p>
+<p>Writes <code dir="auto">instancez.yaml</code>, a <code dir="auto">.development.env.example</code>, and optional boilerplate. Never touches a database. The example code function is scaffolded only when Node.js 22+ is on your PATH; otherwise init warns and omits the <code dir="auto">functions:</code> block.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz init [name] [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz init [name] [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--dir</code></td><td><code dir="auto">.</code></td><td>Output directory.</td></tr><tr><td><code dir="auto">--force</code></td><td><code dir="auto">false</code></td><td>Overwrite existing scaffolding files.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">init</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">my-app</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--dir</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">./my-app</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz init my-app --dir ./my-app"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-dev">inz dev</h2><a class="sl-anchor-link" href="#inz-dev"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz dev”</span></a></div>
+<p>Start a local development server with hot-reload.</p>
+<p>Reads config, connects to Postgres, runs migrations, and watches for file changes. Requires <code dir="auto">INSTANCEZ_DATABASE_URL</code> (a superuser DSN) to provision roles on every startup, or set <code dir="auto">INSTANCEZ_OWNER_DATABASE_URL</code> and <code dir="auto">INSTANCEZ_AUTH_DATABASE_URL</code> directly.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz dev [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz dev [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Config source: file path or <code dir="auto">s3://bucket/key</code>. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td></tr><tr><td><code dir="auto">--dashboard</code></td><td><code dir="auto">readwrite</code></td><td>Dashboard mode: <code dir="auto">disabled</code>, <code dir="auto">readonly</code>, or <code dir="auto">readwrite</code>.</td></tr><tr><td><code dir="auto">--dashboard-write-dotenv</code></td><td><code dir="auto">true</code></td><td>Allow the dashboard to write secrets to <code dir="auto">.development.env</code>.</td></tr><tr><td><code dir="auto">--dotenv-path</code></td><td><code dir="auto">.development.env</code></td><td>Path to the .env file for dashboard secret writing.</td></tr><tr><td><code dir="auto">--embedded-pg</code></td><td><code dir="auto">false</code></td><td>Start an embedded Postgres 16 (data at <code dir="auto">./pgdata/</code>); no external DB needed.</td></tr><tr><td><code dir="auto">--no-watch</code></td><td><code dir="auto">false</code></td><td>Disable hot-reload.</td></tr><tr><td><code dir="auto">--port</code></td><td>(from config or <code dir="auto">8080</code>)</td><td>Override server port.</td></tr><tr><td><code dir="auto">--reset-pg</code></td><td><code dir="auto">false</code></td><td>Wipe <code dir="auto">./pgdata/</code> before starting (requires <code dir="auto">--embedded-pg</code>).</td></tr><tr><td><code dir="auto">--verbose</code></td><td><code dir="auto">false</code></td><td>Enable debug logging.</td></tr><tr><td><code dir="auto">--watch</code></td><td><code dir="auto">true</code></td><td>Watch the config source for changes.</td></tr><tr><td><code dir="auto">--watch-interval</code></td><td><code dir="auto">1m</code></td><td>S3-watch poll interval (minimum 10s).</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#EEFFFF">INSTANCEZ_DATABASE_URL</span><span style="--0:#89DDFF">=</span><span style="--0:#C3E88D">postgres://postgres:postgres@localhost:5432/postgres</span><span style="--0:#EEFFFF"> </span><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">dev</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="INSTANCEZ_DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres inz dev"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-serve">inz serve</h2><a class="sl-anchor-link" href="#inz-serve"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz serve”</span></a></div>
+<p>Start the production server.</p>
+<p>Unlike <code dir="auto">dev</code>, does not hot-reload and defaults to dashboard disabled.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz serve [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz serve [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--allow-destructive</code></td><td><code dir="auto">false</code></td><td><strong>Not currently enforced.</strong> Flag is accepted but DROP operations are always executed.</td></tr><tr><td><code dir="auto">--bundle</code></td><td>—</td><td>Bundle pointer: file path or <code dir="auto">s3://bucket/key[#version]</code>. When set, reads config and functions from the bundle archive instead of <code dir="auto">--config</code>. Env: <code dir="auto">INSTANCEZ_BUNDLE</code>.</td></tr><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Config source: file path or <code dir="auto">s3://bucket/key</code>. Ignored when <code dir="auto">--bundle</code> is set. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td></tr><tr><td><code dir="auto">--dashboard</code></td><td><code dir="auto">disabled</code></td><td>Dashboard mode. Env: <code dir="auto">INSTANCEZ_DASHBOARD</code>.</td></tr><tr><td><code dir="auto">--dashboard-write-dotenv</code></td><td><code dir="auto">false</code></td><td>Allow dashboard to write secrets to a .env file. Env: <code dir="auto">INSTANCEZ_DASHBOARD_WRITE_DOTENV</code>.</td></tr><tr><td><code dir="auto">--dotenv-path</code></td><td>—</td><td>Path to .env file when <code dir="auto">--dashboard-write-dotenv</code> is set. Env: <code dir="auto">INSTANCEZ_DOTENV_PATH</code>.</td></tr><tr><td><code dir="auto">--migrate</code></td><td><code dir="auto">false</code></td><td>Run pending migrations on startup.</td></tr><tr><td><code dir="auto">--port</code></td><td>(from config or <code dir="auto">8080</code>)</td><td>Override server port.</td></tr><tr><td><code dir="auto">--watch</code></td><td><code dir="auto">false</code></td><td>Watch the config source for changes. In bundle mode, polls the bundle ETag (S3) or mtime (local) instead of the config file. Env: <code dir="auto">INSTANCEZ_WATCH</code>.</td></tr><tr><td><code dir="auto">--watch-interval</code></td><td><code dir="auto">1m</code></td><td>S3-watch poll interval. Env: <code dir="auto">INSTANCEZ_WATCH_INTERVAL</code>.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">serve</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--migrate</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--config</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">instancez.yaml</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#979797;--0fs:italic"># Bundle mode: config + functions come from a single archive (no race condition)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">serve</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--bundle</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">s3://my-bucket/bundles/app.tar.gz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--migrate</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--watch</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">serve</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--bundle</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">/path/to/bundle.tar.gz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--migrate</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz serve --migrate --config instancez.yamlinz serve --bundle s3://my-bucket/bundles/app.tar.gz --migrate --watchinz serve --bundle /path/to/bundle.tar.gz --migrate"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-validate">inz validate</h2><a class="sl-anchor-link" href="#inz-validate"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz validate”</span></a></div>
+<p>Validate <code dir="auto">instancez.yaml</code> structure and references without starting the server.</p>
+<p>Checks YAML structure, identifiers, cross-references, and verifies that each declared code function’s <code dir="auto">file:</code> exists on disk.</p>
+<p>With <code dir="auto">--use-dsn</code>, also connects to the database and prints the migration plan (DDL diff) without applying it.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz validate [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz validate [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Config source. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td></tr><tr><td><code dir="auto">--json</code></td><td><code dir="auto">false</code></td><td>Output errors as JSON (for CI).</td></tr><tr><td><code dir="auto">--project</code></td><td>—</td><td>Preview against a cloud project. Bare <code dir="auto">--project</code> uses <code dir="auto">instancez.yaml</code>’s linked project; <code dir="auto">--project &#x3C;id></code> or <code dir="auto">--project=&#x3C;id></code> targets a different one. Never creates a project; link one first with <code dir="auto">inz cloud deploy --new</code>.</td></tr><tr><td><code dir="auto">--use-dsn</code></td><td>—</td><td>After syntax check, plan a migration against this owner-class DSN (plan only — never applied).</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">validate</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">validate</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--use-dsn</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">postgres://owner:pass@localhost/mydb</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">validate</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--project</span><span style="--0:#EEFFFF">                </span><span style="--0:#979797;--0fs:italic"># preview against instancez.yaml's linked project</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">validate</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--project</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">abc123</span><span style="--0:#EEFFFF">         </span><span style="--0:#979797;--0fs:italic"># preview against a specific project id</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz validateinz validate --use-dsn postgres://owner:pass@localhost/mydbinz validate --project                # preview against instancez.yaml&#x27;s linked projectinz validate --project abc123         # preview against a specific project id"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-bundle">inz bundle</h2><a class="sl-anchor-link" href="#inz-bundle"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz bundle”</span></a></div>
+<p>Build a self-contained tar.gz bundle from <code dir="auto">instancez.yaml</code> and <code dir="auto">functions/</code>.</p>
+<p>The bundle is the deployment artifact for projects that use code functions. It contains <code dir="auto">instancez.yaml</code>, <code dir="auto">functions/</code> (with vendored <code dir="auto">node_modules/</code>), and a <code dir="auto">manifest.json</code>. Upload it to S3 then set <code dir="auto">functions_bundle:</code> in <code dir="auto">instancez.yaml</code> to the returned pointer.</p>
+<p>Runs stateless validation (same as <code dir="auto">inz validate</code>) including checking that each declared function’s <code dir="auto">file:</code> exists on disk.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz bundle [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz bundle [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Path to <code dir="auto">instancez.yaml</code>.</td></tr><tr><td><code dir="auto">--output</code></td><td>—</td><td>Destination: local file path or <code dir="auto">s3://bucket/key</code>. If omitted, writes to a temp file and prints the path.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">bundle</span><span style="--0:#EEFFFF">                                       </span><span style="--0:#979797;--0fs:italic"># write temp file, print path</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">bundle</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--output</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">bundle.tar.gz</span><span style="--0:#EEFFFF">                </span><span style="--0:#979797;--0fs:italic"># write to local file</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">bundle</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--output</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">s3://my-bucket/bundle.tar.gz</span><span style="--0:#EEFFFF"> </span><span style="--0:#979797;--0fs:italic"># upload to S3, print pointer</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz bundle                                       # write temp file, print pathinz bundle --output bundle.tar.gz                # write to local fileinz bundle --output s3://my-bucket/bundle.tar.gz # upload to S3, print pointer"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-cloud-deploy">inz cloud deploy</h2><a class="sl-anchor-link" href="#inz-cloud-deploy"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz cloud deploy”</span></a></div>
+<p>Write the current <code dir="auto">instancez.yaml</code> to an instancez Cloud project.</p>
+<p>Shows a diff of what would change and prompts for confirmation before writing. If no project is linked, pass <code dir="auto">--new</code> to create one (after local validation passes) or <code dir="auto">--project &#x3C;id></code> to target an existing one without editing the yaml.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz cloud deploy [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud deploy [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Path to <code dir="auto">instancez.yaml</code>.</td></tr><tr><td><code dir="auto">--new</code></td><td><code dir="auto">false</code></td><td>Create a new instancez Cloud project when none is linked yet (only after local validation passes).</td></tr><tr><td><code dir="auto">--project</code></td><td>—</td><td>Target this cloud project id for this run, instead of <code dir="auto">instancez.yaml</code>’s <code dir="auto">project.cloud.project_id</code>. Does not modify the file.</td></tr><tr><td><code dir="auto">--yes</code>, <code dir="auto">-y</code></td><td><code dir="auto">false</code></td><td>Skip the deploy confirmation prompt.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cloud</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">deploy</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--new</span><span style="--0:#EEFFFF">             </span><span style="--0:#979797;--0fs:italic"># first deploy: create + link + push</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cloud</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">deploy</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--project</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">abc123</span><span style="--0:#EEFFFF">  </span><span style="--0:#979797;--0fs:italic"># target a specific project without editing the yaml</span></div></div><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cloud</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">deploy</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">--yes</span><span style="--0:#EEFFFF">             </span><span style="--0:#979797;--0fs:italic"># skip the confirmation prompt (e.g. in CI)</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud deploy --new             # first deploy: create + link + pushinz cloud deploy --project abc123  # target a specific project without editing the yamlinz cloud deploy --yes             # skip the confirmation prompt (e.g. in CI)"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-doctor">inz doctor</h2><a class="sl-anchor-link" href="#inz-doctor"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz doctor”</span></a></div>
+<p>Run preflight checks for <code dir="auto">inz dev</code>: config validity, the superuser database DSN, and Postgres role layout.</p>
+<p>Exits non-zero if any check fails.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz doctor [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz doctor [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Path to <code dir="auto">instancez.yaml</code>.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">doctor</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz doctor"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-cloud-status">inz cloud status</h2><a class="sl-anchor-link" href="#inz-cloud-status"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz cloud status”</span></a></div>
+<p>Show the linked cloud project’s current state: name, ID, URL, and deploy status.</p>
+<p>Requires a linked project (<code dir="auto">inz cloud deploy --new</code> links one).</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz cloud status [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud status [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Path to <code dir="auto">instancez.yaml</code>.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cloud</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">status</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud status"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-cloud-login">inz cloud login</h2><a class="sl-anchor-link" href="#inz-cloud-login"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz cloud login”</span></a></div>
+<p>Authenticate against instancez Cloud via device-code flow.</p>
+<p>Opens a browser to confirm a one-time code, then stores a Personal Access Token at <code dir="auto">~/.instancez/credentials</code>.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz cloud login [flags]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud login [flags]"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">--force</code></td><td><code dir="auto">false</code></td><td>Re-authenticate even if already logged in.</td></tr></tbody></table>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cloud</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">login</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud login"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-cloud-logout">inz cloud logout</h2><a class="sl-anchor-link" href="#inz-cloud-logout"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz cloud logout”</span></a></div>
+<p>Remove the PAT stored at <code dir="auto">~/.instancez/credentials</code>. The token remains valid server-side until revoked from the dashboard.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz cloud logout</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud logout"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-cloud-whoami">inz cloud whoami</h2><a class="sl-anchor-link" href="#inz-cloud-whoami"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz cloud whoami”</span></a></div>
+<p>Print the currently logged-in instancez Cloud user.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz cloud whoami</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz cloud whoami"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-version">inz version</h2><a class="sl-anchor-link" href="#inz-version"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “inz version”</span></a></div>
+<p>Print the binary version.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz version</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz version"><div></div></button></div></figure></div>  </div> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-zx2mzflk"> <a class="prev astro-zx2mzflk" href="/examples/file-gallery/" rel="prev"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m15 18-6-6 6-6" class="astro-zx2mzflk"></path> </svg> File Gallery </a> <a class="next astro-zx2mzflk" href="/api-reference/config/" rel="next"> instancez.yaml <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m9 18 6-6-6-6" class="astro-zx2mzflk"></path> </svg> </a> </div>   </footer>    </main> </div><div class="toc astro-jytpsvwo"><div class="astro-q2ryvv6g"><starlight-toc data-min-h="2" data-max-h="3" class="astro-enyabzfs"><nav aria-labelledby="starlight__on-this-page" class="astro-enyabzfs"><p id="starlight__on-this-page" class="astro-enyabzfs">On this page</p><ul class="astro-37x2kocx" style="--depth: 0;"> <li class="astro-37x2kocx" style="--depth: 0;"> <a href="#_top" class="astro-37x2kocx" style="--depth: 0;">Overview</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-init" class="astro-37x2kocx" style="--depth: 0;">inz init</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-dev" class="astro-37x2kocx" style="--depth: 0;">inz dev</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-serve" class="astro-37x2kocx" style="--depth: 0;">inz serve</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-validate" class="astro-37x2kocx" style="--depth: 0;">inz validate</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-bundle" class="astro-37x2kocx" style="--depth: 0;">inz bundle</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-cloud-deploy" class="astro-37x2kocx" style="--depth: 0;">inz cloud deploy</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-doctor" class="astro-37x2kocx" style="--depth: 0;">inz doctor</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-cloud-status" class="astro-37x2kocx" style="--depth: 0;">inz cloud status</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-cloud-login" class="astro-37x2kocx" style="--depth: 0;">inz cloud login</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-cloud-logout" class="astro-37x2kocx" style="--depth: 0;">inz cloud logout</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-cloud-whoami" class="astro-37x2kocx" style="--depth: 0;">inz cloud whoami</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-version" class="astro-37x2kocx" style="--depth: 0;">inz version</a>  </li> </ul> </nav></starlight-toc></div></div></main>  </div> </div> </main> <footer class="footer astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container footer-container astro-qgm4hv6f"> <div class="footer-text astro-qgm4hv6f">instancez — a lightweight, self-hosted backend. <a href="https://github.com/instancez/instancez">GitHub</a></div> </div> </div> </footer> </div> <div popover="auto" id="drawer" class="astro-w4txsaed"> <button class="sheet-overlay astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"></button> <div class="content astro-w4txsaed"> <div class="header astro-w4txsaed"> <button class="drag-icon astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"><span class="astro-w4txsaed"></span></button> </div> <div class="body astro-w4txsaed"> <div class="links-nav astro-w4txsaed"> <a href="/" class="astro-w4txsaed">Home</a>  </div> <div class="links-docs astro-w4txsaed"> <div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Build</h4> <a href="/build/schema/" class="astro-w4txsaed"> Tables / Schema </a><a href="/build/auth/" class="astro-w4txsaed"> Auth </a><a href="/build/rls/" class="astro-w4txsaed"> RLS Policies </a><a href="/api-reference/rpc/" class="astro-w4txsaed"> SQL Functions </a><a href="/build/functions/" class="astro-w4txsaed"> Code Functions </a><a href="/build/storage/" class="astro-w4txsaed"> Storage </a><a href="/build/querying/" class="astro-w4txsaed"> Querying </a><a href="/supabase-compatibility/" class="astro-w4txsaed"> Supabase SDK Compatibility </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Deploy</h4> <a href="/deploy/cloud/" class="astro-w4txsaed"> instancez Cloud </a><a href="/deploy/docker/" class="astro-w4txsaed"> Docker </a><a href="/deploy/kubernetes/" class="astro-w4txsaed"> Kubernetes </a><a href="/deploy/lambda/" class="astro-w4txsaed"> AWS Lambda </a><a href="/deploy/self-hosted/" class="astro-w4txsaed"> Self-hosted </a><a href="/deploy/env-vars/" class="astro-w4txsaed"> Environment Variables </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Examples</h4> <a href="/examples/ecommerce-store/" class="astro-w4txsaed"> Ecommerce Store </a><a href="/examples/file-gallery/" class="astro-w4txsaed"> File Gallery </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">CLI Reference</h4> <a href="/api-reference/cli/" class="astro-w4txsaed"> CLI </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Configuration</h4> <a href="/api-reference/config/" class="astro-w4txsaed"> instancez.yaml </a> </div> </div> </div> </div> </div>  </div>   </body></html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Environment Variables | instancez</title><link rel="canonical" href="https://instancez.github.io/deploy/env-vars/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt"/><style>.site-title .title-text::after{content:"0.0.1";margin-left:.55rem;font-family:'Geist Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.02em;color:#6a6a6a;border:1px solid #1c1c1c;border-radius:99px;padding:2px 8px;vertical-align:middle}</style><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.2"/><meta name="generator" content="Starlight v0.34.8"/><meta property="og:title" content="Environment Variables"/><meta property="og:type" content="article"/><meta property="og:url" content="https://instancez.github.io/deploy/env-vars/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Complete environment variable reference for instancez."/><meta property="og:site_name" content="instancez"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Complete environment variable reference for instancez."/><script>
+	document.documentElement.dataset.theme = 'dark';
+</script><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/index.BdrxSEzD.css">
+<link rel="stylesheet" href="/_astro/index.Ch9VW2bI.css">
+<style>@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){margin-bottom:-2px}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{display:flex;align-items:center;gap:.5rem;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected=true]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="layout astro-qgm4hv6f"> <div class="layout__grid astro-qgm4hv6f"> <header class="layout__header astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container container__header astro-qgm4hv6f"> <div class="site-title-wrapper astro-al2ajamp"> <a href="/" class="site-title astro-pl5n7ndn">  <img class="logo-size astro-pl5n7ndn" alt="instancez" src="/_astro/logo.QAEItoHz.svg" width="345" height="383">  <span class="title-text astro-pl5n7ndn"> instancez </span> </a>  <nav class="nav-bar astro-cr6yirev">  </nav>  </div> <button class="show-modal astro-355t7gtl" popovertargetaction="toggle" popovertarget="drawer"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="astro-355t7gtl"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" class="astro-355t7gtl"></path> </svg> <span class="sr-only astro-355t7gtl">Toggle Menu</span> </button>  <div class="header-right astro-al2ajamp"> <site-search class="astro-al2ajamp astro-pmbanboq" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-pmbanboq"> <span aria-hidden="true" class="astro-pmbanboq">Search</span> <kbd class="sl-hidden md:sl-flex astro-pmbanboq" style="display: none;"> <kbd class="astro-pmbanboq">Ctrl</kbd><kbd class="astro-pmbanboq">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-pmbanboq"> <div class="dialog-frame sl-flex astro-pmbanboq">  <button data-close-modal class="sl-flex md:sl-hidden astro-pmbanboq"> Cancel </button> <div class="search-container astro-pmbanboq"> <div id="starlight__search" class="astro-pmbanboq"></div> </div> </div> </dialog> </site-search>  <script>
+  ;(() => {
+    const openBtn = document.querySelector('button[data-open-modal]')
+    const shortcut = openBtn?.querySelector('kbd')
+    if (!openBtn || !(shortcut instanceof HTMLElement)) return
+    const platformKey = shortcut.querySelector('kbd')
+    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+      platformKey.textContent = '⌘'
+      openBtn.setAttribute('aria-keyshortcuts', 'Meta+K')
+    }
+    shortcut.style.display = ''
+  })()
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Bij-bOB5.js"></script>   <nav class="header-nav astro-al2ajamp"> <div class="astro-al2ajamp"> <a href="https://github.com/instancez/instancez" rel="me" class="sl-flex button astro-sxsus6vf" data-variant="ghost"><span class="sr-only astro-sxsus6vf">GitHub</span><svg aria-hidden="true" class="astro-sxsus6vf astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <div class="astro-al2ajamp"> <starlight-theme-black-select class="astro-qxpzpg5m"> <button aria-label="Select theme" aria-live="polite" class="sl-flex button astro-qxpzpg5m" title="Select theme" data-variant="ghost"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun astro-qxpzpg5m"> <circle cx="12" cy="12" r="4" class="astro-qxpzpg5m"></circle> <path d="M12 2v2" class="astro-qxpzpg5m"></path> <path d="M12 20v2" class="astro-qxpzpg5m"></path> <path d="m4.93 4.93 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m17.66 17.66 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="M2 12h2" class="astro-qxpzpg5m"></path> <path d="M20 12h2" class="astro-qxpzpg5m"></path> <path d="m6.34 17.66-1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m19.07 4.93-1.41 1.41" class="astro-qxpzpg5m"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon astro-qxpzpg5m"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" class="astro-qxpzpg5m"></path> </svg> <span class="sr-only astro-qxpzpg5m">Toggle theme</span> </button> </starlight-theme-black-select>   <script>
+  StarlightThemeProvider.updatePickers()
+</script> <script type="module">const n="starlight-theme";function c(e){return e==="auto"||e==="dark"||e==="light"?e:"auto"}function l(){return c(typeof localStorage<"u"&&localStorage.getItem(n))}function i(e){typeof localStorage<"u"&&localStorage.setItem(n,e==="light"||e==="dark"?e:"")}function s(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?s():e,i(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{l()==="auto"&&t("auto")});customElements.define("starlight-theme-black-select",class extends HTMLElement{constructor(){super(),t(l());const a=this.querySelector("button");a?.addEventListener("click",()=>{const o=c(document.documentElement.dataset.theme),r=o==="dark"?"light":o==="light"?"dark":"auto";t(r),a?.setAttribute("aria-label",`${r} theme`)})}});</script> </div> <div class="astro-al2ajamp"> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </nav> </div>  </div> </div> </header> <main class="main astro-qgm4hv6f">  <div class="container-wrapper astro-qgm4hv6f"> <div class="container container-wrapper-main astro-qgm4hv6f"> <aside class="aside astro-qgm4hv6f"> <div class="sidebar astro-ogph4agi"> <div class="container-sidebar astro-ogph4agi"> <a href="/quick-start/" aria-current="false" class="entry-link astro-euowmrmi">Quick Start</a><a href="/install/" aria-current="false" class="entry-link astro-euowmrmi">Installation</a><a href="/coding-agents/" aria-current="false" class="entry-link astro-euowmrmi">Coding Agents</a><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Build</h4><div class="container-group-link astro-euowmrmi"><a href="/build/schema/" aria-current="false" class="entry-link astro-euowmrmi">Tables / Schema</a><a href="/build/auth/" aria-current="false" class="entry-link astro-euowmrmi">Auth</a><a href="/build/rls/" aria-current="false" class="entry-link astro-euowmrmi">RLS Policies</a><a href="/api-reference/rpc/" aria-current="false" class="entry-link astro-euowmrmi">SQL Functions</a><a href="/build/functions/" aria-current="false" class="entry-link astro-euowmrmi">Code Functions</a><a href="/build/storage/" aria-current="false" class="entry-link astro-euowmrmi">Storage</a><a href="/build/querying/" aria-current="false" class="entry-link astro-euowmrmi">Querying</a><a href="/supabase-compatibility/" aria-current="false" class="entry-link astro-euowmrmi">Supabase SDK Compatibility</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Deploy</h4><div class="container-group-link astro-euowmrmi"><a href="/deploy/cloud/" aria-current="false" class="entry-link astro-euowmrmi">instancez Cloud</a><a href="/deploy/docker/" aria-current="false" class="entry-link astro-euowmrmi">Docker</a><a href="/deploy/kubernetes/" aria-current="false" class="entry-link astro-euowmrmi">Kubernetes</a><a href="/deploy/lambda/" aria-current="false" class="entry-link astro-euowmrmi">AWS Lambda</a><a href="/deploy/self-hosted/" aria-current="false" class="entry-link astro-euowmrmi">Self-hosted</a><a href="/deploy/env-vars/" aria-current="page" class="entry-link astro-euowmrmi">Environment Variables</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Examples</h4><div class="container-group-link astro-euowmrmi"><a href="/examples/ecommerce-store/" aria-current="false" class="entry-link astro-euowmrmi">Ecommerce Store</a><a href="/examples/file-gallery/" aria-current="false" class="entry-link astro-euowmrmi">File Gallery</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">CLI Reference</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/cli/" aria-current="false" class="entry-link astro-euowmrmi">CLI</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Configuration</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/config/" aria-current="false" class="entry-link astro-euowmrmi">instancez.yaml</a></div></div> </div> </div>  </aside>   <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <main class="container-main astro-jytpsvwo"><div class="main astro-jytpsvwo">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">     <div class="breadcrumb astro-6jkgswov"><div class="truncate astro-6jkgswov">Docs</div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-6jkgswov"><path d="m9 18 6-6-6-6" class="astro-6jkgswov"></path></svg><div class="text-foreground astro-6jkgswov">Environment Variables</div></div><h1 id="_top" class="astro-6jkgswov">Environment Variables</h1> <p class="astro-6jkgswov">Complete environment variable reference for instancez.</p>     <div class="markdown-wrapper"> <div class="sl-markdown-content">  <div class="sl-heading-wrapper level-h2"><h2 id="required">Required</h2><a class="sl-anchor-link" href="#required"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Required”</span></a></div>
+<p>Both API keys plus one database credential path — either the single superuser DSN or the scoped owner/auth pair — must be set before <code dir="auto">inz serve</code> will start. <code dir="auto">inz dev</code> generates the two keys for you on first run.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_DATABASE_URL</code></td><td>Superuser Postgres DSN (e.g. <code dir="auto">postgres://postgres:password@localhost:5432/mydb</code>). The CLI provisions all required roles (<code dir="auto">instancez_owner</code>, <code dir="auto">authenticator</code>, <code dir="auto">anon</code>, <code dir="auto">authenticated</code>, <code dir="auto">service_role</code>) automatically on startup. This is what <code dir="auto">inz init</code> scaffolds for local dev.</td></tr><tr><td><code dir="auto">INSTANCEZ_OWNER_DATABASE_URL</code> + <code dir="auto">INSTANCEZ_AUTH_DATABASE_URL</code></td><td>Alternative to <code dir="auto">INSTANCEZ_DATABASE_URL</code>: a pre-provisioned <code dir="auto">instancez_owner</code> DSN and a pre-provisioned <code dir="auto">authenticator</code> DSN, used instead of a superuser login. This is the path <code dir="auto">inz init</code> writes into <code dir="auto">.production.env</code>, and the one typically used in production where a superuser DSN isn’t available.</td></tr><tr><td><code dir="auto">INSTANCEZ_PUBLISHABLE_KEY</code></td><td>Publishable API key (value like <code dir="auto">inz_publishable_…</code>). Client-safe, maps to the <code dir="auto">anon</code> role, and is what client apps pass. Sent in the <code dir="auto">apikey</code> header. Also settable with <code dir="auto">--publishable-key</code>.</td></tr><tr><td><code dir="auto">INSTANCEZ_SECRET_KEY</code></td><td>Secret API key (value like <code dir="auto">inz_secret_…</code>). Server-side only, maps to <code dir="auto">service_role</code>, and unlocks the admin API and dashboard login. Sent in the <code dir="auto">apikey</code> header. Also settable with <code dir="auto">--secret-key</code>. Leave unset to disable the admin routes (they return 404).</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="config-and-watch">Config and watch</h2><a class="sl-anchor-link" href="#config-and-watch"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Config and watch”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Flag equivalent</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_CONFIG</code></td><td><code dir="auto">--config</code></td><td><code dir="auto">instancez.yaml</code></td><td>Config source. Accepts a local file path or an <code dir="auto">s3://bucket/key</code> URI.</td></tr><tr><td><code dir="auto">INSTANCEZ_BUNDLE</code></td><td><code dir="auto">--bundle</code></td><td>—</td><td>Bundle source (config + function source in one archive), built with <code dir="auto">inz bundle</code>. Accepts a local path or <code dir="auto">s3://bucket/key</code>. Takes the place of <code dir="auto">INSTANCEZ_CONFIG</code> when set.</td></tr><tr><td><code dir="auto">INSTANCEZ_WATCH</code></td><td><code dir="auto">--watch</code></td><td><code dir="auto">false</code></td><td>Re-apply config when the source changes. For S3 sources, polls on the watch interval.</td></tr><tr><td><code dir="auto">INSTANCEZ_WATCH_INTERVAL</code></td><td><code dir="auto">--watch-interval</code></td><td><code dir="auto">60s</code></td><td>Poll interval for S3 config sources. Minimum 10 s.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="server">Server</h2><a class="sl-anchor-link" href="#server"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Server”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Flag equivalent</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_PORT</code></td><td><code dir="auto">--port</code></td><td><code dir="auto">8080</code> (from config)</td><td>HTTP listen port. Overrides the value in <code dir="auto">instancez.yaml</code>.</td></tr><tr><td><code dir="auto">INSTANCEZ_BASE_URL</code></td><td>—</td><td><code dir="auto">http://localhost:&#x3C;port></code></td><td>Base URL used to build links in auth emails (verification, magic link, password recovery). Set this to your public URL in production.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="database-role-names">Database role names</h2><a class="sl-anchor-link" href="#database-role-names"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Database role names”</span></a></div>
+<p>By default instancez maps the fixed JWT wire values (<code dir="auto">anon</code>, <code dir="auto">authenticated</code>, <code dir="auto">service_role</code>) to Postgres roles of the same names. These variables let you use different Postgres role names while keeping the JWT wire protocol unchanged.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Default Postgres role</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_DB_AUTHENTICATOR_ROLE</code></td><td><code dir="auto">authenticator</code></td><td>Login role for the request pool</td></tr><tr><td><code dir="auto">INSTANCEZ_DB_ANON_ROLE</code></td><td><code dir="auto">anon</code></td><td>Role assumed for unauthenticated requests</td></tr><tr><td><code dir="auto">INSTANCEZ_DB_AUTHENTICATED_ROLE</code></td><td><code dir="auto">authenticated</code></td><td>Role assumed for requests with a valid user JWT</td></tr><tr><td><code dir="auto">INSTANCEZ_DB_SERVICE_ROLE</code></td><td><code dir="auto">service_role</code></td><td>Role assumed for requests authenticated with the secret key; has <code dir="auto">BYPASSRLS</code></td></tr><tr><td><code dir="auto">INSTANCEZ_DB_SEED_ROLE</code></td><td>— (empty)</td><td>Optional Postgres role to run seed statements as. Unlike the roles above, there’s no default — leave unset unless you have a specific seeding role provisioned.</td></tr></tbody></table>
+<p>The JWT <code dir="auto">role</code> claim values (<code dir="auto">anon</code>, <code dir="auto">authenticated</code>, <code dir="auto">service_role</code>) are part of the Supabase wire protocol and are never renamed, regardless of the Postgres role names you configure here.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="dashboard">Dashboard</h2><a class="sl-anchor-link" href="#dashboard"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Dashboard”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Flag equivalent</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_DASHBOARD</code></td><td><code dir="auto">--dashboard</code></td><td><code dir="auto">disabled</code></td><td>Dashboard mode: <code dir="auto">disabled</code>, <code dir="auto">readonly</code>, or <code dir="auto">readwrite</code>. Enable <code dir="auto">readwrite</code> only in trusted environments.</td></tr><tr><td><code dir="auto">INSTANCEZ_DASHBOARD_WRITE_DOTENV</code></td><td><code dir="auto">--dashboard-write-dotenv</code></td><td><code dir="auto">false</code></td><td>Allow the dashboard to write secrets to a <code dir="auto">.env</code> file. Requires <code dir="auto">INSTANCEZ_DOTENV_PATH</code>.</td></tr><tr><td><code dir="auto">INSTANCEZ_DOTENV_PATH</code></td><td><code dir="auto">--dotenv-path</code></td><td>—</td><td>Path to the <code dir="auto">.env</code> file the dashboard may write when <code dir="auto">INSTANCEZ_DASHBOARD_WRITE_DOTENV</code> is set.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="storage-providers">Storage providers</h2><a class="sl-anchor-link" href="#storage-providers"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Storage providers”</span></a></div>
+<p>Storage provider credentials are set in <code dir="auto">instancez.yaml</code> under <code dir="auto">providers.storage</code>. Use <code dir="auto">${VAR}</code> interpolation to reference environment variables without hardcoding secrets:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.sfvf5.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">providers</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">s3</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">bucket</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_BUCKET}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">region</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_REGION}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">access_key_id</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_ACCESS_KEY_ID}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">secret_access_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_SECRET_ACCESS_KEY}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">endpoint</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_ENDPOINT}</span><span style="--0:#EEFFFF">  </span><span style="--0:#979797;--0fs:italic"># optional; for S3-compatible stores</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="providers:  storage:    type: s3    bucket: ${INSTANCEZ_S3_BUCKET}    region: ${INSTANCEZ_S3_REGION}    access_key_id: ${INSTANCEZ_S3_ACCESS_KEY_ID}    secret_access_key: ${INSTANCEZ_S3_SECRET_ACCESS_KEY}    endpoint: ${INSTANCEZ_S3_ENDPOINT}  # optional; for S3-compatible stores"><div></div></button></div></figure></div>
+<p>instancez interpolates <code dir="auto">${VAR}</code> references in <code dir="auto">instancez.yaml</code> at load time. Any environment variable name works; the names above are conventions.</p>
+<p>One variable is read directly from the process environment (no YAML reference needed):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_STORAGE_KEY_PREFIX</code></td><td>Optional prefix prepended to all object keys in the storage bucket. Useful for sharing a bucket across environments.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="email-providers">Email providers</h2><a class="sl-anchor-link" href="#email-providers"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Email providers”</span></a></div>
+<p>Email provider credentials follow the same YAML interpolation pattern:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">providers</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">email</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">resend</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">api_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_RESEND_API_KEY}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="providers:  email:    type: resend    api_key: ${INSTANCEZ_RESEND_API_KEY}"><div></div></button></div></figure></div>
+<p>Set <code dir="auto">INSTANCEZ_RESEND_API_KEY</code> (or any name you choose) in the environment and reference it in <code dir="auto">instancez.yaml</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="config-s3-credentials">Config S3 credentials</h2><a class="sl-anchor-link" href="#config-s3-credentials"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Config S3 credentials”</span></a></div>
+<p>When <code dir="auto">INSTANCEZ_CONFIG</code> points to an S3 URI, a separate set of variables controls the S3 client used to fetch the config file. These are distinct from the storage-provider credentials above.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">S3_REGION</code></td><td>AWS region of the config bucket</td></tr><tr><td><code dir="auto">S3_ENDPOINT</code></td><td>Custom endpoint for S3-compatible stores</td></tr><tr><td><code dir="auto">S3_ACCESS_KEY_ID</code></td><td>Access key ID</td></tr><tr><td><code dir="auto">S3_SECRET_ACCESS_KEY</code></td><td>Secret access key</td></tr></tbody></table>
+<p>If these are unset, the S3 client falls back to the standard credential chain (IAM role, <code dir="auto">~/.aws/credentials</code>, etc.).</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="code-function-secrets">Code function secrets</h2><a class="sl-anchor-link" href="#code-function-secrets"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Code function secrets”</span></a></div>
+<p>Environment variables passed to code functions use the <code dir="auto">INSTANCEZ_ENV_</code> prefix. Reference them in <code dir="auto">instancez.yaml</code> under a function’s <code dir="auto">env:</code> block:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">functions</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">my-function</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">runtime</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">node</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">file</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">functions/my-function.js</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">env</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">STRIPE_SECRET_KEY</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_ENV_STRIPE_SECRET_KEY}</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">DATABASE_URL</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_ENV_DATABASE_URL}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="functions:  my-function:    runtime: node    file: functions/my-function.js    env:      STRIPE_SECRET_KEY: ${INSTANCEZ_ENV_STRIPE_SECRET_KEY}      DATABASE_URL: ${INSTANCEZ_ENV_DATABASE_URL}"><div></div></button></div></figure></div>
+<p>Only variables matching the pattern <code dir="auto">INSTANCEZ_ENV_*</code> are forwarded to function workers. They are never written to the worker process environment directly; they are passed via a secure in-memory channel. Set them in the host environment (or <code dir="auto">.production.env</code>) and reference them with <code dir="auto">${INSTANCEZ_ENV_YOUR_KEY}</code> in the YAML.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="migrations">Migrations</h2><a class="sl-anchor-link" href="#migrations"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Migrations”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Flag equivalent</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_MIGRATE</code></td><td><code dir="auto">--migrate</code></td><td><code dir="auto">false</code></td><td>Run pending schema migrations on startup</td></tr><tr><td><code dir="auto">INSTANCEZ_ALLOW_DESTRUCTIVE</code></td><td><code dir="auto">--allow-destructive</code></td><td><code dir="auto">false</code></td><td>Reserved for gating <code dir="auto">DROP TABLE</code> / <code dir="auto">DROP COLUMN</code> in migrations. <strong>Not currently enforced</strong> — drops apply regardless of this setting.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="cloud">Cloud</h2><a class="sl-anchor-link" href="#cloud"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Cloud”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Variable</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">INSTANCEZ_CLOUD_API</code></td><td>Overrides the cloud API base URL used by <code dir="auto">inz cloud</code> commands. Defaults to <code dir="auto">https://my.instancez.ai/api</code>.</td></tr><tr><td><code dir="auto">INSTANCEZ_CLOUD_PAT</code></td><td>Personal access token for <code dir="auto">inz cloud</code> commands, read directly from the environment. Lets CI authenticate without a <code dir="auto">~/.instancez/credentials</code> file — see <a href="/instancez/deploy/cloud/">Cloud deploys</a>.</td></tr></tbody></table>  </div> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-zx2mzflk"> <a class="prev astro-zx2mzflk" href="/deploy/self-hosted/" rel="prev"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m15 18-6-6 6-6" class="astro-zx2mzflk"></path> </svg> Self-hosted </a> <a class="next astro-zx2mzflk" href="/examples/ecommerce-store/" rel="next"> Ecommerce Store <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m9 18 6-6-6-6" class="astro-zx2mzflk"></path> </svg> </a> </div>   </footer>    </main> </div><div class="toc astro-jytpsvwo"><div class="astro-q2ryvv6g"><starlight-toc data-min-h="2" data-max-h="3" class="astro-enyabzfs"><nav aria-labelledby="starlight__on-this-page" class="astro-enyabzfs"><p id="starlight__on-this-page" class="astro-enyabzfs">On this page</p><ul class="astro-37x2kocx" style="--depth: 0;"> <li class="astro-37x2kocx" style="--depth: 0;"> <a href="#_top" class="astro-37x2kocx" style="--depth: 0;">Overview</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#required" class="astro-37x2kocx" style="--depth: 0;">Required</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#config-and-watch" class="astro-37x2kocx" style="--depth: 0;">Config and watch</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#server" class="astro-37x2kocx" style="--depth: 0;">Server</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#database-role-names" class="astro-37x2kocx" style="--depth: 0;">Database role names</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#dashboard" class="astro-37x2kocx" style="--depth: 0;">Dashboard</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#storage-providers" class="astro-37x2kocx" style="--depth: 0;">Storage providers</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#email-providers" class="astro-37x2kocx" style="--depth: 0;">Email providers</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#config-s3-credentials" class="astro-37x2kocx" style="--depth: 0;">Config S3 credentials</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#code-function-secrets" class="astro-37x2kocx" style="--depth: 0;">Code function secrets</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#migrations" class="astro-37x2kocx" style="--depth: 0;">Migrations</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#cloud" class="astro-37x2kocx" style="--depth: 0;">Cloud</a>  </li> </ul> </nav></starlight-toc></div></div></main>  </div> </div> </main> <footer class="footer astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container footer-container astro-qgm4hv6f"> <div class="footer-text astro-qgm4hv6f">instancez — a lightweight, self-hosted backend. <a href="https://github.com/instancez/instancez">GitHub</a></div> </div> </div> </footer> </div> <div popover="auto" id="drawer" class="astro-w4txsaed"> <button class="sheet-overlay astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"></button> <div class="content astro-w4txsaed"> <div class="header astro-w4txsaed"> <button class="drag-icon astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"><span class="astro-w4txsaed"></span></button> </div> <div class="body astro-w4txsaed"> <div class="links-nav astro-w4txsaed"> <a href="/" class="astro-w4txsaed">Home</a>  </div> <div class="links-docs astro-w4txsaed"> <div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Build</h4> <a href="/build/schema/" class="astro-w4txsaed"> Tables / Schema </a><a href="/build/auth/" class="astro-w4txsaed"> Auth </a><a href="/build/rls/" class="astro-w4txsaed"> RLS Policies </a><a href="/api-reference/rpc/" class="astro-w4txsaed"> SQL Functions </a><a href="/build/functions/" class="astro-w4txsaed"> Code Functions </a><a href="/build/storage/" class="astro-w4txsaed"> Storage </a><a href="/build/querying/" class="astro-w4txsaed"> Querying </a><a href="/supabase-compatibility/" class="astro-w4txsaed"> Supabase SDK Compatibility </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Deploy</h4> <a href="/deploy/cloud/" class="astro-w4txsaed"> instancez Cloud </a><a href="/deploy/docker/" class="astro-w4txsaed"> Docker </a><a href="/deploy/kubernetes/" class="astro-w4txsaed"> Kubernetes </a><a href="/deploy/lambda/" class="astro-w4txsaed"> AWS Lambda </a><a href="/deploy/self-hosted/" class="astro-w4txsaed"> Self-hosted </a><a href="/deploy/env-vars/" class="astro-w4txsaed"> Environment Variables </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Examples</h4> <a href="/examples/ecommerce-store/" class="astro-w4txsaed"> Ecommerce Store </a><a href="/examples/file-gallery/" class="astro-w4txsaed"> File Gallery </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">CLI Reference</h4> <a href="/api-reference/cli/" class="astro-w4txsaed"> CLI </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Configuration</h4> <a href="/api-reference/config/" class="astro-w4txsaed"> instancez.yaml </a> </div> </div> </div> </div> </div>  </div>   </body></html>

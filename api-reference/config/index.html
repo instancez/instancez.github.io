@@ -1,0 +1,763 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Configuration | instancez</title><link rel="canonical" href="https://instancez.github.io/api-reference/config/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt"/><style>.site-title .title-text::after{content:"0.0.1";margin-left:.55rem;font-family:'Geist Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.02em;color:#6a6a6a;border:1px solid #1c1c1c;border-radius:99px;padding:2px 8px;vertical-align:middle}</style><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.2"/><meta name="generator" content="Starlight v0.34.8"/><meta property="og:title" content="Configuration"/><meta property="og:type" content="article"/><meta property="og:url" content="https://instancez.github.io/api-reference/config/"/><meta property="og:locale" content="en"/><meta property="og:description" content="Complete instancez.yaml schema reference. Every key, type, default, and example."/><meta property="og:site_name" content="instancez"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Complete instancez.yaml schema reference. Every key, type, default, and example."/><script>
+	document.documentElement.dataset.theme = 'dark';
+</script><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/index.BdrxSEzD.css">
+<link rel="stylesheet" href="/_astro/index.Ch9VW2bI.css">
+<style>@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){margin-bottom:-2px}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{display:flex;align-items:center;gap:.5rem;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected=true]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="layout astro-qgm4hv6f"> <div class="layout__grid astro-qgm4hv6f"> <header class="layout__header astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container container__header astro-qgm4hv6f"> <div class="site-title-wrapper astro-al2ajamp"> <a href="/" class="site-title astro-pl5n7ndn">  <img class="logo-size astro-pl5n7ndn" alt="instancez" src="/_astro/logo.QAEItoHz.svg" width="345" height="383">  <span class="title-text astro-pl5n7ndn"> instancez </span> </a>  <nav class="nav-bar astro-cr6yirev">  </nav>  </div> <button class="show-modal astro-355t7gtl" popovertargetaction="toggle" popovertarget="drawer"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="astro-355t7gtl"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" class="astro-355t7gtl"></path> </svg> <span class="sr-only astro-355t7gtl">Toggle Menu</span> </button>  <div class="header-right astro-al2ajamp"> <site-search class="astro-al2ajamp astro-pmbanboq" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-pmbanboq"> <span aria-hidden="true" class="astro-pmbanboq">Search</span> <kbd class="sl-hidden md:sl-flex astro-pmbanboq" style="display: none;"> <kbd class="astro-pmbanboq">Ctrl</kbd><kbd class="astro-pmbanboq">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-pmbanboq"> <div class="dialog-frame sl-flex astro-pmbanboq">  <button data-close-modal class="sl-flex md:sl-hidden astro-pmbanboq"> Cancel </button> <div class="search-container astro-pmbanboq"> <div id="starlight__search" class="astro-pmbanboq"></div> </div> </div> </dialog> </site-search>  <script>
+  ;(() => {
+    const openBtn = document.querySelector('button[data-open-modal]')
+    const shortcut = openBtn?.querySelector('kbd')
+    if (!openBtn || !(shortcut instanceof HTMLElement)) return
+    const platformKey = shortcut.querySelector('kbd')
+    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+      platformKey.textContent = '⌘'
+      openBtn.setAttribute('aria-keyshortcuts', 'Meta+K')
+    }
+    shortcut.style.display = ''
+  })()
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Bij-bOB5.js"></script>   <nav class="header-nav astro-al2ajamp"> <div class="astro-al2ajamp"> <a href="https://github.com/instancez/instancez" rel="me" class="sl-flex button astro-sxsus6vf" data-variant="ghost"><span class="sr-only astro-sxsus6vf">GitHub</span><svg aria-hidden="true" class="astro-sxsus6vf astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <div class="astro-al2ajamp"> <starlight-theme-black-select class="astro-qxpzpg5m"> <button aria-label="Select theme" aria-live="polite" class="sl-flex button astro-qxpzpg5m" title="Select theme" data-variant="ghost"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun astro-qxpzpg5m"> <circle cx="12" cy="12" r="4" class="astro-qxpzpg5m"></circle> <path d="M12 2v2" class="astro-qxpzpg5m"></path> <path d="M12 20v2" class="astro-qxpzpg5m"></path> <path d="m4.93 4.93 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m17.66 17.66 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="M2 12h2" class="astro-qxpzpg5m"></path> <path d="M20 12h2" class="astro-qxpzpg5m"></path> <path d="m6.34 17.66-1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m19.07 4.93-1.41 1.41" class="astro-qxpzpg5m"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon astro-qxpzpg5m"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" class="astro-qxpzpg5m"></path> </svg> <span class="sr-only astro-qxpzpg5m">Toggle theme</span> </button> </starlight-theme-black-select>   <script>
+  StarlightThemeProvider.updatePickers()
+</script> <script type="module">const n="starlight-theme";function c(e){return e==="auto"||e==="dark"||e==="light"?e:"auto"}function l(){return c(typeof localStorage<"u"&&localStorage.getItem(n))}function i(e){typeof localStorage<"u"&&localStorage.setItem(n,e==="light"||e==="dark"?e:"")}function s(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?s():e,i(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{l()==="auto"&&t("auto")});customElements.define("starlight-theme-black-select",class extends HTMLElement{constructor(){super(),t(l());const a=this.querySelector("button");a?.addEventListener("click",()=>{const o=c(document.documentElement.dataset.theme),r=o==="dark"?"light":o==="light"?"dark":"auto";t(r),a?.setAttribute("aria-label",`${r} theme`)})}});</script> </div> <div class="astro-al2ajamp"> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </nav> </div>  </div> </div> </header> <main class="main astro-qgm4hv6f">  <div class="container-wrapper astro-qgm4hv6f"> <div class="container container-wrapper-main astro-qgm4hv6f"> <aside class="aside astro-qgm4hv6f"> <div class="sidebar astro-ogph4agi"> <div class="container-sidebar astro-ogph4agi"> <a href="/quick-start/" aria-current="false" class="entry-link astro-euowmrmi">Quick Start</a><a href="/install/" aria-current="false" class="entry-link astro-euowmrmi">Installation</a><a href="/coding-agents/" aria-current="false" class="entry-link astro-euowmrmi">Coding Agents</a><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Build</h4><div class="container-group-link astro-euowmrmi"><a href="/build/schema/" aria-current="false" class="entry-link astro-euowmrmi">Tables / Schema</a><a href="/build/auth/" aria-current="false" class="entry-link astro-euowmrmi">Auth</a><a href="/build/rls/" aria-current="false" class="entry-link astro-euowmrmi">RLS Policies</a><a href="/api-reference/rpc/" aria-current="false" class="entry-link astro-euowmrmi">SQL Functions</a><a href="/build/functions/" aria-current="false" class="entry-link astro-euowmrmi">Code Functions</a><a href="/build/storage/" aria-current="false" class="entry-link astro-euowmrmi">Storage</a><a href="/build/querying/" aria-current="false" class="entry-link astro-euowmrmi">Querying</a><a href="/supabase-compatibility/" aria-current="false" class="entry-link astro-euowmrmi">Supabase SDK Compatibility</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Deploy</h4><div class="container-group-link astro-euowmrmi"><a href="/deploy/cloud/" aria-current="false" class="entry-link astro-euowmrmi">instancez Cloud</a><a href="/deploy/docker/" aria-current="false" class="entry-link astro-euowmrmi">Docker</a><a href="/deploy/kubernetes/" aria-current="false" class="entry-link astro-euowmrmi">Kubernetes</a><a href="/deploy/lambda/" aria-current="false" class="entry-link astro-euowmrmi">AWS Lambda</a><a href="/deploy/self-hosted/" aria-current="false" class="entry-link astro-euowmrmi">Self-hosted</a><a href="/deploy/env-vars/" aria-current="false" class="entry-link astro-euowmrmi">Environment Variables</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Examples</h4><div class="container-group-link astro-euowmrmi"><a href="/examples/ecommerce-store/" aria-current="false" class="entry-link astro-euowmrmi">Ecommerce Store</a><a href="/examples/file-gallery/" aria-current="false" class="entry-link astro-euowmrmi">File Gallery</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">CLI Reference</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/cli/" aria-current="false" class="entry-link astro-euowmrmi">CLI</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Configuration</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/config/" aria-current="page" class="entry-link astro-euowmrmi">instancez.yaml</a></div></div> </div> </div>  </aside>   <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <main class="container-main astro-jytpsvwo"><div class="main astro-jytpsvwo">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">     <div class="breadcrumb astro-6jkgswov"><div class="truncate astro-6jkgswov">Docs</div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-6jkgswov"><path d="m9 18 6-6-6-6" class="astro-6jkgswov"></path></svg><div class="text-foreground astro-6jkgswov">Configuration</div></div><h1 id="_top" class="astro-6jkgswov">Configuration</h1> <p class="astro-6jkgswov">Complete instancez.yaml schema reference. Every key, type, default, and example.</p>     <div class="markdown-wrapper"> <div class="sl-markdown-content">  <p><code dir="auto">instancez.yaml</code> is the single source of truth for your project. On boot, the server diffs it against the live database and applies migrations automatically.</p>
+<p>Env vars are interpolated using <code dir="auto">${VAR}</code> or <code dir="auto">${VAR:-default}</code>. They are resolved at load time; references are never stored in the database.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="version">version</h2><a class="sl-anchor-link" href="#version"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “version”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">version</code></td><td><code dir="auto">integer</code></td><td>yes</td><td>Schema version. Currently <code dir="auto">1</code>.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="project">project</h2><a class="sl-anchor-link" href="#project"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “project”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">project.name</code></td><td><code dir="auto">string</code></td><td>—</td><td>Display name shown in the dashboard.</td></tr><tr><td><code dir="auto">project.description</code></td><td><code dir="auto">string</code></td><td>—</td><td>Optional project description.</td></tr><tr><td><code dir="auto">project.cloud.project_id</code></td><td><code dir="auto">string</code></td><td>—</td><td>Cloud project ID. Written automatically by <code dir="auto">inz cloud deploy --new</code>; not meant to be hand-edited.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="database">database</h2><a class="sl-anchor-link" href="#database"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “database”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">database.pool.max</code></td><td><code dir="auto">integer</code></td><td><code dir="auto">20</code></td><td>Maximum connections in the request pool.</td></tr><tr><td><code dir="auto">database.pool.min</code></td><td><code dir="auto">integer</code></td><td><code dir="auto">5</code></td><td>Minimum idle connections.</td></tr><tr><td><code dir="auto">database.pool.idle_timeout</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">300s</code></td><td>How long idle connections are held before closing.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="server">server</h2><a class="sl-anchor-link" href="#server"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “server”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">server.port</code></td><td><code dir="auto">integer</code></td><td><code dir="auto">8080</code></td><td>HTTP listen port.</td></tr><tr><td><code dir="auto">server.max_body_size</code></td><td><code dir="auto">string</code></td><td><code dir="auto">1MB</code></td><td>Maximum request body size for non-upload endpoints.</td></tr><tr><td><code dir="auto">server.max_limit</code></td><td><code dir="auto">integer</code></td><td><code dir="auto">100</code></td><td><strong>Not currently enforced.</strong> Configuration value is defined but not validated on REST queries. Default query limit is 20.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="servercors">server.cors</h3><a class="sl-anchor-link" href="#servercors"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “server.cors”</span></a></div>
+<p>Methods, headers, credentials, and preflight caching are fixed platform
+defaults — origins is the only knob, matching Supabase’s own gateway.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">server.cors.origins</code></td><td><code dir="auto">string[]</code></td><td><code dir="auto">[]</code></td><td>Allowed origins. Use <code dir="auto">["*"]</code> to allow all.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="servertimeouts">server.timeouts</h3><a class="sl-anchor-link" href="#servertimeouts"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “server.timeouts”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">server.timeouts.request</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">30s</code></td><td>Per-request deadline.</td></tr><tr><td><code dir="auto">server.timeouts.db_query</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">10s</code></td><td>Per-query deadline.</td></tr><tr><td><code dir="auto">server.timeouts.upload</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">5m</code></td><td>Deadline for file upload requests.</td></tr><tr><td><code dir="auto">server.timeouts.shutdown</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">30s</code></td><td>Graceful shutdown window.</td></tr></tbody></table>
+<p>Duration strings use Go format: <code dir="auto">30s</code>, <code dir="auto">5m</code>, <code dir="auto">1h</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="providers">providers</h2><a class="sl-anchor-link" href="#providers"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “providers”</span></a></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="providersemail">providers.email</h3><a class="sl-anchor-link" href="#providersemail"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “providers.email”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">providers.email.type</code></td><td><code dir="auto">string</code></td><td>—</td><td>Email provider type. Currently <code dir="auto">"resend"</code> or <code dir="auto">"ses"</code>.</td></tr><tr><td><code dir="auto">providers.email.api_key</code></td><td><code dir="auto">string</code></td><td>—</td><td>Provider API key. Supports <code dir="auto">${VAR}</code>.</td></tr><tr><td><code dir="auto">providers.email.default_from_email</code></td><td><code dir="auto">string</code></td><td>—</td><td>Default sender address.</td></tr></tbody></table>
+<p>Set <code dir="auto">providers.email: null</code> to disable email sending.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="providersstorage">providers.storage</h3><a class="sl-anchor-link" href="#providersstorage"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “providers.storage”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">providers.storage.type</code></td><td><code dir="auto">string</code></td><td>—</td><td><code dir="auto">"local"</code> or <code dir="auto">"s3"</code>.</td></tr><tr><td><code dir="auto">providers.storage.path</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">local</code> only) Directory for local file storage.</td></tr><tr><td><code dir="auto">providers.storage.bucket</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">s3</code> only) S3 bucket name.</td></tr><tr><td><code dir="auto">providers.storage.region</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">s3</code> only) AWS region.</td></tr><tr><td><code dir="auto">providers.storage.access_key_id</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">s3</code> only) AWS access key. Supports <code dir="auto">${VAR}</code>.</td></tr><tr><td><code dir="auto">providers.storage.secret_access_key</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">s3</code> only) AWS secret key. Supports <code dir="auto">${VAR}</code>.</td></tr><tr><td><code dir="auto">providers.storage.endpoint</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">s3</code> only) Custom endpoint URL for S3-compatible stores.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="auth">auth</h2><a class="sl-anchor-link" href="#auth"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “auth”</span></a></div>
+<p>Omit the <code dir="auto">auth:</code> block entirely to disable authentication endpoints.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">auth.jwt_expiry</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">15m</code> (when <code dir="auto">auth:</code> is present)</td><td>Access token lifetime. Default applies only when <code dir="auto">auth:</code> block is declared but <code dir="auto">jwt_expiry</code> is not.</td></tr><tr><td><code dir="auto">auth.refresh_tokens</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Enable refresh token issuance.</td></tr><tr><td><code dir="auto">auth.refresh_token_expiry</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">7d</code></td><td>Refresh token lifetime (only used when <code dir="auto">refresh_tokens: true</code>).</td></tr><tr><td><code dir="auto">auth.allow_signup</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">true</code></td><td>Allow public <code dir="auto">POST /auth/v1/signup</code>. Set to <code dir="auto">false</code> for invite-only.</td></tr><tr><td><code dir="auto">auth.allow_anonymous</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">true</code></td><td>Allow anonymous sign-in (empty-body signup).</td></tr><tr><td><code dir="auto">auth.redirect_urls</code></td><td><code dir="auto">string[]</code></td><td><code dir="auto">[]</code></td><td>Allowlist of origins for post-auth redirects (OAuth, email verification). The server’s own origin is always allowed.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="authemail">auth.email</h3><a class="sl-anchor-link" href="#authemail"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “auth.email”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">auth.email.verify_email</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Require email verification before the user can sign in. Requires a configured email provider.</td></tr><tr><td><code dir="auto">auth.email.templates</code></td><td><code dir="auto">map</code></td><td>—</td><td>Override built-in email templates by name (e.g. <code dir="auto">confirm</code>, <code dir="auto">recovery</code>).</td></tr><tr><td><code dir="auto">auth.email.templates.&#x3C;name>.subject</code></td><td><code dir="auto">string</code></td><td>—</td><td>Email subject line.</td></tr><tr><td><code dir="auto">auth.email.templates.&#x3C;name>.body</code></td><td><code dir="auto">string</code></td><td>—</td><td>Inline HTML/text body.</td></tr><tr><td><code dir="auto">auth.email.templates.&#x3C;name>.body_file</code></td><td><code dir="auto">string</code></td><td>—</td><td>Path to a file containing the body (alternative to <code dir="auto">body</code>).</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="authoauthname">auth.oauth.&#x3C;name></h3><a class="sl-anchor-link" href="#authoauthname"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “auth.oauth.&#x3C;name>”</span></a></div>
+<p>OAuth provider configuration. Providers are keyed by name under <code dir="auto">auth.oauth</code>; the
+name (<code dir="auto">google</code>, <code dir="auto">github</code>, …) selects the built-in provider implementation.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">auth.oauth.&#x3C;name>.client_id</code></td><td><code dir="auto">string</code></td><td>—</td><td>OAuth client ID. Supports <code dir="auto">${VAR}</code>.</td></tr><tr><td><code dir="auto">auth.oauth.&#x3C;name>.client_secret</code></td><td><code dir="auto">string</code></td><td>—</td><td>OAuth client secret. Supports <code dir="auto">${VAR}</code>.</td></tr><tr><td><code dir="auto">auth.oauth.&#x3C;name>.redirect_url</code></td><td><code dir="auto">string</code></td><td>—</td><td>OAuth callback URL registered with the provider.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="tables">tables</h2><a class="sl-anchor-link" href="#tables"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “tables”</span></a></div>
+<p>Tables map to Postgres tables in the <code dir="auto">public</code> schema by default. The migrator diffs this block against the live database on each boot.</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.sfvf5.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">tables</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">posts</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">schema</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">public</span><span style="--0:#EEFFFF">       </span><span style="--0:#979797;--0fs:italic"># optional; default "public"</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">fields</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">id</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">bigserial</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">primary_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">...</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">indexes</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">...</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">rls</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">...</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="tables:  posts:    schema: public       # optional; default &#x22;public&#x22;    fields:      - name: id        type: bigserial        primary_key: true      - ...    indexes:      - ...    rls:      - ..."><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h3"><h3 id="tablesnamefields">tables.&#x3C;name>.fields</h3><a class="sl-anchor-link" href="#tablesnamefields"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “tables.&#x3C;name>.fields”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">fields[].name</code></td><td><code dir="auto">string</code></td><td>required</td><td>Column name.</td></tr><tr><td><code dir="auto">fields[].type</code></td><td><code dir="auto">string</code></td><td>required</td><td>Postgres type (e.g. <code dir="auto">text</code>, <code dir="auto">bigint</code>, <code dir="auto">uuid</code>, <code dir="auto">timestamptz</code>, <code dir="auto">text[]</code>).</td></tr><tr><td><code dir="auto">fields[].primary_key</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Mark as primary key.</td></tr><tr><td><code dir="auto">fields[].required</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Add <code dir="auto">NOT NULL</code> constraint.</td></tr><tr><td><code dir="auto">fields[].unique</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Add <code dir="auto">UNIQUE</code> constraint.</td></tr><tr><td><code dir="auto">fields[].default</code></td><td><code dir="auto">any</code></td><td>—</td><td>Column default. Supported: literal values, <code dir="auto">now()</code>, <code dir="auto">current_date</code>, <code dir="auto">current_time</code>. The shorthand <code dir="auto">uuid_v7()</code> and <code dir="auto">uuid_v4()</code> are normalized to <code dir="auto">gen_random_uuid()</code>.</td></tr><tr><td><code dir="auto">fields[].enum</code></td><td><code dir="auto">string[]</code></td><td>—</td><td>Restrict values to this list (creates a <code dir="auto">CHECK</code> constraint).</td></tr><tr><td><code dir="auto">fields[].pattern</code></td><td><code dir="auto">string</code></td><td>—</td><td>Regex pattern for a <code dir="auto">CHECK</code> constraint.</td></tr><tr><td><code dir="auto">fields[].min</code></td><td><code dir="auto">number</code></td><td>—</td><td>Minimum numeric value (inclusive).</td></tr><tr><td><code dir="auto">fields[].max</code></td><td><code dir="auto">number</code></td><td>—</td><td>Maximum numeric value (inclusive).</td></tr><tr><td><code dir="auto">fields[].check</code></td><td><code dir="auto">string</code></td><td>—</td><td>Raw SQL <code dir="auto">CHECK</code> expression.</td></tr><tr><td><code dir="auto">fields[].foreign_key.references</code></td><td><code dir="auto">string</code></td><td>—</td><td><code dir="auto">table.column</code> or <code dir="auto">schema.table.column</code>.</td></tr><tr><td><code dir="auto">fields[].foreign_key.on_delete</code></td><td><code dir="auto">string</code></td><td><code dir="auto">restrict</code></td><td><code dir="auto">cascade</code>, <code dir="auto">restrict</code>, or <code dir="auto">set_null</code>. Defaults to <code dir="auto">restrict</code> when omitted.</td></tr><tr><td><code dir="auto">fields[].ref</code></td><td><code dir="auto">string</code></td><td>—</td><td>Storage reference in the form <code dir="auto">storage.&#x3C;bucket></code>.</td></tr><tr><td><code dir="auto">fields[].on_delete</code></td><td><code dir="auto">string</code></td><td>—</td><td>(<code dir="auto">ref</code> only) <code dir="auto">cascade</code> or <code dir="auto">keep</code> — whether to delete the object on row deletion.</td></tr></tbody></table>
+<p>No columns are injected automatically. Every column, including primary keys, must be declared.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="tablesnameindexes">tables.&#x3C;name>.indexes</h3><a class="sl-anchor-link" href="#tablesnameindexes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “tables.&#x3C;name>.indexes”</span></a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">indexes[].columns</code></td><td><code dir="auto">string[]</code></td><td>required</td><td>Columns to index.</td></tr><tr><td><code dir="auto">indexes[].unique</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Create a unique index.</td></tr><tr><td><code dir="auto">indexes[].where</code></td><td><code dir="auto">string</code></td><td>—</td><td>Partial index condition (SQL expression).</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="tablesnamerls">tables.&#x3C;name>.rls</h3><a class="sl-anchor-link" href="#tablesnamerls"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “tables.&#x3C;name>.rls”</span></a></div>
+<p>RLS is the only authorization layer. Declare policies here; instancez applies <code dir="auto">ENABLE ROW LEVEL SECURITY</code> and creates the policies automatically.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">rls[].operations</code></td><td><code dir="auto">string[]</code></td><td>required</td><td>One or more of <code dir="auto">select</code>, <code dir="auto">insert</code>, <code dir="auto">update</code>, <code dir="auto">delete</code>.</td></tr><tr><td><code dir="auto">rls[].check</code></td><td><code dir="auto">string</code></td><td>required</td><td>SQL boolean expression evaluated per row.</td></tr><tr><td><code dir="auto">rls[].type</code></td><td><code dir="auto">string</code></td><td><code dir="auto">permissive</code></td><td><code dir="auto">permissive</code> or <code dir="auto">restrictive</code>.</td></tr></tbody></table>
+<p>Useful SQL helpers available in RLS expressions:</p>
+<ul>
+<li><code dir="auto">auth.uid()</code> — UUID of the authenticated user (<code dir="auto">null</code> for anonymous).</li>
+<li><code dir="auto">auth.is_authenticated()</code> — true when the request carries a valid user JWT.</li>
+</ul>
+<div class="sl-heading-wrapper level-h2"><h2 id="storage">storage</h2><a class="sl-anchor-link" href="#storage"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “storage”</span></a></div>
+<p>Bucket definitions. Buckets cannot be created, modified, or deleted at runtime; only <code dir="auto">instancez.yaml</code> changes take effect.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">avatars</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">public</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">false</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">max_size</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">5MB</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">types</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">image/png</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">image/jpeg</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">rls</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">select</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">using</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">true</span><span style="--0:#89DDFF">"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="storage:  avatars:    public: false    max_size: 5MB    types:      - image/png      - image/jpeg    rls:      - operations: [select]        using: &#x22;true&#x22;"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">storage.&#x3C;name>.public</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Allow unauthenticated downloads via <code dir="auto">/storage/v1/object/public/...</code>.</td></tr><tr><td><code dir="auto">storage.&#x3C;name>.max_size</code></td><td><code dir="auto">string</code></td><td><code dir="auto">50MB</code></td><td>Maximum file size per upload (e.g. <code dir="auto">5MB</code>, <code dir="auto">1GB</code>).</td></tr><tr><td><code dir="auto">storage.&#x3C;name>.types</code></td><td><code dir="auto">string[]</code></td><td><code dir="auto">[]</code></td><td>Allowed MIME types. Wildcards like <code dir="auto">image/*</code> are accepted. Empty means all types allowed.</td></tr><tr><td><code dir="auto">storage.&#x3C;name>.rls</code></td><td><code dir="auto">RLSPolicy[]</code></td><td><code dir="auto">[]</code></td><td>Same policy shape as table RLS, applied to <code dir="auto">storage.objects</code>.</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="rpc">rpc</h2><a class="sl-anchor-link" href="#rpc"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “rpc”</span></a></div>
+<p>Postgres stored procedures exposed at <code dir="auto">/rest/v1/rpc/&#x3C;name></code>.</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">rpc</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">search_posts</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">description</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">Full-text search</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">auth_required</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">false</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">language</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">plpgsql</span><span style="--0:#EEFFFF">      </span><span style="--0:#979797;--0fs:italic"># sql | plpgsql (default: plpgsql)</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">volatility</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">stable</span><span style="--0:#EEFFFF">     </span><span style="--0:#979797;--0fs:italic"># volatile | stable | immutable (default: volatile)</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">security</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">invoker</span><span style="--0:#EEFFFF">      </span><span style="--0:#979797;--0fs:italic"># invoker | definer (default: invoker)</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">args</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">query</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">text</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">required</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">returns</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">setof posts</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">body</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF;--0fs:italic">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#C3E88D">      </span></span><span style="--0:#C3E88D">SELECT * FROM posts WHERE body @@ plainto_tsquery(query);</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="rpc:  search_posts:    description: Full-text search    auth_required: false    language: plpgsql      # sql | plpgsql (default: plpgsql)    volatility: stable     # volatile | stable | immutable (default: volatile)    security: invoker      # invoker | definer (default: invoker)    args:      - name: query        type: text        required: true    returns:      type: &#x22;setof posts&#x22;    body: |      SELECT * FROM posts WHERE body @@ plainto_tsquery(query);"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">rpc.&#x3C;name>.description</code></td><td><code dir="auto">string</code></td><td>—</td><td>Documentation string.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.auth_required</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Reject unauthenticated callers.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.language</code></td><td><code dir="auto">string</code></td><td><code dir="auto">plpgsql</code></td><td><code dir="auto">sql</code> or <code dir="auto">plpgsql</code>.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.volatility</code></td><td><code dir="auto">string</code></td><td><code dir="auto">volatile</code></td><td><code dir="auto">volatile</code>, <code dir="auto">stable</code>, or <code dir="auto">immutable</code>. Only stable/immutable can be called with <code dir="auto">GET</code>.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.security</code></td><td><code dir="auto">string</code></td><td><code dir="auto">invoker</code></td><td><code dir="auto">invoker</code> or <code dir="auto">definer</code>.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.args[].name</code></td><td><code dir="auto">string</code></td><td>required</td><td>Argument name.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.args[].type</code></td><td><code dir="auto">string</code></td><td>required</td><td>Postgres type.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.args[].required</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Return 400 if argument is absent.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.args[].default</code></td><td><code dir="auto">any</code></td><td>—</td><td>Postgres DEFAULT value for optional args.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.returns.type</code></td><td><code dir="auto">string</code></td><td>—</td><td>Return type: <code dir="auto">void</code>, a scalar type, or <code dir="auto">setof &#x3C;table></code>.</td></tr><tr><td><code dir="auto">rpc.&#x3C;name>.body</code></td><td><code dir="auto">string</code></td><td>required</td><td>Function body (PL/pgSQL or SQL).</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="functions">functions</h2><a class="sl-anchor-link" href="#functions"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “functions”</span></a></div>
+<p>JavaScript code functions served at <code dir="auto">/functions/v1/&#x3C;name></code>. Distinct from <code dir="auto">rpc:</code> (which declares Postgres stored procedures).</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">functions</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">send_notification</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">runtime</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">node</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">file</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">functions/send_notification.js</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">auth_required</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">timeout</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">15s</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">env</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">WEBHOOK_URL</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">https://hooks.example.com/notify</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">API_KEY</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_ENV_NOTIFY_API_KEY}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="functions:  send_notification:    runtime: node    file: functions/send_notification.js    auth_required: true    timeout: 15s    env:      WEBHOOK_URL: https://hooks.example.com/notify      API_KEY: ${INSTANCEZ_ENV_NOTIFY_API_KEY}"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">functions.&#x3C;name>.runtime</code></td><td><code dir="auto">string</code></td><td>required</td><td><code dir="auto">"node"</code>.</td></tr><tr><td><code dir="auto">functions.&#x3C;name>.file</code></td><td><code dir="auto">string</code></td><td>required</td><td>Path to the JS handler file, relative to the config root.</td></tr><tr><td><code dir="auto">functions.&#x3C;name>.auth_required</code></td><td><code dir="auto">boolean</code></td><td><code dir="auto">false</code></td><td>Require a valid JWT. Returns 401 otherwise.</td></tr><tr><td><code dir="auto">functions.&#x3C;name>.timeout</code></td><td><code dir="auto">duration</code></td><td><code dir="auto">30s</code></td><td>Per-request timeout. Exceeded requests return 504.</td></tr><tr><td><code dir="auto">functions.&#x3C;name>.env</code></td><td><code dir="auto">map</code></td><td><code dir="auto">{}</code></td><td>Env values injected as <code dir="auto">ctx.env</code>. Values may be string literals or <code dir="auto">${INSTANCEZ_ENV_*}</code> references.</td></tr></tbody></table>
+<p><code dir="auto">INSTANCEZ_ENV_*</code> references are resolved from the process environment. Plain <code dir="auto">${VAR}</code> references (without the <code dir="auto">INSTANCEZ_ENV_</code> prefix) are not supported in <code dir="auto">env:</code> — use them elsewhere in the config file for other values.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="functions_bundle">functions_bundle</h2><a class="sl-anchor-link" href="#functions_bundle"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “functions_bundle”</span></a></div>
+<p>Bundle pointer for self-hosted deployments. <code dir="auto">inz bundle</code> produces the value (e.g. <code dir="auto">s3://bucket/key#sha256</code>) and writes it here; the managed cloud stamps it server-side from uploaded sources. <code dir="auto">inz cloud deploy</code> does not write this field.</p>
+<hr>
+<div class="sl-heading-wrapper level-h2"><h2 id="full-example">Full example</h2><a class="sl-anchor-link" href="#full-example"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Full example”</span></a></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">version</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">1</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">project</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">My App</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">description</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">Example instancez project</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">server</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">port</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">8080</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">max_body_size</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">5MB</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">max_limit</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">500</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">cors</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">origins</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">https://app.example.com</span><span style="--0:#89DDFF">"</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">timeouts</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">request</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">30s</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">db_query</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">10s</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">upload</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">5m</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">shutdown</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">30s</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">database</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">pool</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">max</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">20</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">min</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#F78C6C">5</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">idle_timeout</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">300s</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">providers</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">email</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">resend</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">api_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${RESEND_API_KEY}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">default_from_email</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">noreply@example.com</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">s3</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">bucket</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">my-app-storage</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">region</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">us-east-1</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">access_key_id</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${AWS_ACCESS_KEY_ID}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">secret_access_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${AWS_SECRET_ACCESS_KEY}</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">auth</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">jwt_expiry</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">1h</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">refresh_tokens</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">refresh_token_expiry</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">30d</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">allow_signup</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">allow_anonymous</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">false</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">redirect_urls</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">https://app.example.com</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">email</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">verify_email</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">tables</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">profiles</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">fields</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">id</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">foreign_key</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">          </span><span style="--0:#F07178">references</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">auth.users.id</span></div></div><div class="ec-line"><div class="code"><span class="indent">          </span><span style="--0:#F07178">on_delete</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">cascade</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">primary_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">display_name</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">text</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">avatar_url</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">text</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">ref</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">storage.avatars</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">on_delete</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">keep</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">rls</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">select</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">using</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">true</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">insert</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">with_check</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">auth.uid() = id</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">update</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">using</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">auth.uid() = id</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">with_check</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">auth.uid() = id</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">avatars</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">public</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">max_size</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">2MB</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">types</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">image/png</span><span style="--0:#89DDFF">,</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">image/jpeg</span><span style="--0:#89DDFF">,</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">image/webp</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">rls</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">insert</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">with_check</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">auth.uid() IS NOT NULL</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">operations</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">[</span><span style="--0:#C3E88D">delete</span><span style="--0:#89DDFF">]</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">using</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">auth.uid() IS NOT NULL</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">rpc</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">profile_search</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">language</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">sql</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">volatility</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">stable</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">args</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#89DDFF">-</span><span style="--0:#EEFFFF"> </span><span style="--0:#F07178">name</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">q</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">text</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#F07178">required</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">returns</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">setof profiles</span><span style="--0:#89DDFF">"</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">body</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF;--0fs:italic">|</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#C3E88D">      </span></span><span style="--0:#C3E88D">SELECT * FROM profiles WHERE display_name ILIKE '%' || q || '%';</span></div></div><div class="ec-line"><div class="code">
+</div></div><div class="ec-line"><div class="code"><span style="--0:#F07178">functions</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">resize_avatar</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">runtime</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">node</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">file</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">functions/resize_avatar.js</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">auth_required</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#FF9CAC">true</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">timeout</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">20s</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">env</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">      </span><span style="--0:#F07178">MAX_WIDTH</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#89DDFF">"</span><span style="--0:#C3E88D">512</span><span style="--0:#89DDFF">"</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="version: 1project:  name: My App  description: Example instancez projectserver:  port: 8080  max_body_size: 5MB  max_limit: 500  cors:    origins: [&#x22;https://app.example.com&#x22;]  timeouts:    request: 30s    db_query: 10s    upload: 5m    shutdown: 30sdatabase:  pool:    max: 20    min: 5    idle_timeout: 300sproviders:  email:    type: resend    api_key: ${RESEND_API_KEY}    default_from_email: noreply@example.com  storage:    type: s3    bucket: my-app-storage    region: us-east-1    access_key_id: ${AWS_ACCESS_KEY_ID}    secret_access_key: ${AWS_SECRET_ACCESS_KEY}auth:  jwt_expiry: 1h  refresh_tokens: true  refresh_token_expiry: 30d  allow_signup: true  allow_anonymous: false  redirect_urls:    - https://app.example.com  email:    verify_email: truetables:  profiles:    fields:      - name: id        foreign_key:          references: auth.users.id          on_delete: cascade        primary_key: true      - name: display_name        type: text      - name: avatar_url        type: text        ref: storage.avatars        on_delete: keep    rls:      - operations: [select]        using: &#x22;true&#x22;      - operations: [insert]        with_check: &#x22;auth.uid() = id&#x22;      - operations: [update]        using: &#x22;auth.uid() = id&#x22;        with_check: &#x22;auth.uid() = id&#x22;storage:  avatars:    public: true    max_size: 2MB    types: [image/png, image/jpeg, image/webp]    rls:      - operations: [insert]        with_check: &#x22;auth.uid() IS NOT NULL&#x22;      - operations: [delete]        using: &#x22;auth.uid() IS NOT NULL&#x22;rpc:  profile_search:    language: sql    volatility: stable    args:      - name: q        type: text        required: true    returns:      type: &#x22;setof profiles&#x22;    body: |      SELECT * FROM profiles WHERE display_name ILIKE &#x27;%&#x27; || q || &#x27;%&#x27;;functions:  resize_avatar:    runtime: node    file: functions/resize_avatar.js    auth_required: true    timeout: 20s    env:      MAX_WIDTH: &#x22;512&#x22;"><div></div></button></div></figure></div>  </div> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-zx2mzflk"> <a class="prev astro-zx2mzflk" href="/api-reference/cli/" rel="prev"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m15 18-6-6 6-6" class="astro-zx2mzflk"></path> </svg> CLI </a>  </div>   </footer>    </main> </div><div class="toc astro-jytpsvwo"><div class="astro-q2ryvv6g"><starlight-toc data-min-h="2" data-max-h="3" class="astro-enyabzfs"><nav aria-labelledby="starlight__on-this-page" class="astro-enyabzfs"><p id="starlight__on-this-page" class="astro-enyabzfs">On this page</p><ul class="astro-37x2kocx" style="--depth: 0;"> <li class="astro-37x2kocx" style="--depth: 0;"> <a href="#_top" class="astro-37x2kocx" style="--depth: 0;">Overview</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#version" class="astro-37x2kocx" style="--depth: 0;">version</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#project" class="astro-37x2kocx" style="--depth: 0;">project</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#database" class="astro-37x2kocx" style="--depth: 0;">database</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#server" class="astro-37x2kocx" style="--depth: 0;">server</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#servercors" class="astro-37x2kocx" style="--depth: 1;">server.cors</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#servertimeouts" class="astro-37x2kocx" style="--depth: 1;">server.timeouts</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#providers" class="astro-37x2kocx" style="--depth: 0;">providers</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#providersemail" class="astro-37x2kocx" style="--depth: 1;">providers.email</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#providersstorage" class="astro-37x2kocx" style="--depth: 1;">providers.storage</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#auth" class="astro-37x2kocx" style="--depth: 0;">auth</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#authemail" class="astro-37x2kocx" style="--depth: 1;">auth.email</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#authoauthname" class="astro-37x2kocx" style="--depth: 1;">auth.oauth.&lt;name&gt;</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#tables" class="astro-37x2kocx" style="--depth: 0;">tables</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#tablesnamefields" class="astro-37x2kocx" style="--depth: 1;">tables.&lt;name&gt;.fields</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#tablesnameindexes" class="astro-37x2kocx" style="--depth: 1;">tables.&lt;name&gt;.indexes</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#tablesnamerls" class="astro-37x2kocx" style="--depth: 1;">tables.&lt;name&gt;.rls</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#storage" class="astro-37x2kocx" style="--depth: 0;">storage</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#rpc" class="astro-37x2kocx" style="--depth: 0;">rpc</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#functions" class="astro-37x2kocx" style="--depth: 0;">functions</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#functions_bundle" class="astro-37x2kocx" style="--depth: 0;">functions_bundle</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#full-example" class="astro-37x2kocx" style="--depth: 0;">Full example</a>  </li> </ul> </nav></starlight-toc></div></div></main>  </div> </div> </main> <footer class="footer astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container footer-container astro-qgm4hv6f"> <div class="footer-text astro-qgm4hv6f">instancez — a lightweight, self-hosted backend. <a href="https://github.com/instancez/instancez">GitHub</a></div> </div> </div> </footer> </div> <div popover="auto" id="drawer" class="astro-w4txsaed"> <button class="sheet-overlay astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"></button> <div class="content astro-w4txsaed"> <div class="header astro-w4txsaed"> <button class="drag-icon astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"><span class="astro-w4txsaed"></span></button> </div> <div class="body astro-w4txsaed"> <div class="links-nav astro-w4txsaed"> <a href="/" class="astro-w4txsaed">Home</a>  </div> <div class="links-docs astro-w4txsaed"> <div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Build</h4> <a href="/build/schema/" class="astro-w4txsaed"> Tables / Schema </a><a href="/build/auth/" class="astro-w4txsaed"> Auth </a><a href="/build/rls/" class="astro-w4txsaed"> RLS Policies </a><a href="/api-reference/rpc/" class="astro-w4txsaed"> SQL Functions </a><a href="/build/functions/" class="astro-w4txsaed"> Code Functions </a><a href="/build/storage/" class="astro-w4txsaed"> Storage </a><a href="/build/querying/" class="astro-w4txsaed"> Querying </a><a href="/supabase-compatibility/" class="astro-w4txsaed"> Supabase SDK Compatibility </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Deploy</h4> <a href="/deploy/cloud/" class="astro-w4txsaed"> instancez Cloud </a><a href="/deploy/docker/" class="astro-w4txsaed"> Docker </a><a href="/deploy/kubernetes/" class="astro-w4txsaed"> Kubernetes </a><a href="/deploy/lambda/" class="astro-w4txsaed"> AWS Lambda </a><a href="/deploy/self-hosted/" class="astro-w4txsaed"> Self-hosted </a><a href="/deploy/env-vars/" class="astro-w4txsaed"> Environment Variables </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Examples</h4> <a href="/examples/ecommerce-store/" class="astro-w4txsaed"> Ecommerce Store </a><a href="/examples/file-gallery/" class="astro-w4txsaed"> File Gallery </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">CLI Reference</h4> <a href="/api-reference/cli/" class="astro-w4txsaed"> CLI </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Configuration</h4> <a href="/api-reference/config/" class="astro-w4txsaed"> instancez.yaml </a> </div> </div> </div> </div> </div>  </div>   </body></html>
