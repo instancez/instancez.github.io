@@ -522,19 +522,19 @@ rpc:
       SELECT * FROM posts WHERE body @@ plainto_tsquery(query);
 ```
 
-| Key                          | Type      | Default    | Description                                                                           |
-| ---------------------------- | --------- | ---------- | ------------------------------------------------------------------------------------- |
-| `rpc.<name>.description`     | `string`  | —          | Documentation string.                                                                 |
-| `rpc.<name>.auth_required`   | `boolean` | `false`    | Reject unauthenticated callers.                                                       |
-| `rpc.<name>.language`        | `string`  | `plpgsql`  | `sql` or `plpgsql`.                                                                   |
-| `rpc.<name>.volatility`      | `string`  | `volatile` | `volatile`, `stable`, or `immutable`. Only stable/immutable can be called with `GET`. |
-| `rpc.<name>.security`        | `string`  | `invoker`  | `invoker` or `definer`.                                                               |
-| `rpc.<name>.args[].name`     | `string`  | required   | Argument name.                                                                        |
-| `rpc.<name>.args[].type`     | `string`  | required   | Postgres type.                                                                        |
-| `rpc.<name>.args[].required` | `boolean` | `false`    | Return 400 if argument is absent.                                                     |
-| `rpc.<name>.args[].default`  | `any`     | —          | Postgres DEFAULT value for optional args.                                             |
-| `rpc.<name>.returns.type`    | `string`  | —          | Return type: `void`, a scalar type, or `setof <table>`.                               |
-| `rpc.<name>.body`            | `string`  | required   | Function body (PL/pgSQL or SQL).                                                      |
+| Key                          | Type      | Default    | Description                                                                                         |
+| ---------------------------- | --------- | ---------- | --------------------------------------------------------------------------------------------------- |
+| `rpc.<name>.description`     | `string`  | —          | Documentation string.                                                                               |
+| `rpc.<name>.auth_required`   | `boolean` | `false`    | Reject unauthenticated callers.                                                                     |
+| `rpc.<name>.language`        | `string`  | `plpgsql`  | `sql` or `plpgsql`.                                                                                 |
+| `rpc.<name>.volatility`      | `string`  | `volatile` | `volatile`, `stable`, or `immutable`. Only stable/immutable can be called with `GET`.               |
+| `rpc.<name>.security`        | `string`  | `invoker`  | `invoker` or `definer`.                                                                             |
+| `rpc.<name>.args[].name`     | `string`  | required   | Argument name.                                                                                      |
+| `rpc.<name>.args[].type`     | `string`  | required   | Postgres type.                                                                                      |
+| `rpc.<name>.args[].required` | `boolean` | `false`    | Return 400 if argument is absent.                                                                   |
+| `rpc.<name>.args[].default`  | `any`     | —          | Postgres DEFAULT value for optional args.                                                           |
+| `rpc.<name>.returns.type`    | `string`  | —          | Return type: `void`, `record`, a scalar or composite type, `setof <type>`, or `table(col type, …)`. |
+| `rpc.<name>.body`            | `string`  | required   | Function body (PL/pgSQL or SQL).                                                                    |
 
 ## functions
 
@@ -720,16 +720,16 @@ rpc:
       SELECT count(*) AS total FROM todos WHERE team_id = team_stats.team_id
 ```
 
-| Field             | Required | Description                                    |
-| ----------------- | -------- | ---------------------------------------------- |
-| `language`        | no       | `sql` or `plpgsql` (default: `plpgsql`)        |
-| `volatility`      | no       | `volatile` (default), `stable`, or `immutable` |
-| `security`        | no       | `invoker` (default) or `definer`               |
-| `auth_required`   | no       | Reject unauthenticated callers when `true`     |
-| `args`            | no       | Ordered list of named arguments                |
-| `args[].required` | no       | Return 400 if the argument is absent           |
-| `args[].default`  | no       | Postgres DEFAULT value for optional args       |
-| `returns.type`    | yes      | Return type; `void` emits 204 No Content       |
+| Field             | Required | Description                                                                                                                                                                                                                                                                                                                                                                        |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`        | no       | `sql` or `plpgsql` (default: `plpgsql`)                                                                                                                                                                                                                                                                                                                                            |
+| `volatility`      | no       | `volatile` (default), `stable`, or `immutable`                                                                                                                                                                                                                                                                                                                                     |
+| `security`        | no       | `invoker` (default) or `definer`                                                                                                                                                                                                                                                                                                                                                   |
+| `auth_required`   | no       | Reject unauthenticated callers when `true`                                                                                                                                                                                                                                                                                                                                         |
+| `args`            | no       | Ordered list of named arguments                                                                                                                                                                                                                                                                                                                                                    |
+| `args[].required` | no       | Return 400 if the argument is absent                                                                                                                                                                                                                                                                                                                                               |
+| `args[].default`  | no       | Postgres DEFAULT value for optional args                                                                                                                                                                                                                                                                                                                                           |
+| `returns.type`    | yes      | Return type; `void` emits 204 No Content. One of: `void`, `record`, a scalar or composite type (`int`, `text`, `uuid`, a table’s row type, …), `setof <type>`, or `table(col type, …)`. In the dashboard this is a dropdown of the common scalar types plus `void`/`record`; `setof`/`table(...)` are authored in YAML and a migrated function keeps its own type in the dropdown. |
 
 ## Calling via HTTP
 
