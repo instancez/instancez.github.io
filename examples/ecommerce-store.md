@@ -24,6 +24,7 @@ auth:
 
 tables:
   products:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -50,6 +51,7 @@ tables:
         using: "active"
 
   orders:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -83,6 +85,7 @@ tables:
         using: "auth.uid() = user_id"
 
   order_items:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid

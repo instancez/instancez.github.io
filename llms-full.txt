@@ -67,6 +67,8 @@ Start the production server.
 
 Unlike `dev`, does not hot-reload and defaults to dashboard disabled.
 
+Even without `--migrate`, every boot creates the migration-history table if missing, as its own locked step, then — in a second locked transaction — creates `auth.jwt_keys` if missing, re-applies the privilege revokes on `auth.*` and `_instancez_migrations`, and adds any auth columns or indexes that newer releases introduced. Boot fails if either step fails. With `--watch`, this also re-runs after every hot-reloaded migration; a failure there is logged, not fatal.
+
 ```plaintext
 inz serve [flags]
 ```
@@ -302,11 +304,11 @@ Env vars are interpolated using `${VAR}` or `${VAR:-default}`. They are resolved
 
 [Section titled “server”](#server)
 
-| Key                    | Type      | Default | Description                                                                                                              |
-| ---------------------- | --------- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `server.port`          | `integer` | `8080`  | HTTP listen port.                                                                                                        |
-| `server.max_body_size` | `string`  | `1MB`   | Maximum request body size for non-upload endpoints.                                                                      |
-| `server.max_limit`     | `integer` | `100`   | **Not currently enforced.** Configuration value is defined but not validated on REST queries. Default query limit is 20. |
+| Key                    | Type      | Default | Description                                                                                                                                                                                                      |
+| ---------------------- | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `server.port`          | `integer` | `8080`  | HTTP listen port.                                                                                                                                                                                                |
+| `server.max_body_size` | `string`  | `1MB`   | Maximum request body size for non-upload endpoints.                                                                                                                                                              |
+| `server.max_limit`     | `integer` | `1000`  | Most rows one REST table read, setof RPC, or top-level has-many embed returns (PostgREST `db-max-rows`). Applies with or without `limit`/`Range`; `Content-Range` shows the capped range. `-1` disables the cap. |
 
 ### server.cors
 
@@ -322,12 +324,12 @@ Methods, headers, credentials, and preflight caching are fixed platform defaults
 
 [Section titled “server.timeouts”](#servertimeouts)
 
-| Key                        | Type       | Default | Description                        |
-| -------------------------- | ---------- | ------- | ---------------------------------- |
-| `server.timeouts.request`  | `duration` | `30s`   | Per-request deadline.              |
-| `server.timeouts.db_query` | `duration` | `10s`   | Per-query deadline.                |
-| `server.timeouts.upload`   | `duration` | `5m`    | Deadline for file upload requests. |
-| `server.timeouts.shutdown` | `duration` | `30s`   | Graceful shutdown window.          |
+| Key                        | Type       | Default | Description                                                                                                                                                            |
+| -------------------------- | ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `server.timeouts.request`  | `duration` | `25s`   | Read/write deadline for `/rest/v1` and `/auth/v1` requests. Storage, functions, admin and dashboard routes are exempt.                                                 |
+| `server.timeouts.db_query` | `duration` | `10s`   | `statement_timeout` for every API query (all roles), applied per transaction. `Prefer: statement-timeout=<ms>` can lower it for one request. `0` or empty disables it. |
+| `server.timeouts.upload`   | `duration` | `5m`    | Deadline for file upload requests.                                                                                                                                     |
+| `server.timeouts.shutdown` | `duration` | `30s`   | Graceful shutdown window.                                                                                                                                              |
 
 Duration strings use Go format: `30s`, `5m`, `1h`.
 
@@ -367,13 +369,13 @@ Set `providers.email: null` to disable email sending.
 
 Auth is always provisioned, even if `auth:` is omitted entirely; the block only overrides defaults.
 
-| Key                         | Type       | Default | Description                                                                                                          |
-| --------------------------- | ---------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| `auth.jwt_expiry`           | `duration` | `15m`   | Access token lifetime.                                                                                               |
-| `auth.refresh_token_expiry` | `duration` | `7d`    | Refresh token lifetime. Refresh tokens are always issued.                                                            |
-| `auth.allow_signup`         | `boolean`  | `true`  | Allow public `POST /auth/v1/signup`. Set to `false` for invite-only.                                                 |
-| `auth.allow_anonymous`      | `boolean`  | `true`  | Allow anonymous sign-in (empty-body signup).                                                                         |
-| `auth.redirect_urls`        | `string[]` | `[]`    | Allowlist of origins for post-auth redirects (OAuth, email verification). The server’s own origin is always allowed. |
+| Key                         | Type       | Default | Description                                                                                                                                        |
+| --------------------------- | ---------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth.jwt_expiry`           | `duration` | `15m`   | Access token lifetime.                                                                                                                             |
+| `auth.refresh_token_expiry` | `duration` | `7d`    | Refresh token lifetime. Refresh tokens are always issued.                                                                                          |
+| `auth.allow_signup`         | `boolean`  | `true`  | Allow public sign-up: `POST /auth/v1/signup`, first-time `signInWithOtp`, and first-time OAuth / ID-token sign-in. Set to `false` for invite-only. |
+| `auth.allow_anonymous`      | `boolean`  | `true`  | Allow anonymous sign-in (empty-body signup).                                                                                                       |
+| `auth.redirect_urls`        | `string[]` | `[]`    | Allowlist of origins for post-auth redirects (OAuth, email verification). The server’s own origin is always allowed.                               |
 
 `auth.refresh_tokens` is deprecated and ignored — refresh tokens are always issued.
 
@@ -411,6 +413,7 @@ Tables map to Postgres tables in the `public` schema by default. The migrator di
 tables:
   posts:
     schema: public       # optional; default "public"
+    rls_enabled: true    # recommended; see RLS page
     fields:
       - name: id
         type: bigserial
@@ -446,6 +449,14 @@ tables:
 
 No columns are injected automatically. Every column, including primary keys, must be declared.
 
+### tables.\<name>.rls\_enabled
+
+[Section titled “tables.\<name>.rls\_enabled”](#tablesnamerls_enabled)
+
+| Key           | Type      | Default                                              | Description                                                                                                                                                                                                                                       |
+| ------------- | --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rls_enabled` | `boolean` | inferred: `true` if `rls` has policies, else `false` | Turn row-level security on or off for the table. `true` with no policies denies `anon`/`authenticated` everything. `false` with policies is a validation error. Leaving it unset produces a validation warning. See [RLS](/instancez/build/rls/). |
+
 ### tables.\<name>.indexes
 
 [Section titled “tables.\<name>.indexes”](#tablesnameindexes)
@@ -460,13 +471,14 @@ No columns are injected automatically. Every column, including primary keys, mus
 
 [Section titled “tables.\<name>.rls”](#tablesnamerls)
 
-RLS is the only authorization layer. Declare policies here; instancez applies `ENABLE ROW LEVEL SECURITY` and creates the policies automatically.
+RLS is the only authorization layer. Declare policies here; instancez creates them automatically. Whether RLS itself is on is controlled by [`rls_enabled`](#tablesnamerls_enabled), not by whether this list is empty.
 
-| Key                | Type       | Default      | Description                                            |
-| ------------------ | ---------- | ------------ | ------------------------------------------------------ |
-| `rls[].operations` | `string[]` | required     | One or more of `select`, `insert`, `update`, `delete`. |
-| `rls[].check`      | `string`   | required     | SQL boolean expression evaluated per row.              |
-| `rls[].type`       | `string`   | `permissive` | `permissive` or `restrictive`.                         |
+| Key                | Type       | Default      | Description                                                                           |
+| ------------------ | ---------- | ------------ | ------------------------------------------------------------------------------------- |
+| `rls[].operations` | `string[]` | required     | One or more of `select`, `insert`, `update`, `delete`.                                |
+| `rls[].using`      | `string`   | conditional  | SQL boolean expression selecting which existing rows the operation can see or target. |
+| `rls[].with_check` | `string`   | conditional  | SQL boolean expression deciding what a written row is allowed to look like.           |
+| `rls[].type`       | `string`   | `permissive` | `permissive` or `restrictive`.                                                        |
 
 Useful SQL helpers available in RLS expressions:
 
@@ -632,6 +644,7 @@ auth:
 
 tables:
   profiles:
+    rls_enabled: true
     fields:
       - name: id
         foreign_key:
@@ -848,7 +861,7 @@ auth:
       redirect_url: https://api.myapp.example.com/auth/v1/callback/github
 ```
 
-All keys are optional. Auth is always provisioned, even if `auth:` is omitted entirely — JWT auth works with the defaults (15m expiry, 7d refresh token expiry, sign-up open). Refresh tokens are always issued; the old `auth.refresh_tokens` toggle is deprecated and ignored.
+All keys are optional. Auth is always provisioned, even if `auth:` is omitted entirely — JWT auth works with the defaults (15m expiry, 7d refresh token expiry, sign-up open). Refresh tokens are always issued; the old `auth.refresh_tokens` toggle is deprecated and ignored. After a signing-key rotation, tokens signed by the old key keep verifying until `jwt_expiry` (plus 30 seconds of clock skew) has passed, and are rejected after that. On a multi-instance deployment, a key retired on one instance can keep verifying on another for up to one extra key-cache reload interval (about 30 seconds) past that.
 
 The dashboard’s **Auth** page edits these too: the Registration toggles map to `allow_signup` / `allow_anonymous`, and the Redirect URLs list maps to `redirect_urls`. When sign-up is off, the anonymous toggle is disabled, since anonymous sign-in is blocked along with it.
 
@@ -860,11 +873,13 @@ instancez exposes the same auth API as Supabase, so any Supabase client library 
 
 **Email + password** — `supabase.auth.signUp()` / `supabase.auth.signInWithPassword()`
 
-When `email.verify_email` is `false` (the default), `signUp` returns a session immediately. Set it to `true` and configure an email provider to require confirmation first.
+When `email.verify_email` is `false` (the default), `signUp` returns a session immediately. Set it to `true` and configure an email provider: `signUp` then returns the user with no session, same as Supabase, until the address is confirmed.
+
+`updateUser({ password })` signs out the account’s other sessions, keeping only the one that made the call.
 
 **Magic link / Email OTP** — `supabase.auth.signInWithOtp()` / `supabase.auth.verifyOtp()`
 
-Requires an `auth.email` block in the config — without it, the OTP endpoint isn’t mounted at all and the call 404s. With the block present but no email provider configured to actually send it, `signInWithOtp` returns a 200 with an empty response body.
+Requires an `auth.email` block in the config — without it, the OTP endpoint isn’t mounted at all and the call 404s. With the block present but no email provider configured to actually send it, `signInWithOtp` returns a 200 with an empty response body. Verifying a magic-link or signup code marks the email confirmed. A 6-digit code allows 5 wrong guesses. After that the code and its link stop working, and the code still counts toward the cooldown below. Each address gets at most one email per purpose (magic link, signup, recovery) every 60 seconds, and `admin.generateLink` starts that same cooldown. Inside that window, `signInWithOtp` and `resetPasswordForEmail` return an empty 200 and send nothing, so neither reveals whether the account exists; `resend` returns 429 `over_email_send_rate_limit` instead, which does reveal it, matching GoTrue. With `allow_signup: false`, `signInWithOtp` only signs in existing users. `resend({ type: 'signup' })` sends nothing once the address is confirmed, and `resend({ type: 'email_change' })` never sends, because email changes apply immediately.
 
 **OAuth (Google, GitHub)** — `supabase.auth.signInWithOAuth({ provider: 'google' })`
 
@@ -896,13 +911,25 @@ instancez → exchanges the code, then redirects to the original redirect_to
 
 By default this is the implicit flow (tokens in the URL fragment, which supabase-js parses automatically via `detectSessionInUrl`). PKCE is also supported: create the client with `createClient(url, key, { auth: { flowType: 'pkce' } })` and supabase-js adds `code_challenge`/`code_challenge_method` to `/authorize` for you, getting back an auth code on the redirect instead of tokens directly.
 
+How an OAuth login finds its account:
+
+1. A returning login matches on the provider’s user ID, even if the email at the provider changed.
+2. A first login links to an existing account with the same email (case-insensitive), but only when the provider says the email is verified. It links to a verified account, or to an unverified one nobody can sign in to yet (for example an invited user). An unverified account that has a password, a session, another identity, or is anonymous is never linked; the login fails with `email_exists` so a squatter can’t capture the real owner’s OAuth login. Confirm the email on that account, or sign in to it and link the provider from there.
+3. Otherwise a new user is created, unless `allow_signup` is `false`, which returns `signup_disabled`.
+
+An unverified provider email that matches no existing identity fails with `provider_email_needs_verification`. GitHub logins use the verified address from GitHub’s email list, not the public profile email.
+
+**Linking an identity** — `supabase.auth.linkIdentity({ provider: 'google' })`
+
+The signed-in user’s browser must finish the link. `/auth/v1/user/identities/authorize` sets an HttpOnly `oauth_link_state` cookie (`__Host-oauth_link_state` over HTTPS, so another subdomain can’t plant one), and the provider callback links the identity only when that cookie matches the link’s state, so a link URL sent to someone else can’t attach their account to yours. A missing or wrong cookie fails with `bad_oauth_state` (an error redirect when there’s a redirect target, otherwise 400). Browsers keep that cookie only when the frontend calls the API on the same origin (the default when instancez hosts the frontend, with the API under `/api`). A frontend on a different origin can’t complete `linkIdentity`.
+
 **Anonymous** — `supabase.auth.signInAnonymously()`
 
 Issues a JWT with `is_anonymous: true` and the `anon` Postgres role. Set `allow_anonymous: false` to disable. Anonymous users can be promoted to a full account by calling `signUp` or linking an OAuth identity.
 
-**Session management** — `getSession()`, `onAuthStateChange()`, `signOut()` all work as documented by supabase-js. `signOut` invalidates the refresh token server-side.
+**Session management** — `getSession()`, `onAuthStateChange()` and `signOut()` all work as documented by supabase-js. `signOut` invalidates the refresh token server-side. Refresh tokens rotate on every use. Re-using an old one within 10 seconds (two tabs refreshing at once) is allowed; after that it revokes the whole session. A banned user (`admin.updateUserById(id, { ban_duration })` or the dashboard’s disable/ban) can’t sign in or refresh (`403 user_banned`). Access tokens already issued stay valid until they expire (`jwt_expiry`).
 
-**TOTP MFA** — the full `auth.mfa` surface is implemented: `enroll`, `challenge`, `verify`, `unenroll`, `listFactors`. A successful `verify` re-issues the session JWT with `aal: aal2`.
+**TOTP MFA** — the full `auth.mfa` surface is implemented: `enroll`, `challenge`, `verify`, `unenroll`, `listFactors`, `challengeAndVerify` and `getAuthenticatorAssuranceLevel`. Session JWTs carry Supabase’s top-level `aal` (`aal1`/`aal2`) and `amr` (`[{ method, timestamp }]`) claims plus `session_id`; a successful `verify` re-issues the same session at `aal2`, and refreshes keep it there. Use `auth.jwt()->>'aal'` in RLS policies to require MFA. `verify` requires a `challengeId`; each challenge allows 5 attempts and a TOTP code can only be used once. Creating challenges for one factor is capped at 10 per 5 minutes (429 `over_request_rate_limit`). Once a factor is verified, enrolling another factor or unenrolling a verified one needs an `aal2` session (`insufficient_aal`), and verifying the first factor signs out the user’s other sessions. Sign-in with a password still returns an `aal1` session (same as Supabase); your app decides when to step up.
 
 ## Using auth in RLS
 
@@ -913,6 +940,7 @@ Every request carries the user’s JWT. The middleware switches the Postgres rol
 ```yaml
 tables:
   posts:
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -1115,19 +1143,19 @@ functions:
     runtime: node         # required; "node" is the only supported value
     file: functions/todos.js   # path relative to the config root
     auth_required: true   # when true, unauthenticated callers receive 401 before the handler runs
-    timeout: 30s          # per-request deadline; defaults to 30s
+    timeout: 25s          # per-request deadline; defaults to 25s
     env:                  # secrets injected as ctx.env
       STRIPE_KEY: ${INSTANCEZ_ENV_STRIPE_KEY}
       FIXED_VALUE: "literal"
 ```
 
-| Key             | Type                | Description                                                                                             |
-| --------------- | ------------------- | ------------------------------------------------------------------------------------------------------- |
-| `runtime`       | `string`            | Runtime identifier. Only `"node"` is supported.                                                         |
-| `file`          | `string`            | Path to the handler file, relative to the config root.                                                  |
-| `auth_required` | `bool`              | If `true`, instancez returns `401` for anonymous requests before invoking the handler. Default `false`. |
-| `timeout`       | `string`            | Go duration string (e.g. `"30s"`, `"5s"`). Defaults to `30s`. Exceeding the timeout returns `504`.      |
-| `env`           | `map[string]string` | Secrets available as `ctx.env`. Values are either plain literals or `${INSTANCEZ_ENV_*}` references.    |
+| Key             | Type                | Description                                                                                                                   |
+| --------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `runtime`       | `string`            | Runtime identifier. Only `"node"` is supported.                                                                               |
+| `file`          | `string`            | Path to the handler file, relative to the config root.                                                                        |
+| `auth_required` | `bool`              | If `true`, instancez returns `401` for anonymous requests before invoking the handler. Default `false`.                       |
+| `timeout`       | `string`            | Go duration string (e.g. `"10s"`, `"5s"`). Defaults to `25s`, which is also the maximum. Exceeding the timeout returns `504`. |
+| `env`           | `map[string]string` | Secrets available as `ctx.env`. Values are either plain literals or `${INSTANCEZ_ENV_*}` references.                          |
 
 ## Creating from the dashboard
 
@@ -1219,32 +1247,33 @@ Unlike `/rest/v1`, `/auth/v1`, and `/storage/v1`, functions do **not** require t
 
 [Section titled “Lifecycle”](#lifecycle)
 
-| Command            | npm                                                                                                                                                            | Hot reload                                                                                   |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `inz dev`          | Runs `npm ci` on startup. Falls back to `npm install` when no lockfile exists yet (first run). Restart required only when adding or removing npm dependencies. | JS code changes and `functions:` YAML changes are picked up automatically without a restart. |
-| `inz cloud deploy` | Uploads function sources; the cloud installs dependencies and builds the bundle. A committed `package-lock.json` is required.                                  | N/A                                                                                          |
-| `inz bundle`       | Runs `npm ci` (requires a committed `package-lock.json`) and produces a tar archive. Use `--output s3://…` for self-hosted deploys.                            | N/A                                                                                          |
-| `inz serve`        | Never runs npm. Consumes the pre-built bundle produced by `inz bundle --output s3://…`.                                                                        | N/A                                                                                          |
+| Command            | npm                                                                                                                                                            | Hot reload                                                                                                                                                                  |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `inz dev`          | Runs `npm ci` on startup. Falls back to `npm install` when no lockfile exists yet (first run). Restart required only when adding or removing npm dependencies. | JS code changes and `functions:` YAML changes are picked up automatically without a restart. Calls already running finish on the old workers (up to 30s) before those stop. |
+| `inz cloud deploy` | Uploads function sources; the cloud installs dependencies and builds the bundle. A committed `package-lock.json` is required.                                  | N/A                                                                                                                                                                         |
+| `inz bundle`       | Runs `npm ci` (requires a committed `package-lock.json`) and produces a tar archive. Use `--output s3://…` for self-hosted deploys.                            | N/A                                                                                                                                                                         |
+| `inz serve`        | Never runs npm. Consumes the pre-built bundle produced by `inz bundle --output s3://…`.                                                                        | With `--watch`, a new bundle version is loaded without a restart. Calls already running finish on the old workers (up to 30s) before those stop.                            |
 
 ## Runtime limits
 
 [Section titled “Runtime limits”](#runtime-limits)
 
-| Setting                 | Value                                            |
-| ----------------------- | ------------------------------------------------ |
-| Default timeout         | `30s` (configurable per-function via `timeout:`) |
-| Worker pool size        | `min(4, GOMAXPROCS)` Node processes              |
-| Max concurrent requests | `pool_size × 64`                                 |
+| Setting                 | Value                                                       |
+| ----------------------- | ----------------------------------------------------------- |
+| Default timeout         | `25s` (configurable per-function via `timeout:`, max `25s`) |
+| Worker pool size        | `min(4, GOMAXPROCS)` Node processes                         |
+| Max concurrent requests | `pool_size × 64`                                            |
+| Max response body       | 6 MB (larger → 502)                                         |
 
 **Error codes:**
 
-| Code  | Meaning                                              |
-| ----- | ---------------------------------------------------- |
-| `401` | `auth_required: true` and no valid JWT provided      |
-| `504` | Handler exceeded the `timeout`                       |
-| `503` | All in-flight slots are occupied (runtime saturated) |
-| `502` | Worker process died or no healthy worker available   |
-| `500` | Handler threw an unhandled exception                 |
+| Code  | Meaning                                                                                                                              |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `401` | `auth_required: true` and no valid JWT provided                                                                                      |
+| `504` | Handler exceeded the `timeout`. If the worker then stops answering health checks (e.g. a CPU-bound loop), it is killed and replaced. |
+| `503` | All in-flight slots are occupied (runtime saturated)                                                                                 |
+| `502` | Worker process died, no healthy worker available, or the response was over 6 MB                                                      |
+| `500` | Handler threw an unhandled exception                                                                                                 |
 
 ## What’s next
 
@@ -1271,7 +1300,7 @@ const { data, error } = await supabase.from('todos').select('*')
 // GET /rest/v1/todos?select=*
 ```
 
-List queries default to `LIMIT 20` when no `.limit()`/`.range()` is given — use pagination (below) to get more than 20 rows back.
+There’s no default limit, same as PostgREST. A list query returns every matching row, up to `server.max_limit` (default 1000). Page with `.limit()`/`.range()`.
 
 Fetch specific columns:
 
@@ -1525,11 +1554,11 @@ const { count } = await supabase
 
 Count modes:
 
-| Mode        | Behavior                                                                                                                              |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `exact`     | `COUNT(*)` — precise but adds a query                                                                                                 |
-| `planned`   | Uses the Postgres query planner estimate                                                                                              |
-| `estimated` | `pg_class.reltuples` statistic when no filters exist, planner estimate (via `EXPLAIN`) when filters exist. Never executes `COUNT(*)`. |
+| Mode        | Behavior                                                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `exact`     | `COUNT(*)` over the same joins and filters as the rows (`!inner` embeds, embed filters, `Accept-Profile` schema), in the same transaction. |
+| `planned`   | Uses the Postgres query planner estimate                                                                                                   |
+| `estimated` | `pg_class.reltuples` for an unfiltered read of a plain table; the planner estimate otherwise.                                              |
 
 ## Embeds (joins)
 
@@ -1816,6 +1845,7 @@ An optional `type` field accepts `permissive` (default) or `restrictive`. Multip
 ```yaml
 tables:
   posts:
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -1840,7 +1870,33 @@ tables:
         using: "auth.uid() = user_id"
 ```
 
-When a table has at least one `rls:` entry, instancez emits `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` and `FORCE ROW LEVEL SECURITY`. Tables with no `rls:` block have RLS disabled — all rows are visible to all roles.
+## Turning RLS on and off: `rls_enabled`
+
+[Section titled “Turning RLS on and off: rls\_enabled”](#turning-rls-on-and-off-rls_enabled)
+
+Every table should say whether RLS is on:
+
+```yaml
+tables:
+  posts:
+    rls_enabled: true
+    fields: [...]
+    rls: [...]
+```
+
+| `rls_enabled` | Policies            | Result                                                                                                                                                                                         |
+| ------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `true`        | any, including none | `ENABLE` + `FORCE ROW LEVEL SECURITY`. With no policies, `anon` and `authenticated` are denied everything (reads return zero rows, writes fail). Removing the last policy never turns RLS off. |
+| `false`       | none                | RLS disabled: every role can read and write every row. `inz validate` warns, like Supabase’s `rls_disabled_in_public` lint.                                                                    |
+| `false`       | one or more         | Validation error: the policies would never apply.                                                                                                                                              |
+| not set       | none                | Treated as `false` (RLS off). `inz validate` warns to set it explicitly.                                                                                                                       |
+| not set       | one or more         | Treated as `true`. `inz validate` warns to set it explicitly.                                                                                                                                  |
+
+The unset behavior matches instancez before `rls_enabled` existed, so existing projects migrate with no DDL change. `service_role` (the secret key) bypasses RLS in every case.
+
+**Known gap:** if `rls_enabled` is unset and you remove a table’s last policy, the inferred value flips from `true` to `false` and RLS turns off — unlike the explicit `true` case above, where removing the last policy leaves RLS enabled and deny-all. Set `rls_enabled` explicitly to avoid this; the `inz validate`/`inz dev` warning for an unset field covers it.
+
+Changing the value migrates the table: `true → false` runs `DISABLE ROW LEVEL SECURITY`, `false → true` runs `ENABLE` + `FORCE`.
 
 instancez passes `using` straight through to Postgres’s `USING` clause and `with_check` to `WITH CHECK`. This matches standard Postgres semantics, including the asymmetric `update`-only auto-fill behavior described above.
 
@@ -1859,6 +1915,12 @@ instancez installs these helper functions in the `auth` schema at startup. They 
 | `auth.is_authenticated()` | `boolean`   | Role is `authenticated` or `service_role`. Returns `false` for `anon`.                                                                    |
 
 `auth.uid()` is the right function for owner-scoped policies. `auth.is_authenticated()` is useful as a simpler signed-in-only gate. The underlying implementation reads session GUCs (`app.user_id`, `app.role`, etc.) set at the start of every request transaction.
+
+### The `auth` schema is not readable from `anon`/`authenticated` requests
+
+[Section titled “The auth schema is not readable from anon/authenticated requests”](#the-auth-schema-is-not-readable-from-anonauthenticated-requests)
+
+`anon` and `authenticated` can call the helpers above, but they have no privileges on the `auth.*` tables, the same as on Supabase. A policy or `security: invoker` RPC running as one of those roles that runs `SELECT … FROM auth.users` fails with `permission denied`. Keep user data you need in policies in your own table (for example a `profiles` table with `user_id` referencing `auth.users.id`), or read it in an RPC declared with `security: definer`. Foreign keys to `auth.users.id` keep working. Requests made with the secret key (`service_role`) are unaffected and can still read `auth.*` directly, including through an invoker RPC.
 
 ## Common patterns
 
@@ -1996,6 +2058,7 @@ Tables go under the top-level `tables:` key. Each table gets a name and a list o
 ```yaml
 tables:
   posts:
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -2135,6 +2198,7 @@ By default a table lives in the `public` Postgres schema. Set `schema:` on the t
 tables:
   events:
     schema: analytics
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -2152,6 +2216,7 @@ Add indexes under the table’s `indexes:` key:
 ```yaml
 tables:
   posts:
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -2188,6 +2253,7 @@ Declare the previous name with `renamed_from:` and the migrator issues a rename 
 ```yaml
 tables:
   notes:
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -2203,6 +2269,7 @@ That produces `ALTER TABLE notes RENAME COLUMN body TO content`, so the values s
 tables:
   articles:
     renamed_from: posts
+    rls_enabled: true
     fields:
       - name: id
         type: bigserial
@@ -2340,6 +2407,43 @@ Uploading to an existing path without `upsert: true` returns a 409 error.
 
 Signed URLs are authorized when they are created, not when they are redeemed. `createSignedUrl` checks the bucket’s `select` policy before returning a download URL, and `createSignedUploadUrl` checks the `insert` policy before returning an upload token. If you cannot read or write an object directly, you cannot get a signed URL for it either. Redeeming the token needs no further auth (the token is the grant), so the check happens when the URL is minted.
 
+`createSignedUrls` runs the same `select` check for each path, up to 1000 paths per call: an empty list or more than 1000 returns 400. Paths you can’t read come back with an `error` and a null `signedURL`. Expiry is capped at 7 days (604800 seconds), which is the S3 presign limit. Larger values are clamped, and zero or negative values default to one hour.
+
+`createSignedUploadUrl`’s response `url` includes `?token=`, which is where supabase-js reads it from. `bucket.info(path)` is served at `/object/info/<bucket>/<path>` (also reachable as `/object/info/authenticated/<bucket>/<path>`); `info/authenticated/<bucket>` with no path returns 400. A bucket literally named `public`, `authenticated` or `info` can’t be reached through `.download()` (the bare GET `/object/<bucket>/<path>` route reads the name as a route marker instead). `.exists()` is unaffected: it’s a HEAD request on its own route (`/object/:bucket/*path`), not the parsed GET catch-all, so it reaches those bucket names fine. A bucket literally named `authenticated` also breaks `.info()`, since the info route strips a leading `authenticated/` segment unconditionally. `.getPublicUrl()` is unaffected too. Pick a different name to avoid the ambiguity.
+
+### What each operation checks
+
+[Section titled “What each operation checks”](#what-each-operation-checks)
+
+A row must be visible under a `select` policy before `update` or `delete` can find it: Postgres checks the `WHERE` clause that locates a row against `select`, separately from the write’s own policy. So most operations below need `select` plus the listed policy, not the listed policy alone. A `public: true` bucket gets an implicit unconditional `select` policy, so this is only a concern for a non-public bucket that declares `insert`/`update`/`delete` without `select`.
+
+| Operation               | Policy that must allow it                                                                                                                                                                                                                                                                                                                       |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `remove`, `emptyBucket` | `select` and `delete` on each object. An object you can’t see or delete is dropped from the batch silently, with no error and no count; its bytes are kept. `emptyBucket` isn’t admin-only: it removes what your `select`+`delete` policies allow, as in Supabase.                                                                              |
+| `move`                  | `select` and `update` on the source row, with the destination passing `with_check`. **A policy that grants `update` but not `delete` still lets a caller move an object, which removes the source, same as a delete.** A hidden or missing source returns 404 (unlike `remove`, this fails loudly). Moving onto an existing object returns 409. |
+| `copy`                  | `select` on the source and `insert` on the destination. Copying onto an existing destination object also needs `update` on that row, since copy always upserts. The caller owns the copy.                                                                                                                                                       |
+| `update` (PUT)          | `select` and `update` on the existing object. A hidden or missing object returns 404, like `move`.                                                                                                                                                                                                                                              |
+
+A project that declares no `rls:` on any bucket leaves `storage.objects` RLS off entirely: every operation runs on route-level auth alone, with no per-row check. Every write (upload, update, remove, move, copy, sign) requires a JWT regardless of the bucket’s `public` flag; only the `public/` GET route skips auth.
+
+Object keys with a `..` segment, a NUL byte, or nothing at all return 400 on the single-object routes (upload, download, sign, info, move, copy). `remove` drops bad keys from its batch silently instead; `createSignedUrls` reports a per-path `error` instead of failing the whole call.
+
+A direct upload (`upload`/`update`) checks RLS twice, in this order: the MIME check runs first, then an early probe (a short, always-rolled-back transaction) runs your `insert`/`update` policy with `size = 0` (the real size isn’t known until the body is read), so a `with_check` policy that requires `size > 0` rejects every upload with 403. Only after the probe passes does the body spool to a temporary file, and the real write transaction runs last, re-checking RLS when it writes the metadata row. A signed upload (`uploadToSignedUrl`) checks RLS only once, when `createSignedUploadUrl` mints the token; redemption runs as `service_role` and does not check again, since the token itself is the grant. That mint-time probe uses `size = 0` and an empty content type, so a `with_check` policy bounding either `size` or `mime` rejects every `createSignedUploadUrl` call, the same gotcha as the direct-upload probe above.
+
+The server needs a writable temp directory sized for concurrent uploads × `max_size` (on Lambda, that’s `/tmp`). `uploadToSignedUrl` enforces the same bucket MIME allowlist (422) and `max_size` (413) as a normal upload, and returns 500 if the metadata write fails after the bytes are stored.
+
+### Downloads
+
+[Section titled “Downloads”](#downloads)
+
+For an object served by instancez (every `/object/...` route except a presigned URL from `createSignedUrl(s)`), the response sends `X-Content-Type-Options: nosniff`. Only the `public/` route sends `Cache-Control: public, max-age=3600`; every other route, including an authenticated download of a public bucket, sends `Cache-Control: private, max-age=3600`, since RLS on that route can still be per-caller. HTML, SVG, XML, JavaScript and `multipart/*` responses are sent with `Content-Disposition: attachment`, so an uploaded page can’t run script on your API’s origin. A presigned S3 URL is fetched directly from S3, so none of these headers apply to it; S3 serves its own.
+
+### Image transformations
+
+[Section titled “Image transformations”](#image-transformations)
+
+`width` and `height` accept 1-2500. Larger values are clamped, and negative values return 400. The source image must be 25MB or smaller and 50 megapixels or fewer, or the request returns 413.
+
 ## Storage providers
 
 [Section titled “Storage providers”](#storage-providers)
@@ -2390,6 +2494,8 @@ await fetch(upload_url, { method: 'PUT', headers: { 'Content-Type': file.type },
 ```
 
 Use `GET /api/storage/<bucket>/<id>` to get a presigned download URL later.
+
+These endpoints run as the calling user, so the bucket’s RLS policies apply: `insert` to sign an upload, `select` to sign a download, and `select` plus `delete` to delete (the `DELETE ... RETURNING` under RLS needs `select` to find the row, the same as `remove`). An object you can’t see returns 404. A request with a present but invalid `Authorization: Bearer` token gets 401, even against a public bucket’s download route: a bad token is always an error, not a silent fall-back to anonymous access.
 
 ## What’s next
 
@@ -3356,6 +3462,7 @@ auth:
 
 tables:
   products:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -3383,6 +3490,7 @@ tables:
 
 
   orders:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -3417,6 +3525,7 @@ tables:
 
 
   order_items:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -3821,6 +3930,7 @@ storage:
 
 tables:
   photos:
+    rls_enabled: true
     fields:
       - name: id
         type: uuid
@@ -4166,17 +4276,31 @@ instancez implements the Supabase wire protocol. Any official Supabase SDK works
 
 [Section titled “supabase-js feature matrix”](#supabase-js-feature-matrix)
 
-| Feature                                            | Status                    | Notes                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| -------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Database — `supabase.from()`**                   | ✅ Full                    | `select`, `insert`, `update`, `upsert`, `delete`. All PostgREST filter operators (`eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `like`, `ilike`, `is`, `in`, `contains`, `containedBy`, `overlaps`, …). Embeds (`!inner`, `!left`, FK hints). `order`, `limit`, `offset`, Range-header pagination. `Prefer: return`, `count`, `resolution`, `missing`, `max-affected`, `tx`. CSV responses (`Accept: text/csv`). HEAD requests. |
-| **Auth — `supabase.auth.*`**                       | ✅ Full                    | Email + password, magic link / OTP, anonymous sign-in, session refresh, `updateUser`, `resetPasswordForEmail`, identity linking/unlinking, PKCE.                                                                                                                                                                                                                                                                         |
-| **OAuth — `signInWithOAuth`**                      | ⚠️ Google and GitHub only | The `provider` field accepts `google` and `github`. Other providers return a 400.                                                                                                                                                                                                                                                                                                                                        |
-| **Auth Admin — `supabase.auth.admin.*`**           | ✅ Full                    | `createUser`, `listUsers` (paginated), `getUserById`, `updateUserById`, `deleteUser`, `inviteUserByEmail`, `generateLink`, `signOut` (user), `deleteFactor`.                                                                                                                                                                                                                                                             |
-| **MFA — `supabase.auth.mfa.*`**                    | ⚠️ TOTP only              | `enroll`, `challenge`, `verify`, `unenroll`, `listFactors` all work for TOTP. Phone/SMS factors are not supported.                                                                                                                                                                                                                                                                                                       |
-| **Storage — `supabase.storage.*`**                 | ✅ Full                    | Upload, download, move, copy, remove, list. Public URLs. Signed URLs (download and upload). Bucket management (create, update, delete, empty). Image transforms: resize (`cover`, `contain`, `fill`), quality, format (`jpeg`, `png`); WebP and AVIF output are not supported.                                                                                                                                           |
-| **Edge Functions — `supabase.functions.invoke()`** | ✅ Full                    | Calls code functions at `/functions/v1/<name>`.                                                                                                                                                                                                                                                                                                                                                                          |
-| **RPC — `supabase.rpc()`**                         | ✅ Full                    | Calls SQL functions declared under `rpc:` in `instancez.yaml`.                                                                                                                                                                                                                                                                                                                                                           |
-| **Realtime — `supabase.channel()`**                | ❌ Not supported yet       | instancez has no pub/sub listener. For event-driven patterns in the meantime, use a code function with Postgres LISTEN/NOTIFY or a webhook receiver.                                                                                                                                                                                                                                                                     |
+| Feature                                            | Status                    | Notes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------------------------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Database — `supabase.from()`**                   | ✅ Full                    | `select`, `insert`, `update`, `upsert`, `delete`. All PostgREST filter operators (`eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `like`, `ilike`, `is`, `in`, `contains`, `containedBy`, `overlaps`, …). Embeds (`!inner`, `!left`, FK hints). `order`, `limit`, `offset`, Range-header pagination. `Prefer: return`, `count`, `resolution`, `missing`, `max-affected`, `tx`. CSV responses (`Accept: text/csv`). HEAD requests. The secret key can request a plan with a literal `Accept: application/vnd.pgrst.plan+json` or `+text` header; supabase-js’s `.explain()` adds extra Accept parameters that aren’t recognized yet, so it returns rows instead. Other callers get 406 `PGRST107`. |
+| **Auth — `supabase.auth.*`**                       | ✅ Full                    | Email + password, magic link / OTP, anonymous sign-in, session refresh, `updateUser`, `resetPasswordForEmail`, identity linking/unlinking (`linkIdentity` needs the frontend on the API’s origin, see [Auth](/build/auth/)), PKCE.                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **OAuth — `signInWithOAuth`**                      | ⚠️ Google and GitHub only | The `provider` field accepts `google` and `github`. Other providers return a 400.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **Auth Admin — `supabase.auth.admin.*`**           | ✅ Full                    | `createUser`, `listUsers` (paginated), `getUserById`, `updateUserById`, `deleteUser`, `inviteUserByEmail`, `generateLink`, `signOut` (user), `deleteFactor`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **MFA — `supabase.auth.mfa.*`**                    | ⚠️ TOTP only              | `enroll`, `challenge`, `verify`, `challengeAndVerify`, `unenroll`, `listFactors` and `getAuthenticatorAssuranceLevel` all work for TOTP, with Supabase’s `aal`/`amr` JWT claims. Phone/SMS factors are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Storage — `supabase.storage.*`**                 | ✅ Full                    | Upload, download, move, copy, remove, list. Public URLs. Signed URLs (download and upload). Bucket management (create, update, delete, empty). Image transforms: resize (`cover`, `contain`, `fill`), quality, format (`jpeg`, `png`); WebP and AVIF output are not supported. Transform limits match Supabase: 1-2500px, 25MB and 50MP sources.                                                                                                                                                                                                                                                                                                                                         |
+| **Edge Functions — `supabase.functions.invoke()`** | ✅ Full                    | Calls code functions at `/functions/v1/<name>`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| **RPC — `supabase.rpc()`**                         | ✅ Full                    | Calls SQL functions declared under `rpc:` in `instancez.yaml`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| **Realtime — `supabase.channel()`**                | ❌ Not supported yet       | instancez has no pub/sub listener. For event-driven patterns in the meantime, use a code function with Postgres LISTEN/NOTIFY or a webhook receiver.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+
+## Auth behavior differences from GoTrue
+
+[Section titled “Auth behavior differences from GoTrue”](#auth-behavior-differences-from-gotrue)
+
+instancez’s auth server matches Supabase’s GoTrue on the wire, with a few deliberate differences:
+
+* A banned user gets 403 `user_banned` on every path, including the password grant. GoTrue returns 400 there and 403 elsewhere.
+* A TOTP code is rejected if its 30-second step was already used on that factor, even within the normal replay window GoTrue allows.
+* Linking an OAuth identity to an account that has a password but isn’t verified is refused (422 `email_exists`). GoTrue strips the password and links instead; on an instance with `verify_email: false`, every password user is unverified, so GoTrue’s behavior would silently drop their password.
+* `/otp` with `allow_signup: false` returns an empty 200 for an unknown address, not GoTrue’s 422, so the response never reveals whether the account exists.
+* `/otp` and `/recover` return a silent empty 200 on a repeat within 60 seconds, so neither reveals whether the account exists. `/resend` instead returns 429 `over_email_send_rate_limit` on the same cooldown — matching GoTrue, but inconsistent with instancez’s own `/otp` and `/recover`.
+* An access token issued before a ban or a password change stays valid until it expires; it isn’t revoked early.
+* JWTs are only accepted if signed `RS256` or `HS256`.
 
 ## Direct storage upload (no SDK needed)
 
