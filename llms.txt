@@ -4,8 +4,8 @@
 
 ## Documentation Sets
 
-- [Abridged documentation](https://instancez.github.io/llms-small.txt): a compact version of the documentation for instancez, with non-essential content removed
-- [Complete documentation](https://instancez.github.io/llms-full.txt): the full documentation for instancez
+- [Abridged documentation](https://docs.instancez.ai/llms-small.txt): a compact version of the documentation for instancez, with non-essential content removed
+- [Complete documentation](https://docs.instancez.ai/llms-full.txt): the full documentation for instancez
 
 ## Notes
 
