@@ -620,7 +620,7 @@ Useful SQL helpers available in RLS expressions:
 
 [Section titled “storage”](#storage)
 
-Bucket definitions. Buckets cannot be created, modified, or deleted at runtime; only `instancez.yaml` changes take effect. Bucket names follow the identifier rules, and `public`, `sign`, `authenticated`, `info`, `upload`, `list`, `move` and `copy` are reserved because they’re storage route segments.
+Bucket definitions. Buckets cannot be created, modified, or deleted at runtime; only `instancez.yaml` changes take effect. Bucket names follow the identifier rules, and `public`, `sign`, `authenticated`, `info`, `upload`, `list`, `move`, `copy` and `v1` are reserved because they’re storage route segments.
 
 ```yaml
 storage:
@@ -2089,6 +2089,12 @@ Add `.csv()` in `supabase-js` or set `Accept: text/csv` to receive results as CS
 const { data } = await supabase.from('todos').select('title').order('priority').csv()
 ```
 
+## Error statuses
+
+[Section titled “Error statuses”](#error-statuses)
+
+Database errors use PostgREST’s status mapping. Not-null, check and invalid-input errors (`23502`, `23514`, class `22`) return 400, foreign-key violations (`23503`) return 409, and unknown SQLSTATEs return 400. `42501` (insufficient privilege) returns 403 for `anon`. The body and SQLSTATE `code` are unchanged. A missing required RPC argument returns 404 `PGRST202` with a hint naming the argument.
+
 ## What’s next
 
 [Section titled “What’s next”](#whats-next)
@@ -2879,7 +2885,7 @@ await fetch(upload_url, { method: 'PUT', headers: { 'Content-Type': file.type },
 
 Use `GET /storage/<bucket>/<id>` to get a presigned download URL later.
 
-These endpoints run as the calling user, so the bucket’s RLS policies apply: `insert` to sign an upload, `select` to sign a download (except on a public bucket, where anyone can sign a download, like `/object/public`), and `select` plus `delete` to delete (the `DELETE ... RETURNING` under RLS needs `select` to find the row, the same as `remove`). An object you can’t see returns 404. A request with a present but invalid `Authorization: Bearer` token gets 401, even against a public bucket’s download route: a bad token is always an error, not a silent fall-back to anonymous access.
+These serverless-compatible `/storage/<bucket>` endpoints run as the calling user, so the bucket’s RLS policies apply: `insert` to sign an upload, `select` to sign a download (except on a public bucket, where anyone can sign a download, like `/object/public`; `/storage/v1` signing has no such exception and always follows `rls:`), and `select` plus `delete` to delete (the `DELETE ... RETURNING` under RLS needs `select` to find the row, the same as `remove`). An object you can’t see returns 404. A request with a present but invalid `Authorization: Bearer` token gets 401, even against a public bucket’s download route: a bad token is always an error, not a silent fall-back to anonymous access.
 
 ## What’s next
 
