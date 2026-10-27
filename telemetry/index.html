@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="en" dir="ltr" data-theme="dark" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Telemetry | instancez</title><link rel="canonical" href="https://docs.instancez.ai/telemetry/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt"/><style>.site-title .title-text::after{content:"v0.0.10";margin-left:.55rem;font-family:'Geist Mono',monospace;font-size:.62rem;font-weight:500;letter-spacing:.02em;color:#6a6a6a;border:1px solid #1c1c1c;border-radius:99px;padding:2px 8px;vertical-align:middle}</style><link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml"/><meta name="generator" content="Astro v5.18.2"/><meta name="generator" content="Starlight v0.37.7"/><meta property="og:title" content="Telemetry"/><meta property="og:type" content="article"/><meta property="og:url" content="https://docs.instancez.ai/telemetry/"/><meta property="og:locale" content="en"/><meta property="og:description" content="What the inz CLI sends, what it never sends, crash reports, and how to turn it all off."/><meta property="og:site_name" content="instancez"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="What the inz CLI sends, what it never sends, crash reports, and how to turn it all off."/><script>
+	document.documentElement.dataset.theme = 'dark';
+</script><link rel="stylesheet" href="/_astro/print.DNXP8c50.css" media="print"><link rel="stylesheet" href="/_astro/index.BdrxSEzD.css">
+<link rel="stylesheet" href="/_astro/index.Ce0__qXs.css">
+<style>@layer starlight.components{svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}}
+@layer starlight.components{starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){display:flex}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{--sl-tab-color-border: var(--sl-color-gray-5);display:flex;align-items:center;gap:.5rem;line-height:var(--sl-line-height-headings);padding:.275rem 1.25rem;text-decoration:none;box-shadow:0 2px 0 var(--sl-tab-color-border);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside);overflow-wrap:initial}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected=true]{--sl-tab-color-border: var(--sl-color-text-accent);color:var(--sl-color-white);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}}
+@layer starlight.components{.sl-steps{--bullet-size: calc(var(--sl-line-height) * 1rem);--bullet-margin: .375rem;list-style:none;counter-reset:steps-counter var(--sl-steps-start, 0);padding-inline-start:0}.sl-steps>li{counter-increment:steps-counter;position:relative;padding-inline-start:calc(var(--bullet-size) + 1rem);padding-bottom:1px;min-height:calc(var(--bullet-size) + var(--bullet-margin))}.sl-steps>li+li{margin-top:0}.sl-steps>li:before{content:counter(steps-counter);position:absolute;top:0;inset-inline-start:0;width:var(--bullet-size);height:var(--bullet-size);line-height:var(--bullet-size);font-size:var(--sl-text-xs);font-weight:600;text-align:center;color:var(--sl-color-white);background-color:var(--sl-color-gray-6);border-radius:99rem;box-shadow:inset 0 0 0 1px var(--sl-color-gray-5)}.sl-steps>li:after{--guide-width: 1px;content:"";position:absolute;top:calc(var(--bullet-size) + var(--bullet-margin));bottom:var(--bullet-margin);inset-inline-start:calc((var(--bullet-size) - var(--guide-width)) / 2);width:var(--guide-width);background-color:var(--sl-color-hairline-light)}}@layer starlight.content{.sl-steps>li>:first-child{--lh: calc(1em * var(--sl-line-height));--shift-y: calc(.5 * (var(--bullet-size) - var(--lh)));transform:translateY(var(--shift-y));margin-bottom:var(--shift-y)}.sl-steps>li>:first-child:where(h1,h2,h3,h4,h5,h6){--lh: calc(1em * var(--sl-line-height-headings))}@supports (--prop: 1lh){.sl-steps>li>:first-child{--lh: 1lh}}}
+</style><script type="module" src="/_astro/page.B1D-nYk3.js"></script></head> <body class="astro-bguv2lll"> <a href="#_top" class="astro-7q3lir66">Skip to content</a>  <div class="layout astro-qgm4hv6f"> <div class="layout__grid astro-qgm4hv6f"> <header class="layout__header astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container container__header astro-qgm4hv6f"> <div class="site-title-wrapper astro-al2ajamp"> <a href="/" class="site-title astro-pl5n7ndn">  <img class="logo-size astro-pl5n7ndn" alt="instancez" src="/_astro/logo.QAEItoHz.svg" width="345" height="383">  <span class="title-text astro-pl5n7ndn"> instancez </span> </a>  <nav class="nav-bar astro-cr6yirev">  </nav>  </div> <button class="show-modal astro-355t7gtl" popovertargetaction="toggle" popovertarget="drawer"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="astro-355t7gtl"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" class="astro-355t7gtl"></path> </svg> <span class="sr-only astro-355t7gtl">Toggle Menu</span> </button>  <div class="header-right astro-al2ajamp"> <site-search class="astro-al2ajamp astro-pmbanboq" data-translations="{&#34;placeholder&#34;:&#34;Search&#34;}"> <button data-open-modal disabled aria-label="Search" aria-keyshortcuts="Control+K" class="astro-pmbanboq"> <span aria-hidden="true" class="astro-pmbanboq">Search</span> <kbd class="sl-hidden md:sl-flex astro-pmbanboq" style="display: none;"> <kbd class="astro-pmbanboq">Ctrl</kbd><kbd class="astro-pmbanboq">K</kbd> </kbd> </button> <dialog style="padding:0" aria-label="Search" class="astro-pmbanboq"> <div class="dialog-frame sl-flex astro-pmbanboq">  <button data-close-modal class="sl-flex md:sl-hidden astro-pmbanboq"> Cancel </button> <div class="search-container astro-pmbanboq"> <div id="starlight__search" class="astro-pmbanboq"></div> </div> </div> </dialog> </site-search>  <script>
+  ;(() => {
+    const openBtn = document.querySelector('button[data-open-modal]')
+    const shortcut = openBtn?.querySelector('kbd')
+    if (!openBtn || !(shortcut instanceof HTMLElement)) return
+    const platformKey = shortcut.querySelector('kbd')
+    if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
+      platformKey.textContent = '⌘'
+      openBtn.setAttribute('aria-keyshortcuts', 'Meta+K')
+    }
+    shortcut.style.display = ''
+  })()
+</script> <script type="module" src="/_astro/Search.astro_astro_type_script_index_0_lang.Bij-bOB5.js"></script>   <nav class="header-nav astro-al2ajamp"> <div class="astro-al2ajamp"> <a href="https://github.com/instancez/instancez" rel="me" class="sl-flex button astro-sxsus6vf" data-variant="ghost"><span class="sr-only astro-sxsus6vf">GitHub</span><svg aria-hidden="true" class="astro-sxsus6vf astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg></a> </div> <div class="astro-al2ajamp"> <starlight-theme-black-select class="astro-qxpzpg5m"> <button aria-label="Select theme" aria-live="polite" class="sl-flex button astro-qxpzpg5m" title="Select theme" data-variant="ghost"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun astro-qxpzpg5m"> <circle cx="12" cy="12" r="4" class="astro-qxpzpg5m"></circle> <path d="M12 2v2" class="astro-qxpzpg5m"></path> <path d="M12 20v2" class="astro-qxpzpg5m"></path> <path d="m4.93 4.93 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m17.66 17.66 1.41 1.41" class="astro-qxpzpg5m"></path> <path d="M2 12h2" class="astro-qxpzpg5m"></path> <path d="M20 12h2" class="astro-qxpzpg5m"></path> <path d="m6.34 17.66-1.41 1.41" class="astro-qxpzpg5m"></path> <path d="m19.07 4.93-1.41 1.41" class="astro-qxpzpg5m"></path> </svg> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon astro-qxpzpg5m"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" class="astro-qxpzpg5m"></path> </svg> <span class="sr-only astro-qxpzpg5m">Toggle theme</span> </button> </starlight-theme-black-select>   <script>
+  StarlightThemeProvider.updatePickers()
+</script> <script type="module">const n="starlight-theme";function c(e){return e==="auto"||e==="dark"||e==="light"?e:"auto"}function l(){return c(typeof localStorage<"u"&&localStorage.getItem(n))}function i(e){typeof localStorage<"u"&&localStorage.setItem(n,e==="light"||e==="dark"?e:"")}function s(){return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}function t(e){StarlightThemeProvider.updatePickers(e),document.documentElement.dataset.theme=e==="auto"?s():e,i(e)}matchMedia("(prefers-color-scheme: light)").addEventListener("change",()=>{l()==="auto"&&t("auto")});customElements.define("starlight-theme-black-select",class extends HTMLElement{constructor(){super(),t(l());const a=this.querySelector("button");a?.addEventListener("click",()=>{const o=c(document.documentElement.dataset.theme),r=o==="dark"?"light":o==="light"?"dark":"auto";t(r),a?.setAttribute("aria-label",`${r} theme`)})}});</script> </div> <div class="astro-al2ajamp"> <script type="module">class s extends HTMLElement{constructor(){super();const e=this.querySelector("select");e&&(e.addEventListener("change",t=>{t.currentTarget instanceof HTMLSelectElement&&(window.location.pathname=t.currentTarget.value)}),window.addEventListener("pageshow",t=>{if(!t.persisted)return;const n=e.querySelector("option[selected]")?.index;n!==e.selectedIndex&&(e.selectedIndex=n??0)}))}}customElements.define("starlight-lang-select",s);</script> </div> </nav> </div>  </div> </div> </header> <main class="main astro-qgm4hv6f">  <div class="container-wrapper astro-qgm4hv6f"> <div class="container container-wrapper-main astro-qgm4hv6f"> <aside class="aside astro-qgm4hv6f"> <div class="sidebar astro-ogph4agi"> <div class="container-sidebar astro-ogph4agi"> <a href="/quick-start/" aria-current="false" class="entry-link astro-euowmrmi">Quick Start</a><a href="/install/" aria-current="false" class="entry-link astro-euowmrmi">Installation</a><a href="/coding-agents/" aria-current="false" class="entry-link astro-euowmrmi">Coding Agents</a><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Build</h4><div class="container-group-link astro-euowmrmi"><a href="/build/schema/" aria-current="false" class="entry-link astro-euowmrmi">Tables / Schema</a><a href="/build/auth/" aria-current="false" class="entry-link astro-euowmrmi">Auth</a><a href="/build/rls/" aria-current="false" class="entry-link astro-euowmrmi">RLS Policies</a><a href="/api-reference/rpc/" aria-current="false" class="entry-link astro-euowmrmi">SQL Functions</a><a href="/build/functions/" aria-current="false" class="entry-link astro-euowmrmi">Code Functions</a><a href="/build/storage/" aria-current="false" class="entry-link astro-euowmrmi">Storage</a><a href="/build/sql-editor/" aria-current="false" class="entry-link astro-euowmrmi">SQL Editor</a><a href="/build/querying/" aria-current="false" class="entry-link astro-euowmrmi">Querying</a><a href="/build/types/" aria-current="false" class="entry-link astro-euowmrmi">TypeScript Types</a><a href="/supabase-compatibility/" aria-current="false" class="entry-link astro-euowmrmi">Supabase SDK Compatibility</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Deploy</h4><div class="container-group-link astro-euowmrmi"><a href="/deploy/cloud/" aria-current="false" class="entry-link astro-euowmrmi">instancez Cloud</a><a href="/deploy/docker/" aria-current="false" class="entry-link astro-euowmrmi">Docker</a><a href="/deploy/kubernetes/" aria-current="false" class="entry-link astro-euowmrmi">Kubernetes</a><a href="/deploy/lambda/" aria-current="false" class="entry-link astro-euowmrmi">AWS Lambda</a><a href="/deploy/self-hosted/" aria-current="false" class="entry-link astro-euowmrmi">Self-hosted</a><a href="/deploy/env-vars/" aria-current="false" class="entry-link astro-euowmrmi">Environment Variables</a><a href="/deploy/observability/" aria-current="false" class="entry-link astro-euowmrmi">Observability</a><a href="/telemetry/" aria-current="page" class="entry-link astro-euowmrmi">Telemetry</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Examples</h4><div class="container-group-link astro-euowmrmi"><a href="/examples/ecommerce-store/" aria-current="false" class="entry-link astro-euowmrmi">Ecommerce Store</a><a href="/examples/file-gallery/" aria-current="false" class="entry-link astro-euowmrmi">File Gallery</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">CLI Reference</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/cli/" aria-current="false" class="entry-link astro-euowmrmi">CLI</a></div></div><div class="container-sidebar-entry astro-euowmrmi"><h4 class="entry-title astro-euowmrmi">Configuration</h4><div class="container-group-link astro-euowmrmi"><a href="/api-reference/config/" aria-current="false" class="entry-link astro-euowmrmi">instancez.yaml</a></div></div> </div> </div>  </aside>   <script type="module">const a=document.getElementById("starlight__sidebar"),n=a?.querySelector("sl-sidebar-state-persist"),o="sl-sidebar-state",i=()=>{let t=[];const e=n?.dataset.hash||"";try{const s=sessionStorage.getItem(o),r=JSON.parse(s||"{}");Array.isArray(r.open)&&r.hash===e&&(t=r.open)}catch{}return{hash:e,open:t,scroll:a?.scrollTop||0}},c=t=>{try{sessionStorage.setItem(o,JSON.stringify(t))}catch{}},d=()=>c(i()),l=(t,e)=>{const s=i();s.open[e]=t,c(s)};n?.addEventListener("click",t=>{if(!(t.target instanceof Element))return;const e=t.target.closest("summary")?.closest("details");if(!e)return;const s=e.querySelector("sl-sidebar-restore"),r=parseInt(s?.dataset.index||"");isNaN(r)||l(!e.open,r)});addEventListener("visibilitychange",()=>{document.visibilityState==="hidden"&&d()});addEventListener("pageHide",d);</script> <main class="container-main astro-jytpsvwo"><div class="main astro-jytpsvwo">  <main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">   <script type="module">for(const e of document.querySelectorAll(".page-menu")){document.addEventListener("click",t=>{e.open&&!e.contains(t.target)&&(e.open=!1)}),e.addEventListener("keydown",t=>{t.key==="Escape"&&(e.open=!1)});for(const t of e.querySelectorAll(".menu-item[data-copy]"))t.addEventListener("click",async()=>{const o=t.dataset.copy,a=t.dataset.label;try{const n=await fetch(o);if(!n.ok)throw new Error(String(n.status));await navigator.clipboard.writeText(await n.text()),t.textContent="Copied!"}catch{t.textContent="Copy failed"}setTimeout(()=>{t.textContent=a,e.open=!1},1200)})}</script>  <div class="title-row astro-4neoakie"> <div class="title-col astro-4neoakie"> <div class="breadcrumb astro-6jkgswov"><div class="truncate astro-6jkgswov">Docs</div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-6jkgswov"><path d="m9 18 6-6-6-6" class="astro-6jkgswov"></path></svg><div class="text-foreground astro-6jkgswov">Telemetry</div></div><h1 id="_top" class="astro-6jkgswov">Telemetry</h1> <p class="astro-6jkgswov">What the inz CLI sends, what it never sends, crash reports, and how to turn it all off.</p>   </div> <details class="page-menu astro-4neoakie"> <summary aria-label="Copy this page or ask an AI about it" class="astro-4neoakie"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="astro-4neoakie"> <rect width="14" height="14" x="8" y="8" rx="2" ry="2" class="astro-4neoakie"></rect> <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" class="astro-4neoakie"></path> </svg> <span class="astro-4neoakie">Copy / Ask AI</span> <svg class="chev astro-4neoakie" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="m6 9 6 6 6-6" class="astro-4neoakie"></path> </svg> </summary> <div class="menu astro-4neoakie" role="menu"> <button type="button" class="menu-item astro-4neoakie" data-copy="/telemetry.md" data-label="Copy this page as Markdown" role="menuitem">
+Copy this page as Markdown
+</button> <button type="button" class="menu-item astro-4neoakie" data-copy="/llms-full.txt" data-label="Copy all docs as Markdown" role="menuitem">
+Copy all docs as Markdown
+</button> <a class="menu-item astro-4neoakie" href="https://chatgpt.com/?q=Read%20the%20full%20instancez%20documentation%20at%20https%3A%2F%2Finstancez.github.io%2Fllms-full.txt%20and%20help%20me%20use%20instancez.%20I'm%20currently%20reading%20https%3A%2F%2Finstancez.github.io%2Ftelemetry%2F." target="_blank" rel="noreferrer" role="menuitem">
+Open in ChatGPT
+</a> <a class="menu-item astro-4neoakie" href="https://claude.ai/new?q=Read%20the%20full%20instancez%20documentation%20at%20https%3A%2F%2Finstancez.github.io%2Fllms-full.txt%20and%20help%20me%20use%20instancez.%20I'm%20currently%20reading%20https%3A%2F%2Finstancez.github.io%2Ftelemetry%2F." target="_blank" rel="noreferrer" role="menuitem">
+Open in Claude
+</a> </div> </details> </div>     <div class="markdown-wrapper"> <div class="sl-markdown-content">  <p>The <code dir="auto">inz</code> CLI sends anonymous usage data to help the instancez team see where people get stuck. It is on by default. You can turn it off with one command. This page lists everything it sends.</p>
+<p>Telemetry comes from the CLI process only. The running server never reports request or user data. <code dir="auto">dev_ready</code> does send table and function counts.</p>
+<p>The first time you run a command with telemetry on, <code dir="auto">inz</code> prints this once to stderr:</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.sfvf5.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz collects anonymous usage data to improve the CLI.</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">Disable: inz telemetry disable  (or INSTANCEZ_TELEMETRY_DISABLED=1)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">Details: https://docs.instancez.ai/telemetry/</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz collects anonymous usage data to improve the CLI.Disable: inz telemetry disable  (or INSTANCEZ_TELEMETRY_DISABLED=1)Details: https://docs.instancez.ai/telemetry/"><div></div></button></div></figure></div>
+<p>The notice is not shown for <code dir="auto">serve</code>, <code dir="auto">version</code>, <code dir="auto">telemetry</code>, <code dir="auto">help</code>, or <code dir="auto">completion</code>. The <code dir="auto">telemetry</code>, <code dir="auto">help</code>, and <code dir="auto">completion</code> commands send nothing, not even <code dir="auto">command_run</code>, and never create <code dir="auto">~/.instancez/telemetry.json</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="turn-it-off">Turn it off</h2><a class="sl-anchor-link" href="#turn-it-off"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Turn it off”</span></a></div>
+<p>Any one of these is enough:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Method</th><th>Scope</th></tr></thead><tbody><tr><td><code dir="auto">inz telemetry disable</code></td><td>Saved in <code dir="auto">~/.instancez/telemetry.json</code>. Applies to every run.</td></tr><tr><td><code dir="auto">--no-telemetry</code></td><td>One run. Works on any command.</td></tr><tr><td><code dir="auto">INSTANCEZ_TELEMETRY_DISABLED=1</code></td><td>Environment. Also accepts <code dir="auto">true</code>, <code dir="auto">yes</code>, or <code dir="auto">on</code>, in any case, with surrounding spaces ignored.</td></tr><tr><td><code dir="auto">DO_NOT_TRACK=1</code></td><td>The <a href="https://consoledonottrack.com">Do Not Track</a> convention. Accepts the same values.</td></tr></tbody></table>
+<p><code dir="auto">inz telemetry enable</code> turns it back on. <code dir="auto">inz telemetry status</code> shows whether it is on, why it is off if so, and your anonymous id.</p>
+<p>Builds made from source (version <code dir="auto">dev</code>) never send anything.</p>
+<p>If <code dir="auto">~/.instancez/telemetry.json</code> exists but cannot be read or parsed, telemetry stays off and the file is left untouched. <code dir="auto">inz telemetry status</code> shows the reason, and <code dir="auto">inz telemetry enable</code> or <code dir="auto">disable</code> writes a fresh file.</p>
+<p>When telemetry is off, <code dir="auto">inz</code> makes no network call for it. An opt-out by environment variable, <code dir="auto">--no-telemetry</code>, or a source build does not create <code dir="auto">~/.instancez</code>.</p>
+<p>Off also means no crash prompt, with one exception: a source build asks again only when <code dir="auto">INSTANCEZ_TELEMETRY_DEBUG=1</code> is set, and then prints the payload instead of sending it.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="what-is-sent">What is sent</h2><a class="sl-anchor-link" href="#what-is-sent"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “What is sent”</span></a></div>
+<p>Every event carries the same base properties:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">version</code>, <code dir="auto">commit</code></td><td>CLI build</td></tr><tr><td><code dir="auto">os</code>, <code dir="auto">arch</code></td><td>For example <code dir="auto">linux</code>, <code dir="auto">arm64</code></td></tr><tr><td><code dir="auto">is_ci</code></td><td><code dir="auto">true</code> when the <code dir="auto">CI</code> env var is set</td></tr><tr><td><code dir="auto">is_agent</code></td><td><code dir="auto">true</code> when a known coding-agent env var is set (<code dir="auto">CLAUDECODE</code>, <code dir="auto">CURSOR_AGENT</code>, <code dir="auto">GEMINI_CLI</code>, <code dir="auto">CODEX_SANDBOX</code>)</td></tr><tr><td><code dir="auto">$process_person_profile</code>, <code dir="auto">$geoip_disable</code></td><td>Always <code dir="auto">false</code> and <code dir="auto">true</code>: no person profile, no geo lookup</td></tr></tbody></table>
+<p>The PostHog Go library adds these on send, and <code dir="auto">inz</code> cannot turn them off:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">$os</code></td><td>OS name, for example <code dir="auto">Linux</code> or <code dir="auto">Mac OS X</code></td></tr><tr><td><code dir="auto">$os_version</code></td><td>OS version: <code dir="auto">sw_vers -productVersion</code> on macOS, <code dir="auto">VERSION_ID</code> from <code dir="auto">/etc/os-release</code> on Linux, the build number on Windows</td></tr><tr><td><code dir="auto">$os_distro</code></td><td>Linux only: <code dir="auto">NAME</code> from <code dir="auto">/etc/os-release</code>, for example <code dir="auto">Ubuntu</code></td></tr><tr><td><code dir="auto">$go_version</code></td><td>Go version the CLI was built with</td></tr><tr><td><code dir="auto">$lib</code>, <code dir="auto">$lib_version</code></td><td><code dir="auto">posthog-go</code> and its version</td></tr></tbody></table>
+<p>Debug mode and the crash prompt’s <code dir="auto">v</code> view show these too, so what you see is what is sent.</p>
+<p>The event’s distinct id is a random UUID stored in <code dir="auto">~/.instancez/telemetry.json</code>. It is not tied to you or your machine. Person profiles and geo lookup are switched off, and events carry no IP property. PostHog still sees the IP address of the connection. Whether it keeps it depends on the PostHog project setting “Discard client IP data”, which the team keeps on.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="command_run"><code dir="auto">command_run</code></h3><a class="sl-anchor-link" href="#command_run"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “command_run”</span></a></div>
+<p>Sent once when a command finishes. Not sent by <code dir="auto">inz serve</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">command</code></td><td>Command path, for example <code dir="auto">cloud deploy</code></td></tr><tr><td><code dir="auto">success</code></td><td><code dir="auto">true</code> or <code dir="auto">false</code></td></tr><tr><td><code dir="auto">duration_ms</code></td><td>How long the command ran</td></tr><tr><td><code dir="auto">error_class</code></td><td>On failure, a short class such as <code dir="auto">config_invalid</code>, <code dir="auto">env:db_auth</code> (database rejected the login), <code dir="auto">env:db_connect</code> (any other database connection failure), <code dir="auto">env:connect_refused</code> (any other refused connection), or <code dir="auto">go:*fs.PathError</code></td></tr><tr><td><code dir="auto">error_message</code></td><td>On failure, the cleaned-up message (see below). For config validation failures, the first three errors as <code dir="auto">path: message</code>.</td></tr><tr><td><code dir="auto">expected</code></td><td>On failure, <code dir="auto">true</code> when the cause is a user mistake, such as a config typo or a failed preflight check</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="exception"><code dir="auto">$exception</code></h3><a class="sl-anchor-link" href="#exception"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “$exception”</span></a></div>
+<p>Sent for every failed command, in addition to <code dir="auto">command_run</code>. PostHog uses it to group common errors.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">command</code></td><td>Command path</td></tr><tr><td><code dir="auto">expected</code></td><td><code dir="auto">true</code> for user mistakes, <code dir="auto">false</code> for unexpected errors</td></tr><tr><td><code dir="auto">$exception_list</code></td><td>Error class and cleaned-up message. Panics also carry structured Go stack frames: function, line, and a file path with your home directory shown as <code dir="auto">~</code> and other absolute paths cut to the file name.</td></tr><tr><td><code dir="auto">error_detail</code></td><td>The full error chain, cleaned up, when it adds to the message</td></tr></tbody></table>
+<p>An unexpected <code dir="auto">dev</code> or <code dir="auto">serve</code> failure can also carry a crash report if you accept it. See <a href="#crash-reports">Crash reports</a>.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="dev_ready"><code dir="auto">dev_ready</code></h3><a class="sl-anchor-link" href="#dev_ready"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “dev_ready”</span></a></div>
+<p>Sent by <code dir="auto">inz dev</code> right after it starts the HTTP server, before the port is confirmed bound. <code dir="auto">command_run</code> for <code dir="auto">dev</code> only arrives at exit, so this event shows whether <code dir="auto">dev</code> booted.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">duration_ms</code></td><td>Time from process start to ready</td></tr><tr><td><code dir="auto">embedded_pg</code></td><td><code dir="auto">true</code> when using <code dir="auto">--embedded-pg</code></td></tr><tr><td><code dir="auto">functions</code></td><td>Number of code functions</td></tr><tr><td><code dir="auto">tables</code></td><td>Number of tables</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h3"><h3 id="dev_runtime_error"><code dir="auto">dev_runtime_error</code></h3><a class="sl-anchor-link" href="#dev_runtime_error"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “dev_runtime_error”</span></a></div>
+<p>Sent by <code dir="auto">inz dev</code> when a hot reload fails while <code dir="auto">dev</code> keeps running, including YAML typos. It never prompts. Each distinct error is sent once, and at most 10 per <code dir="auto">dev</code> run.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td><code dir="auto">error_class</code></td><td>Short class</td></tr><tr><td><code dir="auto">error_message</code></td><td>Cleaned-up message</td></tr><tr><td><code dir="auto">expected</code></td><td><code dir="auto">true</code> for user mistakes</td></tr></tbody></table>
+<div class="sl-heading-wrapper level-h2"><h2 id="what-is-never-sent">What is never sent</h2><a class="sl-anchor-link" href="#what-is-never-sent"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “What is never sent”</span></a></div>
+<ul>
+<li>Flag values or command arguments. Quoted text in error messages is replaced, so <code dir="auto">unknown command "x"</code> is sent as <code dir="auto">unknown command &#x3C;value></code>.</li>
+<li>The contents of <code dir="auto">instancez.yaml</code>, except in a crash report you accept</li>
+<li>Environment variables or <code dir="auto">.env</code> files</li>
+<li>Database data, connection strings, or passwords</li>
+<li>Your location. Geo lookup is disabled and events carry no IP property.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="cleaned-up-error-messages">Cleaned-up error messages</h3><a class="sl-anchor-link" href="#cleaned-up-error-messages"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Cleaned-up error messages”</span></a></div>
+<p>Error messages and stack traces are cleaned before they leave your machine. Messages are cut to 300 characters. Structural rules come first:</p>
+<ul>
+<li>
+<p>Anything in double quotes, single quotes, or backticks becomes <code dir="auto">&#x3C;value></code>. Apostrophes inside words, as in <code dir="auto">can't</code>, do not start a quote. Three kinds of quoted text are kept, because they explain the error:</p>
+<ul>
+<li>short lowercase identifiers such as <code dir="auto">"node"</code>, <code dir="auto">"user"</code>, or a mistyped command like <code dir="auto">"deplyo"</code> (up to 25 characters of <code dir="auto">a-z</code>, digits, <code dir="auto">_</code>, <code dir="auto">.</code>, <code dir="auto">-</code>)</li>
+<li>flag spellings such as <code dir="auto">"--port"</code></li>
+<li><code dir="auto">inz</code> command and flag names such as <code dir="auto">"inz cloud"</code> or <code dir="auto">"-y, --yes"</code></li>
+</ul>
+<p>Quoted text after a value word (<code dir="auto">user</code>, <code dir="auto">role</code>, <code dir="auto">database</code>, <code dir="auto">password</code>, <code dir="auto">token</code>, <code dir="auto">key</code>, <code dir="auto">argument</code>, <code dir="auto">parsing</code>, or a Postgres “invalid input” phrase) is always replaced. A short lowercase secret in quotes elsewhere can still appear.</p>
+</li>
+<li>
+<p>Absolute paths become <code dir="auto">&#x3C;path>/</code> plus the file name, for example <code dir="auto">&#x3C;path>/instancez.yaml</code>. That applies to Windows paths and to paths under <code dir="auto">~</code> too.</p>
+</li>
+<li>
+<p>Hosts in <code dir="auto">lookup &#x3C;host></code>, <code dir="auto">dial tcp &#x3C;host></code>, <code dir="auto">host:port (host)</code>, and TLS certificate errors become <code dir="auto">&#x3C;host></code>.</p>
+</li>
+</ul>
+<p>Then pattern rules catch what is left:</p>
+<ul>
+<li>URLs with credentials become <code dir="auto">scheme://&#x3C;redacted></code></li>
+<li>Values after password-, secret-, token-, and key-like names (<code dir="auto">password=</code>, <code dir="auto">password: </code>, <code dir="auto">"password":"…"</code>, <code dir="auto">DB_PW = "…"</code>, <code dir="auto">api_key=</code>) and secret query parameters (<code dir="auto">client_secret=</code>, <code dir="auto">X-Amz-Signature=</code>) become <code dir="auto">&#x3C;redacted></code></li>
+<li>Connection-string keywords <code dir="auto">user=</code>, <code dir="auto">database=</code>, <code dir="auto">dbname=</code>, and <code dir="auto">host=</code> have their values replaced</li>
+<li><code dir="auto">/Users/&#x3C;name></code> and <code dir="auto">/home/&#x3C;name></code> become <code dir="auto">/Users/&#x3C;user></code> and <code dir="auto">/home/&#x3C;user></code></li>
+<li>Email addresses, including ones without a dot such as <code dir="auto">alice@localhost</code>, become <code dir="auto">&#x3C;email></code></li>
+<li>Known token shapes become <code dir="auto">&#x3C;redacted></code>: JWTs, PEM private keys, <code dir="auto">Bearer</code> and <code dir="auto">Basic</code> values, Stripe (<code dir="auto">sk_</code>, <code dir="auto">rk_</code>, <code dir="auto">pk_</code>, <code dir="auto">whsec_</code>), GitHub (<code dir="auto">ghp_</code>, <code dir="auto">gho_</code>, <code dir="auto">github_pat_</code>), Slack (<code dir="auto">xoxb-</code>, webhook URLs), OpenAI and Anthropic (<code dir="auto">sk-…</code>), Google (<code dir="auto">AIza…</code>), instancez keys and tokens (<code dir="auto">inz_secret_</code>, <code dir="auto">inz_publishable_</code>, <code dir="auto">instancez_pat_</code>), AWS access keys, <code dir="auto">phc_</code>, <code dir="auto">npm_</code>, and long base64 or hex runs</li>
+</ul>
+<p>The rest of the message stays. Validation errors often name a table, column, or function from your config, so those names can appear in <code dir="auto">error_message</code>.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="crash-reports">Crash reports</h2><a class="sl-anchor-link" href="#crash-reports"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Crash reports”</span></a></div>
+<p>A crash report adds your project files to the <code dir="auto">$exception</code> event so the team can reproduce a bug. It is never sent without your answer.</p>
+<p><code dir="auto">inz</code> asks only when all of these hold:</p>
+<ul>
+<li>The command is <code dir="auto">dev</code> or <code dir="auto">serve</code>.</li>
+<li>The failure is unexpected, or a panic. User mistakes never prompt.</li>
+<li>stdin and stderr are both a terminal.</li>
+<li>For <code dir="auto">serve</code>, the process is not in a container (<code dir="auto">/.dockerenv</code>, <code dir="auto">/run/.containerenv</code>, or <code dir="auto">KUBERNETES_SERVICE_HOST</code>). A container started with <code dir="auto">-t</code> has a terminal that nobody is typing into.</li>
+<li><code dir="auto">CI</code> is not set.</li>
+<li>Telemetry is not turned off. A source build counts as off unless <code dir="auto">INSTANCEZ_TELEMETRY_DEBUG=1</code> is set.</li>
+</ul>
+<p>Hot-reload failures in <code dir="auto">dev</code> never prompt.</p>
+<p>The prompt lists exactly what would be sent:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#eeffff">inz dev failed. Send a crash report to the instancez team?</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">It includes:</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#eeffff">  </span></span><span style="--0:#eeffff">- the error and stack trace</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#eeffff">  </span></span><span style="--0:#eeffff">- instancez.yaml (comments dropped; values other than schema structure and ${ENV} references replaced with &#x3C;redacted>)</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#eeffff">  </span></span><span style="--0:#eeffff">- function source: functions/hello.js, functions/package.json (2 files, 4.1 KB; comments and long string literals replaced)</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">It never includes: .env files, environment variables, database data, node_modules.</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">Redaction is best-effort. Answer v to see the exact payload.</span></div></div><div class="ec-line"><div class="code"><span style="--0:#eeffff">Send? [y/N/v=view]</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="inz dev failed. Send a crash report to the instancez team?It includes:  - the error and stack trace  - instancez.yaml (comments dropped; values other than schema structure and ${ENV} references replaced with <redacted>)  - function source: functions/hello.js, functions/package.json (2 files, 4.1 KB; comments and long string literals replaced)It never includes: .env files, environment variables, database data, node_modules.Redaction is best-effort. Answer v to see the exact payload.Send? [y/N/v=view]"><div></div></button></div></figure></div>
+<p>Answer <code dir="auto">y</code> to send. Anything else, including Enter, declines. Answer <code dir="auto">v</code> to print the exact payload and be asked again. Keys you typed before the prompt appeared are discarded, so they cannot answer it. With no answer after 30 seconds, <code dir="auto">inz</code> prints <code dir="auto">no answer, not sent</code> and sends no report.</p>
+<p>If you decline, <code dir="auto">dev</code> still sends the plain <code dir="auto">$exception</code> event described above, without any files. <code dir="auto">serve</code> sends nothing.</p>
+<div class="sl-heading-wrapper level-h3"><h3 id="what-a-report-includes">What a report includes</h3><a class="sl-anchor-link" href="#what-a-report-includes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “What a report includes”</span></a></div>
+<ul>
+<li><code dir="auto">instancez.yaml</code>, with secrets redacted.</li>
+<li>Function entry files and <code dir="auto">package*.json</code>. Files named <code dir="auto">.env*</code> and files outside <code dir="auto">functions/</code> are left out, including symlinks that point outside it.</li>
+<li>The whole event is capped at about 450 KB of JSON, below PostHog’s 500 KB limit, so the error and stack always arrive. The largest files are dropped first and listed under <code dir="auto">truncated_files</code>; if the stack is still too big, its outermost frames are dropped.</li>
+<li>When the config comes from S3 or a bundle, no files are attached and the prompt says so.</li>
+</ul>
+<div class="sl-heading-wrapper level-h3"><h3 id="how-redaction-works">How redaction works</h3><a class="sl-anchor-link" href="#how-redaction-works"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “How redaction works”</span></a></div>
+<p><code dir="auto">inz</code> reads <code dir="auto">instancez.yaml</code> from disk, before any <code dir="auto">${ENV}</code> expansion, and rebuilds it:</p>
+<ul>
+<li>All comments are dropped.</li>
+<li>Keys are kept. Table, field, function, and bucket names stay visible.</li>
+<li>Values are replaced with <code dir="auto">&#x3C;redacted></code>, except booleans, numbers, <code dir="auto">${ENV}</code> references, and these schema keys: <code dir="auto">type</code>, <code dir="auto">references</code>, <code dir="auto">on_delete</code>, <code dir="auto">on_update</code>, <code dir="auto">primary_key</code>, <code dir="auto">nullable</code>, <code dir="auto">unique</code>, <code dir="auto">index</code>, <code dir="auto">rls_enabled</code>, <code dir="auto">schema</code>, <code dir="auto">public</code>, <code dir="auto">file</code>, <code dir="auto">runtime</code>, <code dir="auto">method</code>, <code dir="auto">returns</code>, <code dir="auto">language</code>, <code dir="auto">volatility</code>, <code dir="auto">operations</code>, <code dir="auto">version</code>, and <code dir="auto">name</code> inside <code dir="auto">fields</code> and <code dir="auto">args</code>.</li>
+<li>SQL in <code dir="auto">using</code>, <code dir="auto">with_check</code>, <code dir="auto">check</code>, <code dir="auto">where</code>, <code dir="auto">sql</code>, <code dir="auto">body</code>, and function-call defaults such as <code dir="auto">now()</code> is kept, but every string literal becomes <code dir="auto">'&#x3C;value>'</code>. Identifiers and expressions in that SQL are sent.</li>
+<li>Everything under an <code dir="auto">env</code> map is redacted, including numbers, and so is everything reached through a YAML alias or <code dir="auto">&#x3C;&#x3C;</code> merge key.</li>
+<li>If the file does not parse, it is not attached and is listed under <code dir="auto">truncated_files</code> as unparseable.</li>
+</ul>
+<p>Function files keep their code and line numbers, with these changes:</p>
+<ul>
+<li>Comment text is removed. The <code dir="auto">//</code>, <code dir="auto">/*</code>, and <code dir="auto">*/</code> markers and the line breaks stay.</li>
+<li>String literals of 12 or more characters with no whitespace become <code dir="auto">"&#x3C;redacted>"</code>. Module names in <code dir="auto">import</code> and <code dir="auto">require</code> are kept, and so are object keys (a string after <code dir="auto">{</code> or <code dir="auto">,</code> and before <code dir="auto">:</code>).</li>
+<li>Strings that contain spaces are kept, but every run of 12 or more non-space characters that mixes letters with digits or punctuation becomes <code dir="auto">&#x3C;redacted></code>. So do <code dir="auto">user:pass@</code> and <code dir="auto">-p&#x3C;password></code>.</li>
+<li>Short strings are kept. The pattern rules from error messages then run over the result, so short passwords such as <code dir="auto">"hunter2"</code> are only caught when they sit next to a name like <code dir="auto">password</code>.</li>
+</ul>
+<p>Redaction is best-effort. Use <code dir="auto">v</code> to check the payload before you answer <code dir="auto">y</code>, especially if your project keeps secrets in unusual places.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="inz-serve"><code dir="auto">inz serve</code></h2><a class="sl-anchor-link" href="#inz-serve"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “inz serve”</span></a></div>
+<p><code dir="auto">inz serve</code> runs in production containers, CI, and Lambda, so it sends no usage events and shows no notice. It only reads <code dir="auto">~/.instancez/telemetry.json</code> to honor <code dir="auto">inz telemetry disable</code>, and writes to it only if you accept a crash prompt in an interactive terminal. A declined or unasked prompt sends nothing and leaves no files.</p>
+<div class="sl-heading-wrapper level-h2"><h2 id="debug-mode">Debug mode</h2><a class="sl-anchor-link" href="#debug-mode"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Debug mode”</span></a></div>
+<p>Set <code dir="auto">INSTANCEZ_TELEMETRY_DEBUG=1</code> to print each event as JSON to stderr. Nothing is sent. It works on source builds too.</p>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre data-language="bash"><code><div class="ec-line"><div class="code"><span style="--0:#EEFFFF">INSTANCEZ_TELEMETRY_DEBUG</span><span style="--0:#89DDFF">=</span><span style="--0:#C3E88D">1</span><span style="--0:#EEFFFF"> </span><span style="--0:#FFCB6B">inz</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">validate</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="INSTANCEZ_TELEMETRY_DEBUG=1 inz validate"><div></div></button></div></figure></div>
+<div class="sl-heading-wrapper level-h2"><h2 id="where-data-goes">Where data goes</h2><a class="sl-anchor-link" href="#where-data-goes"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only" data-pagefind-ignore="">Section titled “Where data goes”</span></a></div>
+<p>Events go to <a href="https://posthog.com">PostHog</a>, US region (<code dir="auto">us.i.posthog.com</code>). Sending waits at most 2 seconds when a command exits. Network errors are silent and never fail a command.</p>  </div> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-zx2mzflk"> <a class="prev astro-zx2mzflk" href="/deploy/observability/" rel="prev"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m15 18-6-6 6-6" class="astro-zx2mzflk"></path> </svg> Observability </a> <a class="next astro-zx2mzflk" href="/examples/ecommerce-store/" rel="next"> Ecommerce Store <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="astro-zx2mzflk"> <path d="m9 18 6-6-6-6" class="astro-zx2mzflk"></path> </svg> </a> </div>   </footer>    </main> </div><div class="toc astro-jytpsvwo"><div class="astro-q2ryvv6g"><starlight-toc data-min-h="2" data-max-h="3" class="astro-enyabzfs"><nav aria-labelledby="starlight__on-this-page" class="astro-enyabzfs"><p id="starlight__on-this-page" class="astro-enyabzfs">On this page</p><ul class="astro-37x2kocx" style="--depth: 0;"> <li class="astro-37x2kocx" style="--depth: 0;"> <a href="#_top" class="astro-37x2kocx" style="--depth: 0;">Overview</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#turn-it-off" class="astro-37x2kocx" style="--depth: 0;">Turn it off</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#what-is-sent" class="astro-37x2kocx" style="--depth: 0;">What is sent</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#command_run" class="astro-37x2kocx" style="--depth: 1;">command_run</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#exception" class="astro-37x2kocx" style="--depth: 1;">$exception</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#dev_ready" class="astro-37x2kocx" style="--depth: 1;">dev_ready</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#dev_runtime_error" class="astro-37x2kocx" style="--depth: 1;">dev_runtime_error</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#what-is-never-sent" class="astro-37x2kocx" style="--depth: 0;">What is never sent</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#cleaned-up-error-messages" class="astro-37x2kocx" style="--depth: 1;">Cleaned-up error messages</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#crash-reports" class="astro-37x2kocx" style="--depth: 0;">Crash reports</a> <ul class="astro-37x2kocx" style="--depth: 1;"> <li class="astro-37x2kocx" style="--depth: 1;"> <a href="#what-a-report-includes" class="astro-37x2kocx" style="--depth: 1;">What a report includes</a>  </li><li class="astro-37x2kocx" style="--depth: 1;"> <a href="#how-redaction-works" class="astro-37x2kocx" style="--depth: 1;">How redaction works</a>  </li> </ul>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#inz-serve" class="astro-37x2kocx" style="--depth: 0;">inz serve</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#debug-mode" class="astro-37x2kocx" style="--depth: 0;">Debug mode</a>  </li><li class="astro-37x2kocx" style="--depth: 0;"> <a href="#where-data-goes" class="astro-37x2kocx" style="--depth: 0;">Where data goes</a>  </li> </ul> </nav></starlight-toc></div></div></main>  </div> </div> </main> <footer class="footer astro-qgm4hv6f"> <div class="container-wrapper astro-qgm4hv6f"> <div class="container footer-container astro-qgm4hv6f"> <div class="footer-text astro-qgm4hv6f">instancez — a lightweight, self-hosted backend. <a href="https://github.com/instancez/instancez">GitHub</a></div> </div> </div> </footer> </div> <div popover="auto" id="drawer" class="astro-w4txsaed"> <button class="sheet-overlay astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"></button> <div class="content astro-w4txsaed"> <div class="header astro-w4txsaed"> <button class="drag-icon astro-w4txsaed" popovertarget="drawer" popovertargetaction="hide"><span class="astro-w4txsaed"></span></button> </div> <div class="body astro-w4txsaed"> <div class="links-nav astro-w4txsaed"> <a href="/" class="astro-w4txsaed">Home</a>  </div> <div class="links-docs astro-w4txsaed"> <div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Build</h4> <a href="/build/schema/" class="astro-w4txsaed"> Tables / Schema </a><a href="/build/auth/" class="astro-w4txsaed"> Auth </a><a href="/build/rls/" class="astro-w4txsaed"> RLS Policies </a><a href="/api-reference/rpc/" class="astro-w4txsaed"> SQL Functions </a><a href="/build/functions/" class="astro-w4txsaed"> Code Functions </a><a href="/build/storage/" class="astro-w4txsaed"> Storage </a><a href="/build/sql-editor/" class="astro-w4txsaed"> SQL Editor </a><a href="/build/querying/" class="astro-w4txsaed"> Querying </a><a href="/build/types/" class="astro-w4txsaed"> TypeScript Types </a><a href="/supabase-compatibility/" class="astro-w4txsaed"> Supabase SDK Compatibility </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Deploy</h4> <a href="/deploy/cloud/" class="astro-w4txsaed"> instancez Cloud </a><a href="/deploy/docker/" class="astro-w4txsaed"> Docker </a><a href="/deploy/kubernetes/" class="astro-w4txsaed"> Kubernetes </a><a href="/deploy/lambda/" class="astro-w4txsaed"> AWS Lambda </a><a href="/deploy/self-hosted/" class="astro-w4txsaed"> Self-hosted </a><a href="/deploy/env-vars/" class="astro-w4txsaed"> Environment Variables </a><a href="/deploy/observability/" class="astro-w4txsaed"> Observability </a><a href="/telemetry/" class="astro-w4txsaed"> Telemetry </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Examples</h4> <a href="/examples/ecommerce-store/" class="astro-w4txsaed"> Ecommerce Store </a><a href="/examples/file-gallery/" class="astro-w4txsaed"> File Gallery </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">CLI Reference</h4> <a href="/api-reference/cli/" class="astro-w4txsaed"> CLI </a> </div><div class="container-sidebar-entry astro-w4txsaed"> <h4 class="entry-title astro-w4txsaed">Configuration</h4> <a href="/api-reference/config/" class="astro-w4txsaed"> instancez.yaml </a> </div> </div> </div> </div> </div>  </div>   </body></html>
