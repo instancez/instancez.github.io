@@ -18,7 +18,7 @@
   Installs `inz.exe` to `%LOCALAPPDATA%\instancez\bin`. Run in PowerShell 5.1+. Check it works: `inz version`.
   Need a manual download or more options? See the [Installation guide](/instancez/install/).
 
-`inz` sends anonymous usage telemetry. Opt out with `inz telemetry disable`. See [Telemetry](/telemetry/).
+`inz` sends anonymous usage and error telemetry. Opt out with `inz telemetry disable`. See [Telemetry](/telemetry/).
 
 ## Create a project
 

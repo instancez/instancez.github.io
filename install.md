@@ -30,7 +30,7 @@ Install Node.js (which includes npm) from [nodejs.org](https://nodejs.org) or vi
 inz version
 ```
 
-`inz` sends anonymous usage telemetry. Turn it off with `inz telemetry disable` or `INSTANCEZ_TELEMETRY_DISABLED=1`. See [Telemetry](/telemetry/).
+`inz` sends anonymous usage and error telemetry. Turn it off with `inz telemetry disable` or `INSTANCEZ_TELEMETRY_DISABLED=1`. See [Telemetry](/telemetry/).
 
 ## Manual download
 
