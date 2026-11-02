@@ -111,6 +111,8 @@ Validate `instancez.yaml` structure and references without starting the server.
 
 Checks YAML structure, identifiers, cross-references, and verifies that each declared code function’s `file:` exists on disk.
 
+Local validation (including `--use-dsn`) loads `.development.env` first. An unset `${INSTANCEZ_ENV_*}` reference (with no `:-` default) warns and is treated as empty, as in `inz dev`. Any other unset `${VAR}` is still an error. `inz serve` and `inz bundle` stay strict and fail on any unset `${VAR}`. `inz cloud deploy` parses leniently and leaves validation to the cloud, so it does not fail locally on an unset variable. `--project` and `--cloud` send the file as written: they load no `.development.env` and resolve no env references locally.
+
 With `--use-dsn`, also connects to the database and prints the migration plan (DDL diff) without applying it.
 
 ```plaintext
@@ -2522,6 +2524,7 @@ The `default` option accepts:
 
 * A literal value: `true`, `0`, `"pending"`
 * One of the allowed SQL functions: `now()`, `uuid_v7()`, `uuid_v4()`, `current_date`, `current_time`
+* An auth helper, which needs an `auth:` block and a matching column type: `auth.uid()` (`uuid`), `auth.role()` and `auth.email()` (`text`), `auth.jwt()` (`jsonb`). For `auth.uid()`, the signed-in caller’s id fills the column on insert, and it is `NULL` for `anon` and `service_role` (a `required` column then rejects the insert). Pair it with `immutable: true` to stamp an owner that can’t change.
 
 Note: `uuid_v7()` and `uuid_v4()` currently both generate a v4 UUID (`gen_random_uuid()`) — true v7 generation isn’t wired up yet. Use whichever name reads better; there’s no behavioral difference today.
 
