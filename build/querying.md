@@ -466,6 +466,10 @@ const { error } = await supabase
   .eq('id', todoId)
 ```
 
+### `.single()` on a mutation
+
+`.single()` on `insert`, `upsert`, `update` or `delete` (the `Accept: application/vnd.pgrst.object+json` header) needs exactly one affected row. Zero or several rows return 406 `PGRST116` and roll the whole write back, whatever `Prefer: return` says. Use `.maybeSingle()` or drop `.single()` when a mutation may touch zero or many rows.
+
 ### max-affected guard
 
 Prevent accidentally broad mutations with `Prefer: max-affected=N`. The request is rejected (rolled back) if more than N rows would be affected:
@@ -482,6 +486,31 @@ Roll back the transaction after the query executes without committing changes:
 Prefer: tx=rollback
 ```
 
+## Value formats
+
+Rows are serialized by Postgres `to_json`, as in PostgREST. This applies to list, single, insert, upsert, update, delete and RPC responses. The `timestamptz` offset follows the database `TimeZone`, and `interval` text follows `IntervalStyle`.
+
+| Postgres type | JSON value |
+|---|---|
+| `date` | `"2024-01-02"` |
+| `timestamp` | `"2024-01-02T03:04:05"` (no offset) |
+| `timestamptz` | `"2024-01-02T03:04:05+00:00"` |
+| `time`, `interval` | text, such as `"03:04:05"` and `"1 day"` |
+| `bytea` | `"\\xdeadbeef"` |
+| `inet` | `"10.0.0.1"` (no `/32`) |
+| `infinity` date or timestamp | `"infinity"`, `"-infinity"` |
+| `NaN`, `Infinity` | `"NaN"`, `"Infinity"` (strings) |
+| `bigint`, `numeric` | exact JSON number |
+| arrays | JSON arrays, nested for multiple dimensions |
+| `json`, `jsonb` | nested JSON, with large numbers kept exact |
+| composite | nested object |
+| `bit`, geometric, `tsvector`, ranges | Postgres text |
+| `geometry` (PostGIS) | GeoJSON object |
+
+The exactness applies to the response JSON. `supabase-js` parses JSON numbers as JavaScript `number` values, so values above `2^53` can be rounded. JSON write bodies are decoded into Go `float64` values before SQL construction, so integers above `2^53` can also change. Use text representations or a lossless JSON parser when exact values matter.
+
+Keys follow the select list; embedded resources come after the plain columns. A `json` column keeps its stored text, while Postgres sorts `jsonb` keys. A `timestamp` has no offset, so JS `new Date()` reads it as local time. Use `timestamptz` for instants.
+
 ## CSV output
 
 Add `.csv()` in `supabase-js` or set `Accept: text/csv` to receive results as CSV:
@@ -490,9 +519,11 @@ Add `.csv()` in `supabase-js` or set `Accept: text/csv` to receive results as CS
 const { data } = await supabase.from('todos').select('title').order('priority').csv()
 ```
 
+CSV cells use the JSON value formats (`true`, `2024-01-02T03:04:05+00:00`, `[1,2]`, compact JSON). PostgREST's CSV uses Postgres text output instead (`t`, `"2024-01-02 03:04:05+00"`, `"{1,2}"`, json as stored), so boolean, timestamp, array and json cells differ. CSV columns are sorted alphabetically, not in select order.
+
 ## Error statuses
 
-Database errors use PostgREST's status mapping. Not-null, check and invalid-input errors (`23502`, `23514`, class `22`) return 400, foreign-key violations (`23503`) return 409, and unknown SQLSTATEs return 400. `42501` (insufficient privilege) returns 403 for `anon`. The body and SQLSTATE `code` are unchanged. A missing required RPC argument returns 404 `PGRST202` with a hint naming the argument.
+Database errors use PostgREST's status mapping. Not-null, check and invalid-input errors (`23502`, `23514`, class `22`) return 400, foreign-key violations (`23503`) return 409, and unknown SQLSTATEs return 400. `42501` (insufficient privilege) returns 403 for `anon`. The body and SQLSTATE `code` are unchanged. A missing required RPC argument returns 404 `PGRST202` with a hint naming the argument. A singular `Accept` (`.single()`) on a read or write that does not return exactly one row returns 406 `PGRST116`.
 
 ## What's next
 
