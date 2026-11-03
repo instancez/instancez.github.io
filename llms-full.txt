@@ -42,25 +42,25 @@ inz init my-app --dir ./my-app
 
 Start a local development server with hot-reload.
 
-Reads config, connects to Postgres, runs migrations, and watches for file changes. Requires `INSTANCEZ_DATABASE_URL` (a superuser DSN) to provision roles on every startup, or set `INSTANCEZ_OWNER_DATABASE_URL` and `INSTANCEZ_AUTH_DATABASE_URL` directly.
+Reads config, connects to Postgres, runs migrations, and watches for file changes. Requires `INSTANCEZ_DATABASE_URL` (a superuser DSN) to provision roles on every startup, or set `INSTANCEZ_OWNER_DATABASE_URL` and `INSTANCEZ_AUTH_DATABASE_URL` directly. Startup order: validate the config, check that the HTTP port is free, then start embedded Postgres and function dependencies.
 
 ```plaintext
 inz dev [flags]
 ```
 
-| Flag                       | Default                 | Description                                                                 |
-| -------------------------- | ----------------------- | --------------------------------------------------------------------------- |
-| `--config`                 | `instancez.yaml`        | Config source: file path or `s3://bucket/key`. Env: `INSTANCEZ_CONFIG`.     |
-| `--dashboard`              | `readwrite`             | Dashboard mode: `disabled`, `readonly`, or `readwrite`.                     |
-| `--dashboard-write-dotenv` | `true`                  | Allow the dashboard to write secrets to `.development.env`.                 |
-| `--dotenv-path`            | `.development.env`      | Path to the .env file for dashboard secret writing.                         |
-| `--embedded-pg`            | `false`                 | Start an embedded Postgres 16 (data at `./pgdata/`); no external DB needed. |
-| `--no-watch`               | `false`                 | Disable hot-reload.                                                         |
-| `--port`                   | (from config or `8080`) | Override server port.                                                       |
-| `--reset-pg`               | `false`                 | Wipe `./pgdata/` before starting (requires `--embedded-pg`).                |
-| `--verbose`                | `false`                 | Enable debug logging.                                                       |
-| `--watch`                  | `true`                  | Watch the config source for changes.                                        |
-| `--watch-interval`         | `1m`                    | S3-watch poll interval (minimum 10s).                                       |
+| Flag                       | Default                 | Description                                                                                                                         |
+| -------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `--config`                 | `instancez.yaml`        | Config source: file path or `s3://bucket/key`. Env: `INSTANCEZ_CONFIG`.                                                             |
+| `--dashboard`              | `readwrite`             | Dashboard mode: `disabled`, `readonly`, or `readwrite`.                                                                             |
+| `--dashboard-write-dotenv` | `true`                  | Allow the dashboard to write secrets to `.development.env`.                                                                         |
+| `--dotenv-path`            | `.development.env`      | Path to the .env file for dashboard secret writing.                                                                                 |
+| `--embedded-pg`            | `false`                 | Start an embedded Postgres 16 (data at `./pgdata/`); no external DB needed. Prints its DSN in the banner; port is kept across runs. |
+| `--no-watch`               | `false`                 | Disable hot-reload.                                                                                                                 |
+| `--port`                   | (from config or `8080`) | Override server port.                                                                                                               |
+| `--reset-pg`               | `false`                 | Wipe `./pgdata/` before starting (requires `--embedded-pg`). Refused while another `inz dev` uses `./pgdata/`.                      |
+| `--verbose`                | `false`                 | Enable debug logging.                                                                                                               |
+| `--watch`                  | `true`                  | Watch the config source for changes.                                                                                                |
+| `--watch-interval`         | `1m`                    | S3-watch poll interval (minimum 10s).                                                                                               |
 
 ```bash
 INSTANCEZ_DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres inz dev
@@ -74,7 +74,7 @@ Start the production server.
 
 Unlike `dev`, does not hot-reload and defaults to dashboard disabled.
 
-Even without `--migrate`, every boot creates the migration-history table if missing, as its own locked step, then — in a second locked transaction — creates `auth.jwt_keys` if missing, re-applies the privilege revokes on `auth.*` and `_instancez_migrations`, and adds any auth columns or indexes that newer releases introduced. Boot fails if either step fails. With `--watch`, this also re-runs after every hot-reloaded migration; a failure there is logged, not fatal.
+Even without `--migrate`, every boot creates the migration-history table if missing, as its own locked step, then — in a second locked transaction — creates `auth.jwt_keys` if missing, re-applies the privilege revokes on `auth.*` and `_instancez_migrations`, and adds any auth columns or indexes that newer releases introduced. Boot fails if either step fails. With `--watch`, this also re-runs after every hot-reloaded migration; a failure there is logged, not fatal, and the functions of the failed config are not loaded (they reload only after a successful migration).
 
 ```plaintext
 inz serve [flags]
@@ -298,6 +298,8 @@ inz cloud deploy --yes             # skip the confirmation prompt (e.g. in CI)
 [Section titled “inz doctor”](#inz-doctor)
 
 Run preflight checks for `inz dev`: config validity, the superuser database DSN, and Postgres role layout.
+
+Database checks are skipped when no DSN is set (a missing or unreachable database is reported once), and the DSN hint suggests `inz dev --embedded-pg`, which needs none.
 
 Exits non-zero if any check fails.
 
@@ -2667,7 +2669,7 @@ Both are enforced by one engine-managed `BEFORE UPDATE` trigger per table, so th
 
 * **Additive changes apply immediately.** New tables, new columns, new indexes, new policies — the migrator adds them on the next run.
 * **Drops need an opt-in under `inz serve`.** Removing a table or column from the YAML drops it, along with its data. `inz serve` refuses such a plan unless you pass `--allow-destructive` (or set `INSTANCEZ_ALLOW_DESTRUCTIVE=true`), and the error names what would have been dropped. `inz dev` still applies drops without asking, since rebuilding the schema is the normal dev loop, but it logs a warning listing each one. Be careful with watch mode, which re-applies the diff on every save.
-* **One migration at a time.** Instances that share a database take a Postgres advisory lock before migrating. If several boot at once, one applies the change and the rest wait, then find nothing left to do. Each statement waits at most `--migrate-lock-timeout` (default `5s`) for a table lock, so a long-running query makes the migration fail instead of stalling requests. The server keeps the last applied config and reports drift until a later boot or watch reload applies the change.
+* **One migration at a time.** Instances that share a database take a Postgres advisory lock before migrating. If several boot at once, one applies the change and the rest wait, then find nothing left to do. Each statement waits at most `--migrate-lock-timeout` (default `5s`) for a table lock, so a long-running query makes the migration fail instead of stalling requests. The server keeps the last applied config and reports drift until a later boot or watch reload applies the change. A failed watch reload is logged as `config reload: migration failed, still running last applied config`.
 * **Renames are declared, not detected.** The migrator compares two versions of your YAML, and a rename looks exactly like a drop plus an add. Use `renamed_from:` so it renames in place instead. See below.
 * **The migrator never injects columns.** No hidden `id`, `created_at`, or `updated_at` is added. Every column must be declared.
 * **Dev mode watches for changes.** `inz dev` re-applies the schema diff on every save, so the feedback loop is instant. `inz validate` checks the YAML for errors without touching the database.
@@ -4780,7 +4782,7 @@ The quickest way to start is the Postgres that ships inside `inz`. You do not ne
 inz dev --embedded-pg
 ```
 
-The first run downloads a Postgres 16 binary (about 30 MB) and keeps its data in `./pgdata/`. Later runs reuse that directory. To start over from an empty database, add `--reset-pg`.
+The first run downloads a Postgres 16 binary (about 30 MB) and keeps its data in `./pgdata/` and the binaries in `./pgdata.runtime/` (both git-ignored). Later runs reuse that directory. To start over from an empty database, add `--reset-pg`. The startup banner prints the database URL, so you can connect with `psql` or any other tool; the port stays the same across runs.
 
 **Or point at your own Postgres.** If you already have a Postgres 14+ instance, drop the flag and set a superuser connection string:
 
