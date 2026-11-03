@@ -25,12 +25,12 @@ Writes `instancez.yaml`, a `.development.env.example`, and optional boilerplate.
 inz init [name] [flags]
 ```
 
-| Flag               | Default | Description                                                                                                              |
-| ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `--dir`            | `.`     | Output directory.                                                                                                        |
-| `--force`          | `false` | Overwrite existing scaffolding files.                                                                                    |
-| `--template`       |         | Scaffold from a hosted template id. See [templates](https://github.com/instancez/instancez/blob/main/docs/templates.md). |
-| `--list-templates` | `false` | List available templates and exit.                                                                                       |
+| Flag               | Default | Description                                                                                                                                                               |
+| ------------------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--dir`            | `.`     | Output directory.                                                                                                                                                         |
+| `--force`          | `false` | Overwrite existing scaffolding files.                                                                                                                                     |
+| `--template`       |         | Scaffold from a template id (cloud catalog, falls back to the built-in one offline). See [templates](https://github.com/instancez/instancez/blob/main/docs/templates.md). |
+| `--list-templates` | `false` | List available templates (built-in list when offline) and exit.                                                                                                           |
 
 ```bash
 inz init my-app --dir ./my-app
@@ -123,6 +123,7 @@ inz validate [flags]
 
 | Flag            | Default          | Description                                                                                                                                                                                                                    |
 | --------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--cloud`       | `false`          | Validate against the cloud’s policy rules server-side (projectless; the same rules a deploy enforces). Requires `inz cloud login`. Cannot be combined with `--project`.                                                        |
 | `--config`      | `instancez.yaml` | Config source. Env: `INSTANCEZ_CONFIG`.                                                                                                                                                                                        |
 | `--json`        | `false`          | Output errors as JSON (for CI): an array of `{path, message, line, column, suggestion}`. `line` and `column` are omitted when unknown.                                                                                         |
 | `--project`     | —                | Preview against a cloud project. Bare `--project` uses `instancez.yaml`’s linked project; `--project <id>` or `--project=<id>` targets a different one. Never creates a project; link one first with `inz cloud deploy --new`. |
@@ -132,6 +133,7 @@ inz validate [flags]
 ```bash
 inz validate
 inz validate --use-dsn postgres://owner:pass@localhost/mydb
+inz validate --cloud                  # check against the cloud's policy rules
 inz validate --project                # preview against instancez.yaml's linked project
 inz validate --project abc123         # preview against a specific project id
 ```
@@ -196,7 +198,7 @@ Exit codes: `0` when nothing reaches `--fail-on`, `1` when something does, or wh
 }
 ```
 
-`checks.total` is the number of rules below, and `checks.passed` is how many of them have no finding. The human output ends with the same tally, for example `20 of 21 checks passed`. `unknown-key` is reported but is not a check.
+`checks.total` is the number of rules below, and `checks.passed` is how many of them have no finding. The human output ends with the same tally, for example `21 of 22 checks passed`. `unknown-key` is reported but is not a check.
 
 `edit` is present when one config change resolves the finding: `rls-disabled` (only for a table that already has policies, since turning RLS on without any denies every row), `anonymous-signins`, `jwt-expiry-long`, `signup-unverified-email` (only when an email provider is configured), `cors-null-origin` and `max-limit-disabled`. `path` lists object keys and array indexes. `remove: true` deletes the value instead of setting it, and `value` is then the value expected at `path`. Findings whose right fix depends on your app, such as policies, have no `edit`.
 
@@ -227,6 +229,7 @@ The dashboard’s Security page runs the same scan. A banner shows how many chec
 | `policy-no-identity-write`     | medium, high      | A write policy that never checks the caller’s identity, directly or through a declared rpc that does. High when the table has an owner column.                                                                                                                                                           |
 | `bucket-open-write`            | critical          | A storage policy that lets any caller with a JWT (including anonymous sign-in users) write or delete.                                                                                                                                                                                                    |
 | `bucket-open-read`             | medium            | A select policy on a non-public bucket whose `using` is always true, so any caller with a JWT can list and read every object.                                                                                                                                                                            |
+| `bucket-authed-write`          | medium            | An update or delete storage policy that only checks the caller is signed in (`auth.is_authenticated()`, `auth.uid() IS NOT NULL`), so any user can replace or delete other users’ objects.                                                                                                               |
 | `bucket-no-rls`                | medium, high      | A bucket with no policies. High when other buckets have them.                                                                                                                                                                                                                                            |
 | `bucket-public`                | low               | A bucket with `public: true`.                                                                                                                                                                                                                                                                            |
 | `rpc-definer-no-auth`          | low, medium, high | A `security: definer` function callable without sign-in, so its reads bypass RLS. High when the body writes (or runs `EXECUTE`) with no `auth.*` check, medium when it only reads or writes with a check, low when it only reads and checks `auth.uid()`, `auth.jwt()`, `auth.email()` or `auth.role()`. |
@@ -253,20 +256,20 @@ The bundle is the deployment artifact for projects that use code functions. It c
 
 The bundled `instancez.yaml` follows `include:`: the files are merged into one and the `include:` key is dropped. Configs without `include:` are bundled as written. Shorthands such as `timestamps` and `owner` are not expanded in the bundle.
 
-Runs stateless validation (same as `inz validate`) including checking that each declared function’s `file:` exists on disk.
+Runs stateless validation (same as `inz validate`) including checking that each declared function’s `file:` exists on disk. npm output is shown only when `npm ci` fails.
 
 ```plaintext
 inz bundle [flags]
 ```
 
-| Flag       | Default          | Description                                                                                               |
-| ---------- | ---------------- | --------------------------------------------------------------------------------------------------------- |
-| `--config` | `instancez.yaml` | Path to `instancez.yaml`.                                                                                 |
-| `--output` | —                | Destination: local file path or `s3://bucket/key`. If omitted, writes to a temp file and prints the path. |
+| Flag       | Default          | Description                                                                                                                    |
+| ---------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `--config` | `instancez.yaml` | Path to `instancez.yaml`.                                                                                                      |
+| `--output` | `bundle.tar.gz`  | Destination: local file path (relative to the current directory) or `s3://bucket/key`. Local files are written with mode 0600. |
 
 ```bash
-inz bundle                                       # write temp file, print path
-inz bundle --output bundle.tar.gz                # write to local file
+inz bundle                                       # write ./bundle.tar.gz
+inz bundle --output my-app.tar.gz                # write to another local file
 inz bundle --output s3://my-bucket/bundle.tar.gz # upload to S3, print pointer
 ```
 
@@ -406,6 +409,42 @@ Print the currently logged-in instancez Cloud user.
 
 ```plaintext
 inz cloud whoami
+```
+
+## inz cloud frontend deploy
+
+[Section titled “inz cloud frontend deploy”](#inz-cloud-frontend-deploy)
+
+Upload an externally-built static frontend bundle to an instancez Cloud project.
+
+The bundle is served as the project’s static site. `<dist-dir>` must contain `index.html` (a Vite/SPA build). The project id is read from `project.cloud.project_id` in `instancez.yaml`, or pass `--project`.
+
+```plaintext
+inz cloud frontend deploy <dist-dir> [flags]
+```
+
+| Flag        | Default          | Description                                                                            |
+| ----------- | ---------------- | -------------------------------------------------------------------------------------- |
+| `--branch`  | —                | Branch/version to deploy the frontend to (validated server-side).                      |
+| `--config`  | `instancez.yaml` | Path to `instancez.yaml` (for the linked project id).                                  |
+| `--project` | —                | Target this cloud project id instead of `instancez.yaml`’s `project.cloud.project_id`. |
+
+```bash
+npm run build && inz cloud frontend deploy dist
+```
+
+## inz completion
+
+[Section titled “inz completion”](#inz-completion)
+
+Generate the shell autocompletion script.
+
+```plaintext
+inz completion bash|zsh|fish|powershell
+```
+
+```bash
+source <(inz completion zsh)    # load for the current shell
 ```
 
 ## inz telemetry
@@ -907,9 +946,9 @@ storage:
       - operations: [select]
         using: "auth.uid() IS NOT NULL"
       - operations: [insert]
-        with_check: "auth.uid() IS NOT NULL"
+        with_check: "name LIKE auth.uid()::text || '/%'"
       - operations: [delete]
-        using: "auth.uid() IS NOT NULL"
+        using: "name LIKE auth.uid()::text || '/%'"
 
 
 rpc:
@@ -2862,22 +2901,24 @@ storage:
     rls:
       - operations: [select]
         using: "auth.uid() IS NOT NULL"
+      # Each user writes only under <their user id>/.
       - operations: [insert]
-        with_check: "auth.uid() IS NOT NULL"
+        with_check: "name LIKE auth.uid()::text || '/%'"
       - operations: [update]
-        using: "auth.uid() IS NOT NULL"
-        with_check: "auth.uid() IS NOT NULL"
+        using: "name LIKE auth.uid()::text || '/%'"
+        with_check: "name LIKE auth.uid()::text || '/%'"
       - operations: [delete]
-        using: "auth.uid() IS NOT NULL"
+        using: "name LIKE auth.uid()::text || '/%'"
 
 
   documents:
     public: false
     max_size: 10MB
     rls:
+      # Private per-user folders: <user id>/<file>.
       - operations: [select, insert, update, delete]
-        using: "auth.uid() IS NOT NULL"
-        with_check: "auth.uid() IS NOT NULL"
+        using: "name LIKE auth.uid()::text || '/%'"
+        with_check: "name LIKE auth.uid()::text || '/%'"
 ```
 
 | Key        | Type   | Description                                                                                                                                                                                                                        |
@@ -2899,27 +2940,27 @@ instancez exposes the same storage API as Supabase. Any Supabase client library 
 
 ```js
 // Upload
-await supabase.storage.from('avatars').upload('photo.png', file)
-await supabase.storage.from('avatars').upload('photo.png', file, { upsert: true })
+await supabase.storage.from('avatars').upload(`${user.id}/photo.png`, file)
+await supabase.storage.from('avatars').upload(`${user.id}/photo.png`, file, { upsert: true })
 
 
 // Upload with user metadata, returned by info()
-await supabase.storage.from('avatars').upload('photo.png', file, { metadata: { alt: 'me' } })
+await supabase.storage.from('avatars').upload(`${user.id}/photo.png`, file, { metadata: { alt: 'me' } })
 
 
 // Public URL (public buckets), optionally resized
-const { data } = supabase.storage.from('avatars').getPublicUrl('photo.png')
-const { data } = supabase.storage.from('avatars').getPublicUrl('photo.png', { transform: { width: 200 } })
+const { data } = supabase.storage.from('avatars').getPublicUrl(`${user.id}/photo.png`)
+const { data } = supabase.storage.from('avatars').getPublicUrl(`${user.id}/photo.png`, { transform: { width: 200 } })
 
 
 // Signed URL (private buckets, expires in seconds)
-const { data } = await supabase.storage.from('documents').createSignedUrl('report.pdf', 3600)
+const { data } = await supabase.storage.from('documents').createSignedUrl(`${user.id}/report.pdf`, 3600)
 // Same, but the browser saves it as a file
-const { data } = await supabase.storage.from('documents').createSignedUrl('report.pdf', 3600, { download: 'q3.pdf' })
+const { data } = await supabase.storage.from('documents').createSignedUrl(`${user.id}/report.pdf`, 3600, { download: 'q3.pdf' })
 
 
 // Signed URL for a resized image
-const { data } = await supabase.storage.from('documents').createSignedUrl('scan.png', 3600, { transform: { width: 400 } })
+const { data } = await supabase.storage.from('documents').createSignedUrl(`${user.id}/scan.png`, 3600, { transform: { width: 400 } })
 
 
 // List one folder level, or page through every key
@@ -2928,7 +2969,7 @@ const { data } = await supabase.storage.from('avatars').listV2({ prefix: 'users/
 
 
 // Delete
-await supabase.storage.from('avatars').remove(['photo.png'])
+await supabase.storage.from('avatars').remove([`${user.id}/photo.png`])
 ```
 
 Uploading to an existing path without `upsert: true` returns a 409 error.
@@ -4875,7 +4916,7 @@ mkdir my-app && cd my-app
 inz init
 ```
 
-This creates `instancez.yaml` (project name inferred from the directory) with `profiles` and `todos` tables, an `avatars` storage bucket, and a `todos` code function. Nothing touches the database yet.
+This creates `instancez.yaml` (project name inferred from the directory) with `profiles` and `todos` tables, an `avatars` storage bucket where each user uploads under their own user id, and a `todos` code function. Nothing touches the database yet.
 
 Code functions run in Node.js workers, so the example function is only scaffolded when Node.js 22+ is on your PATH. Without it, `inz init` prints a warning and skips the function; everything else works the same.
 
