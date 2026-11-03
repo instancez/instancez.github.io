@@ -109,9 +109,9 @@ inz serve --bundle /path/to/bundle.tar.gz --migrate
 
 Validate `instancez.yaml` structure and references without starting the server.
 
-Checks YAML structure, identifiers, cross-references, and verifies that each declared code function’s `file:` exists on disk.
+Follows `include:` files. Checks YAML structure, identifiers, cross-references, and verifies that each declared code function’s `file:` exists on disk.
 
-Local validation (including `--use-dsn`) loads `.development.env` first. An unset `${INSTANCEZ_ENV_*}` reference (with no `:-` default) warns and is treated as empty, as in `inz dev`. Any other unset `${VAR}` is still an error. `inz validate` and `inz dev` also warn when an OAuth provider other than `google`/`apple` ends up with an empty `client_secret` (`inz serve` rejects it). When an unset variable is outside the `INSTANCEZ_ENV_` namespace, the report lists it together with every other error. `${VAR}` on a full-line `#` comment is ignored everywhere (this includes a line starting with `#` inside a `|` block scalar). `inz serve` and `inz bundle` stay strict and fail on any unset `${VAR}`. `inz cloud deploy` parses leniently and leaves validation to the cloud, so it does not fail locally on an unset variable. `--project` and `--cloud` send the file as written: they load no `.development.env` and resolve no env references locally.
+Local validation (including `--use-dsn`) loads `.development.env` first. An unset `${INSTANCEZ_ENV_*}` reference (with no `:-` default) warns and is treated as empty, as in `inz dev`. Any other unset `${VAR}` is still an error. `inz validate` and `inz dev` also warn when an OAuth provider other than `google`/`apple` ends up with an empty `client_secret` (`inz serve` rejects it). When an unset variable is outside the `INSTANCEZ_ENV_` namespace, the report lists it together with every other error. `${VAR}` on a full-line `#` comment is ignored everywhere (this includes a line starting with `#` inside a `|` block scalar). `inz serve` and `inz bundle` stay strict and fail on any unset `${VAR}`. `inz cloud deploy` parses leniently and leaves validation to the cloud, so it does not fail locally on an unset variable. `--project` and `--cloud` load no `.development.env` and resolve no env references locally. They send the file as written, unless it uses `include:`. Then they send one merged file without the `include:` key. Shorthands (`timestamps`, `owner`) are sent as written, so the cloud needs a release that knows them before such a config deploys.
 
 With `--use-dsn`, also connects to the database and prints the migration plan (DDL diff) without applying it.
 
@@ -250,6 +250,8 @@ The dashboard’s Security page runs the same scan. A banner shows how many chec
 Build a self-contained tar.gz bundle from `instancez.yaml` and `functions/`.
 
 The bundle is the deployment artifact for projects that use code functions. It contains `instancez.yaml`, `functions/` (with vendored `node_modules/`), and a `manifest.json`. Upload it to S3 then set `functions_bundle:` in `instancez.yaml` to the returned pointer.
+
+The bundled `instancez.yaml` follows `include:`: the files are merged into one and the `include:` key is dropped. Configs without `include:` are bundled as written. Shorthands such as `timestamps` and `owner` are not expanded in the bundle.
 
 Runs stateless validation (same as `inz validate`) including checking that each declared function’s `file:` exists on disk.
 
@@ -654,6 +656,14 @@ To reference one column of a composite key from another table’s `foreign_key`,
 | ------------- | --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `rls_enabled` | `boolean` | inferred: `true` if `rls` has policies, else `false` | Turn row-level security on or off for the table. `true` with no policies denies `anon`/`authenticated` everything. `false` with policies is a validation error. Leaving it unset produces a validation warning. See [RLS](/instancez/build/rls/). |
 
+### tables.\<name>.timestamps
+
+[Section titled “tables.\<name>.timestamps”](#tablesnametimestamps)
+
+| Key          | Type      | Default | Description                                                                                                                                                                                                                                                                                                                                                |
+| ------------ | --------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `timestamps` | `boolean` | `false` | Appends `created_at` (`timestamptz`, required, default `now()`) and `updated_at` (same, plus `auto_updated_at: true`) after the declared fields. Declaring either column as well is a validation error. Removing `timestamps` later drops both columns, so it needs `--allow-destructive`. A dashboard save writes the expanded fields, not the shorthand. |
+
 ### tables.\<name>.indexes
 
 [Section titled “tables.\<name>.indexes”](#tablesnameindexes)
@@ -671,12 +681,13 @@ To reference one column of a composite key from another table’s `foreign_key`,
 
 RLS is the only authorization layer. Declare policies here; instancez creates them automatically. Whether RLS itself is on is controlled by [`rls_enabled`](#tablesnamerls_enabled), not by whether this list is empty.
 
-| Key                | Type       | Default      | Description                                                                           |
-| ------------------ | ---------- | ------------ | ------------------------------------------------------------------------------------- |
-| `rls[].operations` | `string[]` | required     | One or more of `select`, `insert`, `update`, `delete`.                                |
-| `rls[].using`      | `string`   | conditional  | SQL boolean expression selecting which existing rows the operation can see or target. |
-| `rls[].with_check` | `string`   | conditional  | SQL boolean expression deciding what a written row is allowed to look like.           |
-| `rls[].type`       | `string`   | `permissive` | `permissive` or `restrictive`.                                                        |
+| Key                | Type       | Default      | Description                                                                                                                                                                                                                                               |
+| ------------------ | ---------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rls[].operations` | `string[]` | required     | One or more of `select`, `insert`, `update`, `delete`.                                                                                                                                                                                                    |
+| `rls[].using`      | `string`   | conditional  | SQL boolean expression selecting which existing rows the operation can see or target.                                                                                                                                                                     |
+| `rls[].with_check` | `string`   | conditional  | SQL boolean expression deciding what a written row is allowed to look like.                                                                                                                                                                               |
+| `rls[].type`       | `string`   | `permissive` | `permissive` or `restrictive`.                                                                                                                                                                                                                            |
+| `rls[].owner`      | `string`   | —            | Shorthand for `<column> = auth.uid()` in `using` and `with_check` (whichever the operations read). `operations` defaults to all four. The column must be `uuid`. Cannot be combined with `using`/`with_check`. A dashboard save writes the expanded form. |
 
 Useful SQL helpers available in RLS expressions:
 
@@ -775,6 +786,29 @@ functions:
 | `functions.<name>.env`           | `map`      | `{}`     | Env values injected as `ctx.env`. Values may be string literals or `${INSTANCEZ_ENV_*}` references. |
 
 `INSTANCEZ_ENV_*` references are resolved from the process environment. Plain `${VAR}` references (without the `INSTANCEZ_ENV_` prefix) are not supported in `env:` — use them elsewhere in the config file for other values.
+
+## include
+
+[Section titled “include”](#include)
+
+Split a large config across files. Only the main `instancez.yaml` may use it.
+
+```yaml
+version: 1
+include:
+  - tables/*.yaml
+  - rpc.yaml
+```
+
+* Paths are relative to the main file’s directory. Glob characters (`*`, `?`, `[...]`) are allowed only in the last path element, there is no `**`, and each pattern must match at least one file. `${VAR}` and absolute paths are rejected.
+* An included file may only contain `tables`, `storage`, `rpc` and `functions` (empty files are fine). Nested `include` is an error.
+* The same table, bucket, rpc or function name in two files is an error. `functions.<name>.file` stays relative to the project root.
+* Every match must resolve inside the project directory, symlinks included. The main file is skipped if a glob matches it.
+* Errors in a fragment name the file and line. Line numbers in later validation errors refer to the merged document.
+* `inz dev` reloads when the main file or any included file changes, including a new file that matches a glob.
+* The dashboard cannot save a config that uses `include:` (`GET /_admin/config/status` reports `read_only: true` and the save returns 409 `config_read_only`); edit the YAML files instead.
+* `inz validate`, `inz vet`, `inz gen`, `inz dev` and `inz serve` read the merged config. S3 and bundle config sources do not support `include`; `inz bundle`, `inz cloud deploy` and `inz validate --cloud` send one merged file without the `include:` key; configs without `include:` are sent as written. Shorthands (`timestamps`, `owner`) are not expanded by the CLI, so cloud support for them needs a platform release.
+* A glob that matches only the main file logs a warning. Dotfiles and editor temp files (`.x.swp`, `x~`, `#x#`) are skipped by globs.
 
 ## functions\_bundle
 
@@ -2217,7 +2251,7 @@ instancez has no HTTP-level RBAC. Every access decision is a Postgres row-level 
 
 Each entry in `rls:` is a policy object with these fields:
 
-* `operations` — either exactly one of `select`, `insert`, `update`, `delete`, or all four together. Partial combinations (e.g. `[insert, update]`) are rejected.
+* `operations` — one or more of `select`, `insert`, `update`, `delete`, for example `[insert, update]`. Each operation gets its own policy.
 * `using` — a SQL boolean expression that decides which existing rows the operation can see or target. Read by `select`, `update`, `delete`.
 * `with_check` — a SQL boolean expression that decides what a written row is allowed to look like. Read by `insert`, `update`.
 * at least one of `using`/`with_check` is required, whichever your operations read. `select`/`delete` have no `with_check` fallback and `insert` has no `using` fallback, so those always need the matching field directly. For `update` alone, the two fields aren’t symmetric. Setting only `using` gets `with_check` auto-filled with the same expression, for both permissive and restrictive policies. Setting only `with_check` auto-fills `using` only when `type: restrictive` is set. On a permissive (default) `update` policy, `with_check` alone leaves `using` unset, and that blocks every update through the policy, so set `using` explicitly there too.
@@ -2341,6 +2375,21 @@ rls:
     using: "auth.is_authenticated()"
     with_check: "auth.is_authenticated()"
 ```
+
+### Owner shorthand
+
+[Section titled “Owner shorthand”](#owner-shorthand)
+
+`owner: <column>` replaces `using` and `with_check` for the common “user\_id = auth.uid()” rule. `operations` defaults to all four, and the column must be a `uuid` (or an untyped foreign key to `auth.users.id`). `owner` cannot be combined with `using` or `with_check`.
+
+```yaml
+rls:
+  - owner: user_id
+  - operations: [select]
+    owner: user_id
+```
+
+On a bucket, `owner` must be `uploaded_by`.
 
 ### Private (owner only)
 
@@ -2922,6 +2971,33 @@ Object keys with a `..` segment, a NUL byte, or nothing at all return 400 on the
 A direct upload (`upload`/`update`) checks RLS twice, in this order: the MIME check runs first, then an early probe (a short, always-rolled-back transaction) runs your `insert`/`update` policy with `size = 0` (the real size isn’t known until the body is read), so a `with_check` policy that requires `size > 0` rejects every upload with 403. Only after the probe passes does the body spool to a temporary file, and the real write transaction runs last, re-checking RLS when it writes the metadata row. A signed upload (`uploadToSignedUrl`) checks RLS only once, when `createSignedUploadUrl` mints the token; redemption runs as `service_role` and does not check again, since the token itself is the grant. That mint-time probe uses `size = 0` and an empty content type, so a `with_check` policy bounding either `size` or `mime` rejects every `createSignedUploadUrl` call, the same gotcha as the direct-upload probe above.
 
 The server needs a writable temp directory sized for concurrent uploads × `max_size` (on Lambda, that’s `/tmp`). `uploadToSignedUrl` enforces the same bucket MIME allowlist (422) and `max_size` (413) as a normal upload, and returns 500 if the metadata write fails after the bytes are stored.
+
+### Per-user folders and ownership
+
+[Section titled “Per-user folders and ownership”](#per-user-folders-and-ownership)
+
+`storage.foldername(name)`, `storage.filename(name)` and `storage.extension(name)` work in bucket policies with Supabase’s signatures. `owner` (uuid) and `owner_id` (text) are read-only aliases of `uploaded_by`, so policies written for Supabase carry over.
+
+```yaml
+storage:
+  avatars:
+    rls:
+      - operations: [select, insert, update, delete]
+        using: "(storage.foldername(name))[1] = auth.uid()::text"
+        with_check: "(storage.foldername(name))[1] = auth.uid()::text"
+```
+
+Bucket policies also accept `owner: uploaded_by` as a shorthand for `uploaded_by = auth.uid()`. Other columns are rejected there.
+
+On a database that already has `storage.objects`, the first policy that mentions `owner` or `owner_id` adds those columns, which rewrites the table once under an exclusive lock, with no size or time limit, and blocks storage traffic until it finishes. On a large table, add the columns yourself in a maintenance window first; the migration then skips them:
+
+```sql
+ALTER TABLE storage.objects
+  ADD COLUMN owner UUID GENERATED ALWAYS AS (uploaded_by) STORED,
+  ADD COLUMN owner_id TEXT GENERATED ALWAYS AS (uploaded_by::text) STORED;
+```
+
+They are not added to API responses.
 
 ### Downloads
 
@@ -4891,7 +4967,7 @@ instancez implements the Supabase wire protocol. Any official Supabase SDK works
 | **OAuth — `signInWithIdToken`**                    | ⚠️ Google and Apple only               | Reads `id_token` like GoTrue (`token` also works). Verifies the token against the provider’s keys, with `nonce` (a token that has one needs one in the request, and the reverse). Google compares it raw. Apple compares the claim to the hex SHA-256 of the request nonce. Apple takes several audiences in `client_id` (comma-separated) for iOS bundle IDs.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | **Auth Admin — `supabase.auth.admin.*`**           | ✅ Full                                 | `createUser`, `listUsers` (paginated), `getUserById`, `updateUserById`, `deleteUser`, `inviteUserByEmail`, `generateLink`, `signOut` (user), `deleteFactor`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | **MFA — `supabase.auth.mfa.*`**                    | ⚠️ TOTP only                           | `enroll`, `challenge`, `verify`, `challengeAndVerify`, `unenroll`, `listFactors` and `getAuthenticatorAssuranceLevel` all work for TOTP, with Supabase’s `aal`/`amr` JWT claims. Phone/SMS factors are not supported.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **Storage — `supabase.storage.*`**                 | ✅ Full                                 | Upload (with `metadata`), download, move, copy, remove, `list`, `listV2`, `info`, `exists`. Guest (publishable-key) calls run as `anon` under the bucket’s `rls:`, as in Supabase. Public URLs. Signed URLs (download, with the `download` or `transform` option, and upload). `/render/image/{public,authenticated,sign}` serve `transform` URLs. Bucket management (create, update, delete, empty). Image transforms: resize (`cover`, `contain`, `fill`), quality, format (`jpeg`, `png`); WebP and AVIF output are not supported. Transform limits match Supabase: 1-2500px, 25MB and 50MP sources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Storage — `supabase.storage.*`**                 | ✅ Full                                 | RLS expressions can use `storage.foldername()`, `storage.filename()`, `storage.extension()` and the `owner` / `owner_id` columns. Upload (with `metadata`), download, move, copy, remove, `list`, `listV2`, `info`, `exists`. Guest (publishable-key) calls run as `anon` under the bucket’s `rls:`, as in Supabase. Public URLs. Signed URLs (download, with the `download` or `transform` option, and upload). `/render/image/{public,authenticated,sign}` serve `transform` URLs. Bucket management (create, update, delete, empty). Image transforms: resize (`cover`, `contain`, `fill`), quality, format (`jpeg`, `png`); WebP and AVIF output are not supported. Transform limits match Supabase: 1-2500px, 25MB and 50MP sources.                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | **Edge Functions — `supabase.functions.invoke()`** | ✅ Full                                 | Calls code functions at `/functions/v1/<name>`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | **RPC — `supabase.rpc()`**                         | ✅ Full                                 | Calls SQL functions declared under `rpc:` in `instancez.yaml`. setof results take filters, embeds and aggregates like tables.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **Type generation — `supabase gen types`**         | ⚠️ TypeScript only, differences listed | `inz gen types` writes a `Database` type and `Constants` for `createClient<Database>()` from the yaml, with no database needed. See [TypeScript types](/build/types/).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
