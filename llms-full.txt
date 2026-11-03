@@ -111,20 +111,23 @@ Validate `instancez.yaml` structure and references without starting the server.
 
 Checks YAML structure, identifiers, cross-references, and verifies that each declared code function’s `file:` exists on disk.
 
-Local validation (including `--use-dsn`) loads `.development.env` first. An unset `${INSTANCEZ_ENV_*}` reference (with no `:-` default) warns and is treated as empty, as in `inz dev`. Any other unset `${VAR}` is still an error. `inz serve` and `inz bundle` stay strict and fail on any unset `${VAR}`. `inz cloud deploy` parses leniently and leaves validation to the cloud, so it does not fail locally on an unset variable. `--project` and `--cloud` send the file as written: they load no `.development.env` and resolve no env references locally.
+Local validation (including `--use-dsn`) loads `.development.env` first. An unset `${INSTANCEZ_ENV_*}` reference (with no `:-` default) warns and is treated as empty, as in `inz dev`. Any other unset `${VAR}` is still an error. `inz validate` and `inz dev` also warn when an OAuth provider other than `google`/`apple` ends up with an empty `client_secret` (`inz serve` rejects it). When an unset variable is outside the `INSTANCEZ_ENV_` namespace, the report lists it together with every other error. `${VAR}` on a full-line `#` comment is ignored everywhere (this includes a line starting with `#` inside a `|` block scalar). `inz serve` and `inz bundle` stay strict and fail on any unset `${VAR}`. `inz cloud deploy` parses leniently and leaves validation to the cloud, so it does not fail locally on an unset variable. `--project` and `--cloud` send the file as written: they load no `.development.env` and resolve no env references locally.
 
 With `--use-dsn`, also connects to the database and prints the migration plan (DDL diff) without applying it.
+
+Add `--dry-run-ddl` to also run the migration inside a transaction that is always rolled back. That surfaces unknown columns in RLS policies and bad `language: sql` rpc bodies as real Postgres errors, and exits non-zero on failure. It is opt-in because it takes the migration advisory lock and DDL locks until the rollback (`lock_timeout` 2s, `statement_timeout` 30s per statement, 2 minutes for the whole run). When the database already matches the config, it skips the plan but still re-creates every rpc with body checking on. It needs a DSN with the instancez roles provisioned, and runs destructive changes inside the rolled-back transaction. With `--json`, the output gains `dry_run` (`"ok"` or the error).
 
 ```plaintext
 inz validate [flags]
 ```
 
-| Flag        | Default          | Description                                                                                                                                                                                                                    |
-| ----------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `--config`  | `instancez.yaml` | Config source. Env: `INSTANCEZ_CONFIG`.                                                                                                                                                                                        |
-| `--json`    | `false`          | Output errors as JSON (for CI).                                                                                                                                                                                                |
-| `--project` | —                | Preview against a cloud project. Bare `--project` uses `instancez.yaml`’s linked project; `--project <id>` or `--project=<id>` targets a different one. Never creates a project; link one first with `inz cloud deploy --new`. |
-| `--use-dsn` | —                | After syntax check, plan a migration against this owner-class DSN (plan only — never applied).                                                                                                                                 |
+| Flag            | Default          | Description                                                                                                                                                                                                                    |
+| --------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--config`      | `instancez.yaml` | Config source. Env: `INSTANCEZ_CONFIG`.                                                                                                                                                                                        |
+| `--json`        | `false`          | Output errors as JSON (for CI): an array of `{path, message, line, column, suggestion}`. `line` and `column` are omitted when unknown.                                                                                         |
+| `--project`     | —                | Preview against a cloud project. Bare `--project` uses `instancez.yaml`’s linked project; `--project <id>` or `--project=<id>` targets a different one. Never creates a project; link one first with `inz cloud deploy --new`. |
+| `--use-dsn`     | —                | After syntax check, plan a migration against this owner-class DSN (plan only — never applied).                                                                                                                                 |
+| `--dry-run-ddl` | `false`          | With `--use-dsn`, also run the migration in a rolled-back transaction. Takes DDL locks until rollback.                                                                                                                         |
 
 ```bash
 inz validate
@@ -402,6 +405,18 @@ inz version
 
 Env vars are interpolated using `${VAR}` or `${VAR:-default}`. They are resolved at load time; references are never stored in the database.
 
+## Editor schema
+
+[Section titled “Editor schema”](#editor-schema)
+
+A JSON Schema for this file is published at `https://docs.instancez.ai/schema/instancez.json`. Add this as the first line of `instancez.yaml` for completion and inline errors in editors that use the YAML language server (VS Code YAML extension, Neovim, JetBrains):
+
+```yaml
+# yaml-language-server: $schema=https://docs.instancez.ai/schema/instancez.json
+```
+
+`inz init` writes the line for you. Numbers and booleans also accept a `${VAR}` string.
+
 ## version
 
 [Section titled “version”](#version)
@@ -574,12 +589,10 @@ tables:
 | `fields[].min`                    | `number`   | —          | Minimum numeric value (inclusive).                                                                                                                                                                            |
 | `fields[].max`                    | `number`   | —          | Maximum numeric value (inclusive).                                                                                                                                                                            |
 | `fields[].check`                  | `string`   | —          | Raw SQL `CHECK` expression.                                                                                                                                                                                   |
-| `fields[].foreign_key.references` | `string`   | —          | `table.column` or `schema.table.column`.                                                                                                                                                                      |
+| `fields[].foreign_key.references` | `string`   | —          | `table.column` or `schema.table.column`. `table.column` is `public`; use `auth.users.id` for auth users.                                                                                                      |
 | `fields[].foreign_key.on_delete`  | `string`   | `restrict` | `cascade`, `restrict`, or `set_null`. Defaults to `restrict` when omitted.                                                                                                                                    |
 | `fields[].auto_updated_at`        | `boolean`  | `false`    | Set the column to `now()` on every `UPDATE`. Only on `timestamp`/`timestamptz` fields.                                                                                                                        |
 | `fields[].immutable`              | `boolean`  | `false`    | Reject any `UPDATE` that changes the column (error `23514`, HTTP 400), for every role including the secret key. `INSERT` is unaffected; an upsert that hits a conflict counts as an update.                   |
-| `fields[].ref`                    | `string`   | —          | Storage reference in the form `storage.<bucket>`.                                                                                                                                                             |
-| `fields[].on_delete`              | `string`   | —          | (`ref` only) `cascade` or `keep` — whether to delete the object on row deletion.                                                                                                                              |
 
 No columns are injected automatically. Every column, including primary keys, must be declared.
 
@@ -808,8 +821,6 @@ tables:
         type: text
       - name: avatar_url
         type: text
-        ref: storage.avatars
-        on_delete: keep
     rls:
       - operations: [select]
         using: "true"
@@ -904,7 +915,7 @@ rpc:
 
 A `language: sql` body must start with a Postgres command or a parenthesized query, after any comments. Bodies that open with `BEGIN`, `COMMIT`, `END`, `ROLLBACK` or another transaction-control statement are rejected, because Postgres refuses those inside a SQL function. Use `language: plpgsql` for `BEGIN ... END` blocks.
 
-Function bodies are not checked when the migration creates them, so a `language: sql` body can reference tables defined later in the same config. A typo in a body shows up when the function is first called. `inz validate` runs no DDL, and `inz validate --use-dsn` only prints the migration plan, so neither catches body errors. Call the function once in a dev database to check it.
+Function bodies are not checked when the migration creates them, so a `language: sql` body can reference tables defined later in the same config. A typo in a body shows up when the function is first called. `inz validate` runs no DDL, and `inz validate --use-dsn` only prints the migration plan, so neither catches body errors. Run `inz validate --use-dsn <dsn> --dry-run-ddl` against a dev database: it re-creates each function with body checking on inside a rolled-back transaction.
 
 ## Calling via HTTP
 
@@ -2238,6 +2249,8 @@ Changing the value migrates the table: `true → false` runs `DISABLE ROW LEVEL 
 
 instancez passes `using` straight through to Postgres’s `USING` clause and `with_check` to `WITH CHECK`. This matches standard Postgres semantics, including the asymmetric `update`-only auto-fill behavior described above.
 
+`inz validate` catches expressions that can never parse (unbalanced parentheses or quotes, `= =`, a leading or trailing `AND`/`OR`). Unknown columns are only caught by `inz validate --use-dsn --dry-run-ddl`.
+
 ## auth.uid() and auth.is\_authenticated()
 
 [Section titled “auth.uid() and auth.is\_authenticated()”](#authuid-and-authis_authenticated)
@@ -2566,6 +2579,8 @@ Declare a foreign key with `foreign_key.references` pointing to `table.column` o
     references: auth.users.id
     on_delete: cascade
 ```
+
+`inz validate` checks the target by schema and table. `users.id` means `public.users.id`, so reference `auth.users.id` for auth users. Allowed unique targets in system schemas are `auth.users.id`, `auth.users.email` and `storage.objects.id`; other columns there are errors, other tables warn. A reference into an undeclared schema, or to a table of a declared schema that this config does not define, only warns (it may exist outside the config). A table with `schema: app` is referenced as `app.table.column`.
 
 When `foreign_key` is the only option on a field, the column type is inferred from the referenced column: `UUID` for `auth.users.id`, the referenced column’s type for another table’s field (integer types give `BIGINT`). A reference that can’t be resolved (unknown table, cross-schema, or circular) falls back to `BIGINT`. Set `type` to override.
 
@@ -3099,6 +3114,12 @@ Then add a line to your `AGENTS.md` (or `CLAUDE.md`, `.cursorrules`, …):
 ```markdown
 When working on the instancez backend (instancez.yaml, functions/), read docs/instancez-skill.md first.
 ```
+
+## Editor schema
+
+[Section titled “Editor schema”](#editor-schema)
+
+`inz init` adds a `yaml-language-server` line to `instancez.yaml`, so editors and agents that use the YAML language server get completion and key validation from `https://docs.instancez.ai/schema/instancez.json`.
 
 ## What the skill covers
 
