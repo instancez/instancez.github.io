@@ -425,7 +425,7 @@
 <tr>
 <td><code dir="auto">bucket-authed-write</code></td>
 <td>medium</td>
-<td>An update or delete storage policy that only checks the caller is signed in (<code dir="auto">auth.is_authenticated()</code>, <code dir="auto">auth.uid() IS NOT NULL</code>), so any user can replace or delete other users’ objects.</td>
+<td>An insert, update or delete storage policy that only checks the caller is signed in (<code dir="auto">auth.is_authenticated()</code>, <code dir="auto">auth.uid() IS NOT NULL</code>), so any user can upload anywhere, or replace or delete other users’ objects.</td>
 </tr>
 <tr>
 <td><code dir="auto">bucket-no-rls</code></td>
@@ -504,6 +504,13 @@
 </tr>
 </tbody>
 </table>
+<p>Sign-in rules (<code dir="auto">bucket-authed-write</code>, <code dir="auto">policy-authed-read-sensitive</code>) read expressions with a small tokenizer, not a SQL parser. They skip string literals, quoted identifiers and comments. Known limits, all of which err toward not flagging:</p>
+<ul>
+<li>Only a top-level <code dir="auto">OR</code>, or the <code dir="auto">ELSE</code> or sign-in-guarded <code dir="auto">THEN</code> of one whole searched <code dir="auto">CASE</code>, is checked. A sign-in check hidden in a subquery, a function body, <code dir="auto">COALESCE</code>, <code dir="auto">NOT</code>, or the simple form <code dir="auto">CASE x WHEN ...</code> is not seen.</li>
+<li>A sign-in check <code dir="auto">AND</code>ed with a condition counts as scoped only when that condition mentions <code dir="auto">auth.uid()</code>, <code dir="auto">auth.jwt()</code>, <code dir="auto">auth.email()</code>, <code dir="auto">service_role</code> or a declared rpc that reads the caller. Other filters (<code dir="auto">bucket_id = 'x'</code>, <code dir="auto">deleted_at IS NULL</code>, path checks) do not scope, so the policy is still flagged.</li>
+<li>Dollar-quoted strings and <code dir="auto">E'...'</code> backslash escapes are not special-cased.</li>
+<li>An insert policy that only checks sign-in is flagged even when open uploads are intended. Scope it by path, for example <code dir="auto">(storage.foldername(name))[1] = auth.uid()::text</code>, or ignore the finding.</li>
+</ul>
 <div class="sl-heading-wrapper level-h2"><h2 id="inz-bundle">inz bundle</h2><a class="sl-anchor-link" href="#inz-bundle"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 1 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 0 0-1.42-1.42m8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 1 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l3.88-3.89a4.49 4.49 0 0 0 0-6.33M8.83 15.17a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.92-4.92a1 1 0 1 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42"></path></svg></span><span class="sr-only" data-pagefind-ignore>Section titled “inz bundle”</span></a></div>
 <p>Build a self-contained tar.gz bundle from <code dir="auto">instancez.yaml</code> and <code dir="auto">functions/</code>.</p>
 <p>The bundle is the deployment artifact for projects that use code functions. It contains <code dir="auto">instancez.yaml</code>, <code dir="auto">functions/</code> (with vendored <code dir="auto">node_modules/</code>), and a <code dir="auto">manifest.json</code>. Upload it to S3 then set <code dir="auto">functions_bundle:</code> in <code dir="auto">instancez.yaml</code> to the returned pointer.</p>
