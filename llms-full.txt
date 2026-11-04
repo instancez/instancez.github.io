@@ -687,9 +687,9 @@ tables:
 
 To reference one column of a composite key from another table’s `foreign_key`, that column must be unique on its own: add a unique index on it (`indexes: [{columns: [serial], unique: true}]`). `unique: true` on an existing column adds no constraint. See [Schema](/instancez/build/schema/).
 
-### tables.\<name>.rls\_enabled
+### tables.\<name>.rls_enabled
 
-[Section titled “tables.\<name>.rls\_enabled”](#tablesnamerls_enabled)
+[Section titled “tables.\<name>.rls_enabled”](#tablesnamerls_enabled)
 
 | Key           | Type      | Default                                              | Description                                                                                                                                                                                                                                       |
 | ------------- | --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -849,9 +849,9 @@ include:
 * `inz validate`, `inz vet`, `inz gen`, `inz dev` and `inz serve` read the merged config. S3 and bundle config sources do not support `include`; `inz bundle`, `inz cloud deploy` and `inz validate --cloud` send one merged file without the `include:` key; configs without `include:` are sent as written. Shorthands (`timestamps`, `owner`) are not expanded by the CLI, so cloud support for them needs a platform release.
 * A glob that matches only the main file logs a warning. Dotfiles and editor temp files (`.x.swp`, `x~`, `#x#`) are skipped by globs.
 
-## functions\_bundle
+## functions_bundle
 
-[Section titled “functions\_bundle”](#functions_bundle)
+[Section titled “functions_bundle”](#functions_bundle)
 
 Bundle pointer for self-hosted deployments. `inz bundle` produces the value (e.g. `s3://bucket/key#sha256`) and writes it here; the managed cloud stamps it server-side from uploaded sources. `inz cloud deploy` does not write this field.
 
@@ -2327,7 +2327,7 @@ tables:
 
 ## Turning RLS on and off: `rls_enabled`
 
-[Section titled “Turning RLS on and off: rls\_enabled”](#turning-rls-on-and-off-rls_enabled)
+[Section titled “Turning RLS on and off: rls_enabled”](#turning-rls-on-and-off-rls_enabled)
 
 Every table should say whether RLS is on:
 
@@ -2357,9 +2357,9 @@ instancez passes `using` straight through to Postgres’s `USING` clause and `wi
 
 `inz validate` catches expressions that can never parse (unbalanced parentheses or quotes, `= =`, a leading or trailing `AND`/`OR`). Unknown columns are only caught by `inz validate --use-dsn --dry-run-ddl`.
 
-## auth.uid() and auth.is\_authenticated()
+## auth.uid() and auth.is_authenticated()
 
-[Section titled “auth.uid() and auth.is\_authenticated()”](#authuid-and-authis_authenticated)
+[Section titled “auth.uid() and auth.is_authenticated()”](#authuid-and-authis_authenticated)
 
 instancez installs these helper functions in the `auth` schema at startup. They read session variables set by the request middleware, not application memory.
 
@@ -2419,7 +2419,7 @@ rls:
 
 [Section titled “Owner shorthand”](#owner-shorthand)
 
-`owner: <column>` replaces `using` and `with_check` for the common “user\_id = auth.uid()” rule. `operations` defaults to all four, and the column must be a `uuid` (or an untyped foreign key to `auth.users.id`). `owner` cannot be combined with `using` or `with_check`.
+`owner: <column>` replaces `using` and `with_check` for the common “user_id = auth.uid()” rule. `operations` defaults to all four, and the column must be a `uuid` (or an untyped foreign key to `auth.users.id`). `owner` cannot be combined with `using` or `with_check`.
 
 ```yaml
 rls:
@@ -5136,7 +5136,7 @@ The event’s distinct id is a random UUID stored in `~/.instancez/telemetry.jso
 
 ### `command_run`
 
-[Section titled “command\_run”](#command_run)
+[Section titled “command_run”](#command_run)
 
 Sent once when a command finishes. Not sent by `inz serve`.
 
@@ -5166,7 +5166,7 @@ An unexpected `dev` or `serve` failure can also carry a crash report if you acce
 
 ### `dev_ready`
 
-[Section titled “dev\_ready”](#dev_ready)
+[Section titled “dev_ready”](#dev_ready)
 
 Sent by `inz dev` right after it starts the HTTP server, before the port is confirmed bound. `command_run` for `dev` only arrives at exit, so this event shows whether `dev` booted.
 
@@ -5179,7 +5179,7 @@ Sent by `inz dev` right after it starts the HTTP server, before the port is conf
 
 ### `dev_runtime_error`
 
-[Section titled “dev\_runtime\_error”](#dev_runtime_error)
+[Section titled “dev_runtime_error”](#dev_runtime_error)
 
 Sent by `inz dev` when a hot reload fails while `dev` keeps running, including YAML typos. It never prompts. Each distinct error is sent once, and at most 10 per `dev` run.
 
