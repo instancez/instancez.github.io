@@ -76,7 +76,7 @@
 <tbody>
 <tr>
 <td><code dir="auto">INSTANCEZ_DATABASE_URL</code></td>
-<td>Superuser Postgres DSN (e.g. <code dir="auto">postgres://postgres:password@localhost:5432/mydb</code>). The CLI provisions all required roles (<code dir="auto">instancez_owner</code>, <code dir="auto">authenticator</code>, <code dir="auto">anon</code>, <code dir="auto">authenticated</code>, <code dir="auto">service_role</code>) automatically on startup. This is what <code dir="auto">inz init</code> scaffolds for local dev.</td>
+<td>Superuser Postgres DSN (e.g. <code dir="auto">postgres://postgres:password@localhost:5432/mydb</code>). The CLI provisions all required roles (<code dir="auto">instancez_owner</code>, <code dir="auto">authenticator</code>, <code dir="auto">anon</code>, <code dir="auto">authenticated</code>, <code dir="auto">service_role</code>) automatically on startup. This is what <code dir="auto">inz init</code> scaffolds for local dev. URLs follow libpq rules: percent-encode <code dir="auto">@</code> in passwords as <code dir="auto">%40</code>, and bracket IPv6 hosts (<code dir="auto">[::1]</code>).</td>
 </tr>
 <tr>
 <td><code dir="auto">INSTANCEZ_OWNER_DATABASE_URL</code> + <code dir="auto">INSTANCEZ_AUTH_DATABASE_URL</code></td>
