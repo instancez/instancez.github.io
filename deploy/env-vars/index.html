@@ -107,13 +107,13 @@
 <td><code dir="auto">INSTANCEZ_CONFIG</code></td>
 <td><code dir="auto">--config</code></td>
 <td><code dir="auto">instancez.yaml</code></td>
-<td>Config source. Accepts a local file path or an <code dir="auto">s3://bucket/key</code> URI.</td>
+<td>Config source. Accepts a local file path or an <code dir="auto">s3://bucket/key</code> or <code dir="auto">gcs://bucket/key</code> URI.</td>
 </tr>
 <tr>
 <td><code dir="auto">INSTANCEZ_BUNDLE</code></td>
 <td><code dir="auto">--bundle</code></td>
 <td>—</td>
-<td>Bundle source (config + function source in one archive), built with <code dir="auto">inz bundle</code>. Accepts a local path or <code dir="auto">s3://bucket/key</code>. Takes the place of <code dir="auto">INSTANCEZ_CONFIG</code> when set.</td>
+<td>Bundle source (config + function source in one archive), built with <code dir="auto">inz bundle</code>. Accepts a local path, <code dir="auto">s3://bucket/key</code> or <code dir="auto">gcs://bucket/key</code>. Takes the place of <code dir="auto">INSTANCEZ_CONFIG</code> when set.</td>
 </tr>
 <tr>
 <td><code dir="auto">INSTANCEZ_WATCH</code></td>
@@ -228,7 +228,9 @@
 <p>Storage provider credentials are set in <code dir="auto">instancez.yaml</code> under <code dir="auto">providers.storage</code>. Use <code dir="auto">${VAR}</code> interpolation to reference environment variables without hardcoding secrets:</p>
 <div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.s2qim.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">providers</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">s3</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">bucket</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_BUCKET}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">region</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_REGION}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">access_key_id</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_ACCESS_KEY_ID}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">secret_access_key</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_SECRET_ACCESS_KEY}</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">endpoint</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_S3_ENDPOINT}</span><span style="--0:#EEFFFF">  </span><span style="--0:#979797;--0fs:italic"># optional; for S3-compatible stores</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="providers:  storage:    type: s3    bucket: ${INSTANCEZ_S3_BUCKET}    region: ${INSTANCEZ_S3_REGION}    access_key_id: ${INSTANCEZ_S3_ACCESS_KEY_ID}    secret_access_key: ${INSTANCEZ_S3_SECRET_ACCESS_KEY}    endpoint: ${INSTANCEZ_S3_ENDPOINT}  # optional; for S3-compatible stores"><div></div></button></div></figure></div>
 <p>instancez interpolates <code dir="auto">${VAR}</code> references in <code dir="auto">instancez.yaml</code> at load time. Any environment variable name works; the names above are conventions.</p>
-<p>One variable is read directly from the process environment (no YAML reference needed):</p>
+<p>For Google Cloud Storage, set only the bucket; credentials come from Application Default Credentials:</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="yaml"><code><div class="ec-line"><div class="code"><span style="--0:#F07178">providers</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">  </span><span style="--0:#F07178">storage</span><span style="--0:#89DDFF">:</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">type</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">gcs</span></div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#F07178">bucket</span><span style="--0:#89DDFF">:</span><span style="--0:#EEFFFF"> </span><span style="--0:#C3E88D">${INSTANCEZ_GCS_BUCKET}</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="providers:  storage:    type: gcs    bucket: ${INSTANCEZ_GCS_BUCKET}"><div></div></button></div></figure></div>
+<p>These variables are read directly from the process environment (no YAML reference needed):</p>
 <table>
 <thead>
 <tr>
@@ -240,6 +242,10 @@
 <tr>
 <td><code dir="auto">INSTANCEZ_STORAGE_KEY_PREFIX</code></td>
 <td>Optional prefix prepended to all object keys in the storage bucket. Useful for sharing a bucket across environments.</td>
+</tr>
+<tr>
+<td><code dir="auto">INSTANCEZ_GCS_SIGNER_EMAIL</code></td>
+<td>(<code dir="auto">gcs</code> only) Optional service account that signs URLs via IAM <code dir="auto">signBlob</code>. Auto-detected on GKE and Cloud Run when unset.</td>
 </tr>
 </tbody>
 </table>

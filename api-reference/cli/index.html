@@ -135,7 +135,7 @@
 <tr>
 <td><code dir="auto">--config</code></td>
 <td><code dir="auto">instancez.yaml</code></td>
-<td>Config source: file path or <code dir="auto">s3://bucket/key</code>. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td>
+<td>Config source: file path, <code dir="auto">s3://bucket/key</code> or <code dir="auto">gcs://bucket/key</code>. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td>
 </tr>
 <tr>
 <td><code dir="auto">--dashboard</code></td>
@@ -217,12 +217,12 @@
 <tr>
 <td><code dir="auto">--bundle</code></td>
 <td>—</td>
-<td>Bundle pointer: file path or <code dir="auto">s3://bucket/key[#version]</code>. When set, reads config and functions from the bundle archive instead of <code dir="auto">--config</code>. Env: <code dir="auto">INSTANCEZ_BUNDLE</code>.</td>
+<td>Bundle pointer: file path or <code dir="auto">s3://bucket/key[#version]</code> or <code dir="auto">gcs://bucket/key[#version]</code>. When set, reads config and functions from the bundle archive instead of <code dir="auto">--config</code>. Env: <code dir="auto">INSTANCEZ_BUNDLE</code>.</td>
 </tr>
 <tr>
 <td><code dir="auto">--config</code></td>
 <td><code dir="auto">instancez.yaml</code></td>
-<td>Config source: file path or <code dir="auto">s3://bucket/key</code>. Ignored when <code dir="auto">--bundle</code> is set. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td>
+<td>Config source: file path, <code dir="auto">s3://bucket/key</code> or <code dir="auto">gcs://bucket/key</code>. Ignored when <code dir="auto">--bundle</code> is set. Env: <code dir="auto">INSTANCEZ_CONFIG</code>.</td>
 </tr>
 <tr>
 <td><code dir="auto">--dashboard</code></td>
@@ -534,7 +534,7 @@
 <tr>
 <td><code dir="auto">--output</code></td>
 <td><code dir="auto">bundle.tar.gz</code></td>
-<td>Destination: local file path (relative to the current directory) or <code dir="auto">s3://bucket/key</code>. Local files are written with mode 0600.</td>
+<td>Destination: local file path (relative to the current directory), <code dir="auto">s3://bucket/key</code> or <code dir="auto">gcs://bucket/key</code>. Local files are written with mode 0600.</td>
 </tr>
 </tbody>
 </table>
