@@ -172,7 +172,7 @@
 <td><code dir="auto">server.max_body_size</code></td>
 <td><code dir="auto">string</code></td>
 <td><code dir="auto">1MB</code></td>
-<td>Maximum request body size for non-upload endpoints.</td>
+<td>Maximum request body size for non-upload endpoints. Cannot raise Instancez Cloud’s ~6MB request cap.</td>
 </tr>
 <tr>
 <td><code dir="auto">server.max_limit</code></td>
@@ -710,7 +710,7 @@ name (<code dir="auto">google</code>, <code dir="auto">github</code>, <code dir=
 <td><code dir="auto">storage.&lt;name&gt;.max_size</code></td>
 <td><code dir="auto">string</code></td>
 <td><code dir="auto">50MB</code></td>
-<td>Maximum file size per upload (e.g. <code dir="auto">5MB</code>, <code dir="auto">1GB</code>).</td>
+<td>Maximum file size per upload (e.g. <code dir="auto">5MB</code>, <code dir="auto">1GB</code>). Does not lift the ~4.5MB cap on server-proxied uploads on Instancez Cloud; use <code dir="auto">POST /storage/&lt;bucket&gt;/sign</code> for larger files.</td>
 </tr>
 <tr>
 <td><code dir="auto">storage.&lt;name&gt;.types</code></td>
