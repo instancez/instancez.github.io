@@ -128,6 +128,14 @@ inz cloud status [flags]
 ```bash
 inz cloud status
 ```
+ ## inz cloud logs [Section titled “inz cloud logs”](#inz-cloud-logs) Show recent runtime logs for the linked cloud project, one line per event: `<RFC3339 time> message`. Control characters are stripped from messages. 
+```plaintext
+inz cloud logs [flags]
+```
+ | Flag | Default | Description | | ----------- | ---------------- | ------------------------------------------------------------------------------------------------------- | | `--config` | `instancez.yaml` | Path to `instancez.yaml`. | | `--minutes` | `5` | Look-back window. One of 5, 15, 30, 60, 180, 360, 720, 1440. | | `--json` | `false` | Print the API response (`events`, `deployed`, `truncated`, `minutes`) as JSON. Never prompts for login. | When the server truncates the result, older lines are dropped and a note goes to stderr; use a smaller `--minutes`. 
+```bash
+inz cloud logs --minutes 60
+```
  ## inz cloud login [Section titled “inz cloud login”](#inz-cloud-login) Authenticate against instancez Cloud via device-code flow. Opens a browser to confirm a one-time code, then stores a Personal Access Token at `~/.instancez/credentials`. 
 ```plaintext
 inz cloud login [flags]
@@ -1483,7 +1491,11 @@ npm run build && inz cloud site deploy dist --site <id|slug>
 ```bash
 inz cloud status
 ```
- This prints the project name, id, URL, and deploy status. It’s separate from `inz doctor`, which checks your local environment rather than the cloud project. ## Other commands [Section titled “Other commands”](#other-commands) 
+ This prints the project name, id, URL, and deploy status. It’s separate from `inz doctor`, which checks your local environment rather than the cloud project. ## View logs [Section titled “View logs”](#view-logs) 
+```bash
+inz cloud logs --minutes 60
+```
+ This prints runtime log lines from the last 5 to 1440 minutes (see the [CLI reference](/api-reference/cli/#inz-cloud-logs)). ## Other commands [Section titled “Other commands”](#other-commands) 
 ```bash
 inz cloud whoami    # print the signed-in account's email
 inz cloud logout    # forget the local Personal Access Token
