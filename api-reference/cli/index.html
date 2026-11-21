@@ -410,7 +410,12 @@
 <tr>
 <td><code dir="auto">policy-no-identity-write</code></td>
 <td>medium, high</td>
-<td>A write policy that never checks the caller’s identity, directly or through a declared rpc that does. High when the table has an owner column.</td>
+<td>A write policy that never checks the caller’s identity, directly or through a declared rpc that does. A bare <code dir="auto">auth.uid() IS NOT NULL</code>, <code dir="auto">auth.jwt() IS NOT NULL</code> or <code dir="auto">auth.role() = ...</code> check is not an identity check. High when the table has an owner column.</td>
+</tr>
+<tr>
+<td><code dir="auto">policy-unanalyzable</code></td>
+<td>medium</td>
+<td>A table or bucket policy expression nested more than 32 levels deep. Vet stops analyzing it, so review it by hand.</td>
 </tr>
 <tr>
 <td><code dir="auto">bucket-open-write</code></td>
@@ -504,9 +509,11 @@
 </tr>
 </tbody>
 </table>
-<p>Sign-in rules (<code dir="auto">bucket-authed-write</code>, <code dir="auto">policy-authed-read-sensitive</code>) read expressions with a small tokenizer, not a SQL parser. They skip string literals, quoted identifiers and comments. Known limits, all of which err toward not flagging:</p>
+<p>Sign-in rules (<code dir="auto">bucket-authed-write</code>, <code dir="auto">policy-authed-read-sensitive</code>) read expressions with a small tokenizer, not a SQL parser. They skip string literals, quoted identifiers and comments. Known limits (most err toward not flagging):</p>
 <ul>
-<li>Only a top-level <code dir="auto">OR</code>, or the <code dir="auto">ELSE</code> or sign-in-guarded <code dir="auto">THEN</code> of one whole searched <code dir="auto">CASE</code>, is checked. A sign-in check hidden in a subquery, a function body, <code dir="auto">COALESCE</code>, <code dir="auto">NOT</code>, or the simple form <code dir="auto">CASE x WHEN ...</code> is not seen.</li>
+<li>Always-true detection follows nested <code dir="auto">OR</code>, <code dir="auto">AND</code>, <code dir="auto">NOT</code> and parentheses, and treats <code dir="auto">1=1</code> and <code dir="auto">0=1</code> as constants. Policies nested more than 32 levels deep are not analyzed and raise <code dir="auto">policy-unanalyzable</code>.</li>
+<li>Identity means <code dir="auto">auth.uid()</code>, <code dir="auto">auth.jwt()</code>, <code dir="auto">auth.email()</code> or the legacy <code dir="auto">current_setting('request.jwt.claims' | 'request.jwt.claim.sub' | 'request.jwt.claim.email')</code>. Any <code dir="auto">request.jwt.claims</code> read counts, even <code dir="auto">-&gt;&gt; 'role'</code>, as <code dir="auto">auth.jwt()</code> does. A declared rpc counts as identity only when its body uses one of these or compares <code dir="auto">auth.role() = 'service_role'</code>; an <code dir="auto">auth.role()</code>-only body does not. <code dir="auto">service_role</code> scoping needs that equality, so <code dir="auto">auth.role() IN (..., 'service_role')</code> does not scope.</li>
+<li>For sign-in rules, only a top-level <code dir="auto">OR</code>, or the <code dir="auto">ELSE</code> or sign-in-guarded <code dir="auto">THEN</code> of one whole searched <code dir="auto">CASE</code>, is checked. A sign-in check hidden in a subquery, a function body, <code dir="auto">COALESCE</code>, <code dir="auto">NOT</code>, or the simple form <code dir="auto">CASE x WHEN ...</code> is not seen.</li>
 <li>A sign-in check <code dir="auto">AND</code>ed with a condition counts as scoped only when that condition mentions <code dir="auto">auth.uid()</code>, <code dir="auto">auth.jwt()</code>, <code dir="auto">auth.email()</code>, <code dir="auto">service_role</code> or a declared rpc that reads the caller. Other filters (<code dir="auto">bucket_id = 'x'</code>, <code dir="auto">deleted_at IS NULL</code>, path checks) do not scope, so the policy is still flagged.</li>
 <li>Dollar-quoted strings and <code dir="auto">E'...'</code> backslash escapes are not special-cased.</li>
 <li>An insert policy that only checks sign-in is flagged even when open uploads are intended. Scope it by path, for example <code dir="auto">(storage.foldername(name))[1] = auth.uid()::text</code>, or ignore the finding.</li>
