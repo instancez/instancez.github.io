@@ -229,7 +229,7 @@
 <tr>
 <td><code dir="auto">min</code> / <code dir="auto">max</code></td>
 <td>number</td>
-<td>Numeric range constraints. Applied as check constraints.</td>
+<td>Numeric range constraints. Applied as check constraints. Only valid on numeric types; for text length use <code dir="auto">check: "char_length(col) &lt;= 280"</code>.</td>
 </tr>
 <tr>
 <td><code dir="auto">pattern</code></td>
